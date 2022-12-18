@@ -23,7 +23,7 @@
       <ButtonBar layoutX="408.0" layoutY="364.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button mnemonicParsing="false" text="Cancel" />
-            <Button mnemonicParsing="false" text="Next" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
         </buttons>
       </ButtonBar>
       <Label layoutX="112.0" layoutY="244.0" text="Email address" />

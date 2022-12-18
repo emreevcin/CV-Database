@@ -36,6 +36,7 @@ public class MainController implements Initializable {
         this.controller_s3_ep = new Controller_S3_EP();
         this.controller_s4_cs = new Controller_S4_CS();
         this.controller_s5_ro = new Controller_S5_RO();
+        addStage = new Stage();
     }
 
     public void setMain(Main main) {
@@ -62,6 +63,22 @@ public class MainController implements Initializable {
         this.controller_s5_ro = controller_s5_ro;
     }
 
+    public Scene getAddScene() {
+        return addScene;
+    }
+
+    public void setAddScene(Scene addScene) {
+        this.addScene = addScene;
+    }
+
+    public Stage getAddStage() {
+        return addStage;
+    }
+
+    public void setAddStage(Stage addStage) {
+        this.addStage = addStage;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -79,17 +96,17 @@ public class MainController implements Initializable {
             Parent root = loader.load();
 
             Controller_S1_PI controller1 = loader.getController();
-            controller1.setMainController(this);
-
+            controller1.init(this);
 
             addScene = new Scene(root);
-            addStage = new Stage();
             addStage.setScene(addScene);
             addStage.show();
 
 
 
-        }catch(Exception e){}
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
 
     }
