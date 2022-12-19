@@ -13,31 +13,31 @@
       <Label layoutX="164.0" layoutY="14.0" text="Personal Information" />
       <Separator layoutX="164.0" layoutY="33.0" prefHeight="0.0" prefWidth="431.0" />
       <Label layoutX="164.0" layoutY="36.0" text="First name(s)" />
-      <TextField layoutX="164.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
+      <TextField fx:id="firstNameTF" layoutX="164.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
       <Label layoutX="383.0" layoutY="36.0" text="Last name(s)" />
-      <TextField layoutX="380.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
-      <Label layoutX="168.0" layoutY="136.0" text="Carrer Objective" />
-      <TextArea layoutX="164.0" layoutY="154.0" prefHeight="67.0" prefWidth="431.0" />
+      <TextField fx:id="lastNameTF" layoutX="380.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
+      <Label layoutX="168.0" layoutY="136.0" text="Career Objective" />
       <Label layoutX="66.0" layoutY="221.0" text="Contact" />
       <Separator layoutX="9.0" layoutY="239.0" prefHeight="3.0" prefWidth="600.0" />
       <ButtonBar layoutX="408.0" layoutY="364.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Cancel" />
-            <Button mnemonicParsing="false" text="Next" />
+          <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" text="Next" />
         </buttons>
       </ButtonBar>
       <Label layoutX="112.0" layoutY="244.0" text="Email address" />
-      <TextField layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField fx:id="emailTF" layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
       <Label layoutX="109.0" layoutY="266.0" text="Phone number" />
-      <TextField layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField fx:id="phoneTF" layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
       <Label layoutX="64.0" layoutY="284.0" text="Address" />
       <Separator layoutX="6.0" layoutY="302.0" prefHeight="3.0" prefWidth="589.0" />
       <Label layoutX="141.0" layoutY="307.0" text="City" />
       <Label layoutX="130.0" layoutY="338.0" text="Country" />
-      <TextField layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
-      <TextField layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
-      <Button layoutX="39.0" layoutY="369.0" mnemonicParsing="false" text="Add" />
+      <TextField fx:id="cityTF" layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField fx:id="countryTF" layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
+      <Button fx:id="addButton" layoutX="39.0" layoutY="369.0" mnemonicParsing="false" onAction="#addCVs" text="Add" />
       <Label layoutX="168.0" layoutY="94.0" text="Title" />
-      <TextField layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
+      <TextField fx:id="titleTF" layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
+      <TextArea layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
    </children>
 </AnchorPane>
