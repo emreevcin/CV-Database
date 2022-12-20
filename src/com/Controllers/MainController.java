@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,8 @@ public class MainController implements Initializable {
 
     private Scene addScene ;
     private Stage addStage;
-
+    @FXML
+    private Button showCV; //CV'Yİ GÖSTER BUTONU
 
     public MainController() {
         this.controller_s1_pi = new Controller_S1_PI();
@@ -86,6 +88,9 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
+        cvList.getItems().add("CV1"); // CV İÇİN STATİK BİR ÖRNEK EKLEDİM.
+        cvList.getItems().add("CV2"); // CV İÇİN GİRİLEN TİTLE PDF NAME OLMALI
+
     }
 
     @FXML
@@ -110,5 +115,17 @@ public class MainController implements Initializable {
 
 
     }
+    @FXML
+    public void openShowCV() {
+        cvList.getItems().remove(cvList.getSelectionModel().getSelectedItem());
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.open(new java.io.File("C:\\Users\\erdem\\Desktop\\CV.pdf")); //HEPSİNİN AYNI YERDE OLMASI GEREKİYOR.
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-}
+        //TEKRAR VERİLERİN ÇEKİLMESİ GEREKİYOR BURADA. LİSTENİN GÜNCELLENMESİ İÇİN...
+
+
+    }
