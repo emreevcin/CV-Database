@@ -22,7 +22,7 @@
       <Label layoutX="14.0" layoutY="131.0" text="Mother tongue" />
       <Separator layoutX="14.0" layoutY="128.0" prefHeight="3.0" prefWidth="577.0" />
       <TextField layoutX="14.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
-      <Label layoutX="310.0" layoutY="131.0" text="Other language" />
+      <Label layoutX="310.0" layoutY="131.0" text="Other languages" />
       <TextField layoutX="310.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="14.0" layoutY="173.0" text="Skills" />
       <TextField layoutX="14.0" layoutY="209.0" prefHeight="25.0" prefWidth="276.0" />
@@ -33,7 +33,7 @@
       <Label layoutX="14.0" layoutY="234.0" text="Hobbies and interests" />
       <Separator layoutX="14.0" layoutY="243.0" prefHeight="17.0" prefWidth="577.0" />
       <Label layoutX="14.0" layoutY="252.0" text="Title" />
-      <TextField layoutX="14.0" layoutY="269.0" prefHeight="25.0" prefWidth="577.0" />
+      <TextField layoutX="14.0" layoutY="269.0" prefHeight="25.0" prefWidth="577.0" promptText="Chess, listening music, etc." />
       <Button layoutX="28.0" layoutY="300.0" mnemonicParsing="false" text="Add" />
       <ButtonBar layoutX="386.0" layoutY="293.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
