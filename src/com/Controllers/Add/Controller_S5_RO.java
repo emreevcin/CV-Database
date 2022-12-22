@@ -1,11 +1,14 @@
 package com.Controllers.Add;
 
+import com.Classes.CV;
 import com.Classes.Main;
 import com.Controllers.MainController;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller_S5_RO implements Initializable {
@@ -42,9 +45,22 @@ public class Controller_S5_RO implements Initializable {
         setMainController(mainController);
     }
 
-    public void back(){}
+    public void back(){
+        Scene scene4 = this.getMainController().getSceneList().get(3);
+        this.getMainController().getAddStage().setScene(scene4);
+    }
 
-    public void submit(){}
+    @FXML
+    public void submit(){
+        ArrayList<Scene> scenes = new ArrayList<>();
+        for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {
+            scenes.add(this.getMainController().getSceneList().get(i));
+        }
+        CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
+        cv.setTitle("a");
+        this.getMainController().getListView().getItems().add(cv.getTitle());
+        this.getMainController().getCvList().put(cv.getTitle(), cv);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

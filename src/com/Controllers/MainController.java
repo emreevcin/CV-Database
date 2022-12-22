@@ -1,5 +1,6 @@
 package com.Controllers;
 
+import com.Classes.CV;
 import com.Classes.Main;
 import com.Controllers.Add.*;
 import javafx.fxml.FXML;
@@ -17,6 +18,8 @@ import javafx.stage.FileChooser;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -29,12 +32,21 @@ public class MainController implements Initializable {
     private Controller_S4_CS controller_s4_cs ;
     private Controller_S5_RO controller_s5_ro ;
 
+    private Scene scene1;
+    private Scene scene2;
+    private Scene scene3;
+    private Scene scene4;
+    private Scene scene5;
+
+
+    private HashMap<String,CV> cvList;
+
+
+
+    private ArrayList<Scene> sceneList= new ArrayList<>();
+
     @FXML
     private Button createCV ;
-    @FXML
-    private ListView cvList;
-    @FXML
-    private ListView pdfList;
     private Scene addScene ;
     private Stage addStage;
     @FXML
@@ -89,6 +101,18 @@ public class MainController implements Initializable {
         this.addStage = addStage;
     }
 
+    public ArrayList<Scene> getSceneList() {
+        return sceneList;
+    }
+
+    public ListView<String> getListView() {
+        return listView;
+    }
+
+    public HashMap<String, CV> getCvList() {
+        return cvList;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -96,6 +120,8 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
+
+
         cvList.getItems().add("CV1"); // CV İÇİN STATİK BİR ÖRNEK EKLEDİM.
         cvList.getItems().add("CV2"); // CV İÇİN GİRİLEN TİTLE PDF NAME OLMALI
         pullFiles();
@@ -104,14 +130,43 @@ public class MainController implements Initializable {
     @FXML
     public void openCreateScreen(){
         try{
+            FXMLLoader addLoader1 = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
+            FXMLLoader addLoader2 = new FXMLLoader(getClass().getResource("../resources/work-experience-view.fxml"));
+            FXMLLoader addLoader3 = new FXMLLoader(getClass().getResource("../resources/education-projects-view.fxml"));
+            FXMLLoader addLoader4 = new FXMLLoader(getClass().getResource("../resources/certificates-skills-view.fxml"));
+            FXMLLoader addLoader5 = new FXMLLoader(getClass().getResource("../resources/recommendation-others-view.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
-            Parent root = loader.load();
+            Parent root1 = addLoader1.load();
+            Parent root2 = addLoader2.load();
+            Parent root3 = addLoader3.load();
+            Parent root4 = addLoader4.load();
+            Parent root5 = addLoader5.load();
 
-            Controller_S1_PI controller1 = loader.getController();
-            controller1.init(this);
+            Controller_S1_PI controller_s1_pi1 = addLoader1.getController();
+            controller_s1_pi1.init(this);
+            Controller_S2_WE controller_s2_we1 = addLoader2.getController();
+            controller_s2_we1.init(this);
+            Controller_S3_EP controller_s3_ep1 = addLoader3.getController();
+            controller_s3_ep1.init(this);
+            Controller_S4_CS controller_s4_cs1 = addLoader4.getController();
+            controller_s4_cs1.init(this);
+            Controller_S5_RO controller_s5_ro1 = addLoader5.getController();
+            controller_s5_ro1.init(this);
 
-            addScene = new Scene(root);
+            Scene scene1 = new Scene(root1);
+            Scene scene2 = new Scene(root2);
+            Scene scene3 = new Scene(root3);
+            Scene scene4 = new Scene(root4);
+            Scene scene5 = new Scene(root5);
+
+            sceneList.clear();
+            sceneList.add(scene1);
+            sceneList.add(scene2);
+            sceneList.add(scene3);
+            sceneList.add(scene4);
+            sceneList.add(scene5);
+
+            addScene = scene1;
             addStage.setScene(addScene);
             addStage.show();
 
@@ -219,5 +274,17 @@ public class MainController implements Initializable {
 
 
 
+
+    @FXML
+    public void deleteCV(){
+        String s  =listView.getSelectionModel().getSelectedItem();
+        listView.getItems().remove(s);
+        for (int i = 0; i < cvList.keySet().size(); i++) {
+            String key = (String) cvList.keySet().toArray()[i];
+            if(s.equals(key)){
+                cvList.remove(key);
+            }
+        }
+    }
 
 }

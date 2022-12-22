@@ -26,18 +26,17 @@
         </buttons>
       </ButtonBar>
       <Label layoutX="112.0" layoutY="244.0" text="Email address" />
-      <TextField fx:id="emailTF" layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
       <Label layoutX="109.0" layoutY="266.0" text="Phone number" />
-      <TextField fx:id="phoneTF" layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
       <Label layoutX="64.0" layoutY="284.0" text="Address" />
       <Separator layoutX="6.0" layoutY="302.0" prefHeight="3.0" prefWidth="589.0" />
       <Label layoutX="141.0" layoutY="307.0" text="City" />
       <Label layoutX="130.0" layoutY="338.0" text="Country" />
-      <TextField fx:id="cityTF" layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
-      <TextField fx:id="countryTF" layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
-      <Button fx:id="addButton" layoutX="39.0" layoutY="369.0" mnemonicParsing="false" onAction="#addCVs" text="Add" />
+      <TextField layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
+      <TextField layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
+      <Button layoutX="39.0" layoutY="369.0" mnemonicParsing="false" text="Add" />
       <Label layoutX="168.0" layoutY="94.0" text="Title" />
-      <TextField fx:id="titleTF" layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
-      <TextArea layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
+      <TextField layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
    </children>
 </AnchorPane>

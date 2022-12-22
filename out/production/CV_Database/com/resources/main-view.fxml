@@ -38,9 +38,10 @@
           </Menu>
         </menus>
       </MenuBar>
+      <ListView layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
       <ButtonBar layoutX="386.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Delete CV" />
+          <Button mnemonicParsing="false" onAction="#deleteCV" text="Delete CV" />
             <Button fx:id="createCV" mnemonicParsing="false" onMouseClicked="#openCreateScreen" text="Create CV" />
         </buttons>
       </ButtonBar>

@@ -121,6 +121,18 @@ public class Controller_S1_PI implements Initializable {
         this.mainController = mainController;
     }
 
+    @FXML
+    public void next(){
+        try{
+            Scene scene2 = this.getMainController().getSceneList().get(1);
+            this.getMainController().getAddStage().setScene(scene2);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

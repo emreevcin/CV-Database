@@ -38,16 +38,12 @@
           </Menu>
         </menus>
       </MenuBar>
+      <ListView layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
       <ButtonBar layoutX="386.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button mnemonicParsing="false" text="Delete CV" />
             <Button fx:id="createCV" mnemonicParsing="false" onMouseClicked="#openCreateScreen" text="Create CV" />
         </buttons>
       </ButtonBar>
-      <ListView fx:id="pdfList" layoutX="386.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
-      <Button fx:id="addButton" layoutX="386.0" layoutY="65.0" mnemonicParsing="false" onAction="#addButtonClick" text="Add" />
-      <Button fx:id="deleteButton" layoutX="450.0" layoutY="65.0" mnemonicParsing="false" onAction="#deleteButtonClick" text="Delete" />
-      <Button fx:id="openButton" layoutX="518.0" layoutY="65.0" mnemonicParsing="false" onAction="#openButtonClick" text="Open" />
-      <ListView fx:id="cvList" layoutX="34.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
