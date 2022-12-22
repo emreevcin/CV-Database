@@ -51,6 +51,8 @@ public class MainController implements Initializable {
     private Stage addStage;
     @FXML
     private Button showCV; //CV'Yİ GÖSTER BUTONU
+    @FXML
+    private ListView<String> CVs = new ListView<>(); //CV'LERİN LİSTESİ
 
     public MainController() {
         this.controller_s1_pi = new Controller_S1_PI();
@@ -122,8 +124,8 @@ public class MainController implements Initializable {
         controller_s5_ro.init(this);
 
 
-        cvList.getItems().add("CV1"); // CV İÇİN STATİK BİR ÖRNEK EKLEDİM.
-        cvList.getItems().add("CV2"); // CV İÇİN GİRİLEN TİTLE PDF NAME OLMALI
+        CVs.getItems().add("CV1"); // CV İÇİN STATİK BİR ÖRNEK EKLEDİM.
+        CVs.getItems().add("CV2"); // CV İÇİN GİRİLEN TİTLE PDF NAME OLMALI
         pullFiles();
     }
 
@@ -180,7 +182,7 @@ public class MainController implements Initializable {
     }
     @FXML
     public void openShowCV() {
-        cvList.getItems().remove(cvList.getSelectionModel().getSelectedItem());
+        CVs.getItems().remove(CVs.getSelectionModel().getSelectedItem());
         Desktop desktop = Desktop.getDesktop();
         try {
             desktop.open(new java.io.File("C:\\Users\\erdem\\Desktop\\CV.pdf")); //HEPSİNİN AYNI YERDE OLMASI GEREKİYOR.

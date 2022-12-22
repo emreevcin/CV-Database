@@ -9,7 +9,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
    <children>
       <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -38,11 +38,12 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ListView layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
-      <ButtonBar layoutX="386.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0">
+      <ListView fx:id="CVs" layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
+      <ButtonBar layoutX="321.0" layoutY="346.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button mnemonicParsing="false" text="Delete CV" />
             <Button fx:id="createCV" mnemonicParsing="false" onMouseClicked="#openCreateScreen" text="Create CV" />
+            <Button fx:id="showCV" mnemonicParsing="false" onMouseClicked="#openShowCV" text="Show CV" />
         </buttons>
       </ButtonBar>
    </children>
