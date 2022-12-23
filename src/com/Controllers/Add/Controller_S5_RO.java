@@ -58,8 +58,8 @@ public class Controller_S5_RO implements Initializable {
         }
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
         cv.setTitle("a");
-        this.getMainController().getListView().getItems().add(cv.getTitle());
-        this.getMainController().getCvList().put(cv.getTitle(), cv);
+        this.getMainController().getCvList().getItems().add(cv.getTitle());
+        this.getMainController().getCvMap().put(cv.getTitle(), cv);
     }
 
     @Override

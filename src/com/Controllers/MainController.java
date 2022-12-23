@@ -9,11 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import java.awt.*;
 import java.io.*;
@@ -38,21 +36,17 @@ public class MainController implements Initializable {
     private Scene scene4;
     private Scene scene5;
 
-
-    private HashMap<String,CV> cvList;
-
-
-
-    private ArrayList<Scene> sceneList= new ArrayList<>();
+    private HashMap<String,CV> cvMap;
 
     @FXML
-    private Button createCV ;
+    private ListView<String> cvList;
+    @FXML
+    private ListView<String> pdfList;
+
+    private ArrayList<Scene> sceneList;
+
     private Scene addScene ;
     private Stage addStage;
-    @FXML
-    private Button showCV; //CV'Yİ GÖSTER BUTONU
-    @FXML
-    private ListView<String> CVs = new ListView<>(); //CV'LERİN LİSTESİ
 
     public MainController() {
         this.controller_s1_pi = new Controller_S1_PI();
@@ -61,6 +55,8 @@ public class MainController implements Initializable {
         this.controller_s4_cs = new Controller_S4_CS();
         this.controller_s5_ro = new Controller_S5_RO();
         addStage = new Stage();
+        cvMap = new HashMap<>();
+        sceneList= new ArrayList<>();
     }
 
     public void setMain(Main main) {
@@ -87,31 +83,20 @@ public class MainController implements Initializable {
         this.controller_s5_ro = controller_s5_ro;
     }
 
-    public Scene getAddScene() {
-        return addScene;
-    }
-
-    public void setAddScene(Scene addScene) {
-        this.addScene = addScene;
-    }
 
     public Stage getAddStage() {
         return addStage;
     }
 
-    public void setAddStage(Stage addStage) {
-        this.addStage = addStage;
-    }
 
     public ArrayList<Scene> getSceneList() {
         return sceneList;
     }
-
-    public ListView<String> getListView() {
-        return listView;
+    public HashMap<String, CV> getCvMap() {
+        return cvMap;
     }
 
-    public HashMap<String, CV> getCvList() {
+    public ListView<String> getCvList() {
         return cvList;
     }
 
@@ -123,9 +108,6 @@ public class MainController implements Initializable {
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
 
-
-        CVs.getItems().add("CV1"); // CV İÇİN STATİK BİR ÖRNEK EKLEDİM.
-        CVs.getItems().add("CV2"); // CV İÇİN GİRİLEN TİTLE PDF NAME OLMALI
         pullFiles();
     }
 
@@ -171,34 +153,24 @@ public class MainController implements Initializable {
             addScene = scene1;
             addStage.setScene(addScene);
             addStage.show();
-
-
-
         }catch(Exception e){
             e.printStackTrace();
         }
-
-
     }
     @FXML
     public void openShowCV() {
-        CVs.getItems().remove(CVs.getSelectionModel().getSelectedItem());
+        // needs to show both created and imported cvs
         Desktop desktop = Desktop.getDesktop();
         try {
-            desktop.open(new java.io.File("C:\\Users\\erdem\\Desktop\\CV.pdf")); //HEPSİNİN AYNI YERDE OLMASI GEREKİYOR.
+            //desktop.open(new java.io.File("")); //irrelevant path.
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //TEKRAR VERİLERİN ÇEKİLMESİ GEREKİYOR BURADA. LİSTENİN GÜNCELLENMESİ İÇİN...
-
-
     }
 
     @FXML
-    private void openButtonClick(ActionEvent event) throws IOException {
-
-        File fileToOpen = new File("./././pdfs/"+pdfList.getSelectionModel().getSelectedItem());
+    private void openButtonClick() throws IOException {
+        File fileToOpen = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
 
         if(!fileToOpen.exists()){
             String alertText = "File does not exist!";
@@ -215,10 +187,12 @@ public class MainController implements Initializable {
         alert.setContentText(contentText);
         alert.show();
     }
-    private   void pullFiles(){
-        File folder = new File("./././pdfs/");
+    private void pullFiles(){
+        File folder = new File("../resources/PDFs/");
         File[] listOfFiles = folder.listFiles();
         pdfList.getItems().clear();
+        if(listOfFiles == null)
+            return;
         for(File file : listOfFiles){
             if(file.isFile()){
                 pdfList.getItems().add(file.getName());
@@ -226,31 +200,23 @@ public class MainController implements Initializable {
         }
     }
     private static void copyFileUsingStream(File source, File dest) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            os = new FileOutputStream(dest);
+        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = is.read(buffer)) > 0) {
                 os.write(buffer, 0, length);
             }
-        } finally {
-            is.close();
-            os.close();
         }
     }
-
     @FXML
-    private void addButtonClick(ActionEvent event) throws IOException {
+    private void addButtonClick() throws IOException {
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF (*.PDF, *.pdf)", "*.pdf","*.PDF"));
         File f = fc.showOpenDialog(null);
 
         if(f!=null){
             File src = new File(f.getPath());
-            File dest = new File("./././pdfs/"+f.getName());
+            File dest = new File("../resources/PDFs/"+f.getName());
             if (dest.exists()){
                 String alertText = "File already exist!";
                 Alerting(alertText);
@@ -260,10 +226,9 @@ public class MainController implements Initializable {
             }
         }
     }
-
     @FXML
-    private void deleteButtonClick(ActionEvent event) throws  IOException{
-        File fileToDelete = new File("./././pdfs/"+pdfList.getSelectionModel().getSelectedItem());
+    private void deleteButtonClick(ActionEvent event){
+        File fileToDelete = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
         if(!fileToDelete.exists()){
             String alertText = "File does not exist!";
             Alerting(alertText);
@@ -273,20 +238,40 @@ public class MainController implements Initializable {
         }
         pullFiles();
     }
-
-
-
-
     @FXML
     public void deleteCV(){
-        String s  =listView.getSelectionModel().getSelectedItem();
-        listView.getItems().remove(s);
-        for (int i = 0; i < cvList.keySet().size(); i++) {
-            String key = (String) cvList.keySet().toArray()[i];
-            if(s.equals(key)){
-                cvList.remove(key);
+        // delete selected cv from listview and data structure that holds the selected cv
+        String s  =cvList.getSelectionModel().getSelectedItem();
+        if(s.equals("")) {
+            return ;
+        }
+        cvList.getItems().remove(s);
+        cvMap.remove(s);
+
+    }
+    @FXML
+    public void openEditScreen(){    // If selected CV exist edit screen openable
+        try{
+            String title = cvList.getSelectionModel().getSelectedItem();
+            CV cv = checkCV(title);
+            if(cv==null){
+                return;
             }
+            Stage stage = new Stage();
+            stage.setScene(cv.getScene1());
+            stage.show();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
-
+    public CV checkCV(String s){ //Checking CV is exist if exist return selected CV otherwise return null
+        if(s!= null){
+            for (String key : cvMap.keySet()) {
+                if(key.equals(s)){
+                    return cvMap.get(key);
+                }
+            }
+        }
+        return null;
+    }
 }

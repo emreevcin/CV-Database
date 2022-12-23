@@ -55,37 +55,25 @@ public class Controller_S2_WE implements Initializable {
     public void init (MainController mainController){
         setMainController(mainController);
     }
-
+    @FXML
     public void next(){
         try{
             Scene scene3 = this.getMainController().getSceneList().get(2);
             this.getMainController().getAddStage().setScene(scene3);
-
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
     }
-
-
+    @FXML
     public void back(){
       try{
-
           Scene scene1 = this.getMainController().getSceneList().get(0);
           this.getMainController().getAddStage().setScene(scene1);
-
-
         }catch(Exception e){
             e.printStackTrace();
         }
 
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
