@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="415.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
+<AnchorPane prefHeight="415.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Recomendation" />
       <Separator layoutX="14.0" layoutY="33.0" prefHeight="0.0" prefWidth="577.0" />
@@ -31,7 +31,7 @@
       <TextArea layoutX="17.0" layoutY="308.0" prefHeight="68.0" prefWidth="577.0" />
       <ButtonBar layoutX="394.0" layoutY="376.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#back" text="Previous" />
+          <Button mnemonicParsing="false" onAction="#back" text="Back" />
             <Button mnemonicParsing="false" onAction="#submit" text="Save" />
         </buttons>
       </ButtonBar>

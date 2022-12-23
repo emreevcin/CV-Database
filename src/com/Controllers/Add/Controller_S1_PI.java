@@ -1,6 +1,5 @@
 package com.Controllers.Add;
 
-import com.Classes.DatabaseConnection;
 import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.event.ActionEvent;
@@ -10,7 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -19,9 +20,6 @@ import java.util.ResourceBundle;
 
 public class Controller_S1_PI implements Initializable {
 
-    DatabaseConnection d = new DatabaseConnection();
-    // yeri değiştirilebilir deneme amaçlı burada
-
     private MainController mainController ;
     private Main main ;
 
@@ -29,10 +27,12 @@ public class Controller_S1_PI implements Initializable {
 
     @FXML
     private Button cancelButton;
-
-//    @FXML
-//    private TextArea careerObjectiveTA;
-    // TEXTAREA initialize edilince hata veriyor
+    @FXML
+    private ImageView personImageView;
+    @FXML
+    private Button loadPhotoButton;
+    @FXML
+    private TextArea careerObjectiveTA;
 
     @FXML
     private TextField cityTF;
@@ -54,7 +54,6 @@ public class Controller_S1_PI implements Initializable {
 
     @FXML
     private Button addButton;
-    // DATABASE testi için kullanılıyor değişecek
 
     @FXML
     private TextField phoneTF;
@@ -77,20 +76,6 @@ public class Controller_S1_PI implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    // bu metodun yeri nerde ve nasıl olacağı konuşulcak
-    @FXML
-    void addCVs(ActionEvent event) {
-        d.addCV(firstNameTF.getText(), lastNameTF.getText(), titleTF.getText(),
-                emailTF.getText(), phoneTF.getText(), cityTF.getText(), countryTF.getText());
-        firstNameTF.setText("");
-        lastNameTF.setText("");
-        titleTF.setText("");
-        emailTF.setText("");
-        phoneTF.setText("");
-        cityTF.setText("");
-        countryTF.setText("");
     }
 
     public Scene getScene() {
@@ -136,5 +121,8 @@ public class Controller_S1_PI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void loadPhoto() {
     }
 }

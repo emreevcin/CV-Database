@@ -7,6 +7,15 @@ public class DatabaseConnection {
     private final String fileName;
     private Connection conn;
     private PreparedStatement insertSQL;
+    private PreparedStatement insertSQLPersonal;
+    private PreparedStatement insertSQLWork;
+    private PreparedStatement insertSQLEducation;
+    private PreparedStatement insertSQLProject;
+    private PreparedStatement insertSQLCertificate;
+    private PreparedStatement insertSQLSkill;
+    private PreparedStatement insertSQLRecommendation;
+    private PreparedStatement insertSQLOther;
+    private PreparedStatement insertSQLTags;
     private PreparedStatement selectSQL;
 
     public DatabaseConnection() {
@@ -21,43 +30,284 @@ public class DatabaseConnection {
 
             if (firstRun) {
                 Statement stat = conn.createStatement();
-                stat.executeUpdate("create table cvs(" +
-                        "id integer primary key ," +
-                        "firstName text," +
-                        "lastName text," +
-                        "title text," +
-                        "email text," +
-                        "phone text," +
-                        "city text," +
-                        "country text);");
+                Statement statPersonal = conn.createStatement();
+                Statement statWork = conn.createStatement();
+                Statement statEducation = conn.createStatement();
+                Statement statProject = conn.createStatement();
+                Statement statCertificate = conn.createStatement();
+                Statement statSkill = conn.createStatement();
+                Statement statRecommendation = conn.createStatement();
+                Statement statOther = conn.createStatement();
+                Statement statTag = conn.createStatement();
+
+                stat.executeUpdate("CREATE TABLE cvs(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_name TEXT UNIQUE NOT NULL, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statPersonal.executeUpdate("CREATE TABLE people(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "image_url TEXT, " +
+                        "first_name TEXT, " +
+                        "last_name TEXT, " +
+                        "title TEXT, " +
+                        "email TEXT, " +
+                        "phone TEXT, " +
+                        "city TEXT, " +
+                        "country TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statWork.executeUpdate("CREATE TABLE works(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "occupation TEXT, " +
+                        "employer TEXT, " +
+                        "city TEXT, " +
+                        "country TEXT, " +
+                        "starting_date BLOB, " +
+                        "ending_date BLOB, " +
+                        "ongoing BLOB, " +
+                        "activities_responsibilities TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statEducation.executeUpdate("CREATE TABLE educations(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "institution TEXT, " +
+                        "department TEXT, " +
+                        "gpa REAL, " +
+                        "country TEXT, " +
+                        "starting_date BLOB, " +
+                        "ending_date BLOB, " +
+                        "ongoing BLOB, " +
+                        "activities_responsibilities TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statCertificate.executeUpdate("CREATE TABLE certificates(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "education_name TEXT, " +
+                        "company TEXT, " +
+                        "verified_date BLOB, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statSkill.executeUpdate("CREATE TABLE skills(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "mother_tongue TEXT, " +
+                        "other_languages TEXT, " +
+                        "soft_skills TEXT, " +
+                        "hard_skills TEXT, " +
+                        "hobbies_interests TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statProject.executeUpdate("CREATE TABLE projects(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "title TEXT, " +
+                        "starting_date BLOB, " +
+                        "ending_date BLOB, " +
+                        "ongoing BLOB, " +
+                        "description TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statRecommendation.executeUpdate("CREATE TABLE recommendations(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "name_ TEXT, " +
+                        "role_ TEXT, " +
+                        "email TEXT, " +
+                        "phone TEXT, " +
+                        "description TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statOther.executeUpdate("CREATE TABLE others(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "header TEXT, " +
+                        "title TEXT, " +
+                        "description TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statTag.executeUpdate("CREATE TABLE tags(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "tag_name TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
             }
 
-            // tek tek almak mantıklı mı? nasıl bir iyileşme yapılabilir konuşulacak
-            // career objective hata veriyor şimdilik onsuz test ediyorum
+            insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
 
-            insertSQL = conn.prepareStatement("insert into cvs (firstName, " +
-                    "lastName, title, email, " +
-                    "phone, city, country) values (?, ?, ?, ?, ?, ?, ?)");
+            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, image_url, first_name, last_name, title, " +
+                    "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
-            selectSQL = conn.prepareStatement("select * from cvs " +
-                    "order by title;");
+            insertSQLWork = conn.prepareStatement("INSERT INTO  works(cv_id, occupation, employer, city, country, " +
+                    "starting_date, ending_date, ongoing, activities_responsibilities) values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+
+            insertSQLEducation = conn.prepareStatement("INSERT INTO  educations(cv_id, institution, department, gpa, starting_date, " +
+                    "ending_date, ongoing) values (?, ?, ?, ?, ?, ?, ?);");
+
+            insertSQLCertificate = conn.prepareStatement("INSERT INTO  certificates(cv_id, education_name, company, verified_date) " +
+                    "values (?, ?, ?, ?);");
+
+            insertSQLSkill = conn.prepareStatement("INSERT INTO  skills(cv_id, mother_tongue, other_languages, soft_skills, hard_skills, " +
+                    "hobbies_interests) values (?, ?, ?, ?, ?, ?);");
+
+            insertSQLProject = conn.prepareStatement("INSERT INTO  projects(cv_id, title, starting_date, ending_date, ongoing, " +
+                    "description) values (?, ?, ?, ?, ?, ?);");
+
+            insertSQLRecommendation = conn.prepareStatement("INSERT INTO  recommendations(cv_id, name_, role_, email, phone, " +
+                    "description) values (?, ?, ?, ?, ?, ?);");
+
+            insertSQLOther = conn.prepareStatement("INSERT INTO  others(cv_id, header, title, description) " +
+                    "values (?, ?, ?, ?);");
+
+            insertSQLTags = conn.prepareStatement("INSERT INTO  tags(tag_name) values (?);");
+
+
+            selectSQL = conn.prepareStatement("SELECT * FROM cvs ORDER BY created_at;");
+
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void addCV(String firstName , String lastName, String title ,
-                      String email , String phone,
-                      String city , String country ) {
+    public void addCV(String firstName , String lastName) {
+        String cvName = firstName + "_" + lastName + "_CV";
         try {
-            insertSQL.setString(1, firstName);
-            insertSQL.setString(2, lastName);
-            insertSQL.setString(3, title);
-            insertSQL.setString(4, email);
-            insertSQL.setString(5, phone);
-            insertSQL.setString(6, city);
-            insertSQL.setString(7, country);
+            insertSQL.setString(1, cvName);
             insertSQL.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addPerson(int cvId, String imageUrl, String firstName, String lastName, String title,
+                          String email, String phone, String city, String country) {
+        try {
+            insertSQLPersonal.setInt(1, cvId);
+            insertSQLPersonal.setString(2, imageUrl);
+            insertSQLPersonal.setString(3, firstName);
+            insertSQLPersonal.setString(4, lastName);
+            insertSQLPersonal.setString(5, title);
+            insertSQLPersonal.setString(6, email);
+            insertSQLPersonal.setString(7, phone);
+            insertSQLPersonal.setString(8, city);
+            insertSQLPersonal.setString(9, country);
+            insertSQLPersonal.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addWork(int cvId, String occupation, String employer, String city, String country,
+                        Date startingDate, Date endingDate, boolean ongoing, String activitiesResponsibilities) {
+        try {
+            insertSQLWork.setInt(1, cvId);
+            insertSQLWork.setString(2, occupation);
+            insertSQLWork.setString(3, employer);
+            insertSQLWork.setString(4, city);
+            insertSQLWork.setString(5, country);
+            insertSQLWork.setDate(6, startingDate);
+            insertSQLWork.setDate(7, endingDate);
+            insertSQLWork.setBoolean(8, ongoing);
+            insertSQLWork.setString(9, activitiesResponsibilities);
+            insertSQLWork.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addEducation(int cvId, String institution, String department, double gpa, Date startingDate,
+                             Date endingDate, boolean ongoing, String activitiesResponsibilities) {
+        try {
+            insertSQLEducation.setInt(1, cvId);
+            insertSQLEducation.setString(2, institution);
+            insertSQLEducation.setString(3, department);
+            insertSQLEducation.setDouble(4, gpa);
+            insertSQLEducation.setDate(5, startingDate);
+            insertSQLEducation.setDate(6, endingDate);
+            insertSQLEducation.setBoolean(7, ongoing);
+            insertSQLEducation.setString(8, activitiesResponsibilities);
+            insertSQLEducation.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addCertificates(int cvId, String educationName, String company, Date verifiedDate) {
+        try {
+            insertSQLCertificate.setInt(1, cvId);
+            insertSQLCertificate.setString(2, educationName);
+            insertSQLCertificate.setString(3, company);
+            insertSQLCertificate.setDate(4, verifiedDate);
+            insertSQLCertificate.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addSkills(int cvId, String motherTongue, String otherLanguages, String softSkills, String hardSkills,
+                          String hobbies_interests) {
+        try {
+            insertSQLSkill.setInt(1, cvId);
+            insertSQLSkill.setString(2, motherTongue);
+            insertSQLSkill.setString(3, otherLanguages);
+            insertSQLSkill.setString(4, softSkills);
+            insertSQLSkill.setString(5, hardSkills);
+            insertSQLSkill.setString(6, hobbies_interests);
+            insertSQLSkill.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addProjects(int cvId, String title, Date startingDate, Date endingDate, Boolean ongoing,
+                            String description) {
+        try {
+            insertSQLProject.setInt(1, cvId);
+            insertSQLProject.setString(2, title);
+            insertSQLProject.setDate(3, startingDate);
+            insertSQLProject.setDate(4, endingDate);
+            insertSQLProject.setBoolean(5, ongoing);
+            insertSQLProject.setString(6, description);
+            insertSQLProject.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addRecommendations(int cvId, String name, String role, String email, String phone,
+                                   String description) {
+        try {
+            insertSQLRecommendation.setInt(1, cvId);
+            insertSQLRecommendation.setString(2, name);
+            insertSQLRecommendation.setString(3, role);
+            insertSQLRecommendation.setString(4, email);
+            insertSQLRecommendation.setString(5, phone);
+            insertSQLRecommendation.setString(6, description);
+            insertSQLRecommendation.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addOthers(int cvId, String header, String title, String description) {
+        try {
+            insertSQLOther.setInt(1, cvId);
+            insertSQLOther.setString(2, header);
+            insertSQLOther.setString(3, title);
+            insertSQLOther.setString(4, description);
+            insertSQLOther.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addTags(String tagName) {
+        try {
+            insertSQLTags.setString(1, tagName);
+            insertSQLTags.execute();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -76,16 +326,3 @@ public class DatabaseConnection {
 //    }
 
 }
-
-
-
-/*
-    genel durumlar:
-    dynamic olması uygulamanın büyük değişiklikler gerektiyior birlikte düşünmek lazım
-    scene geçişlerinin tamamlanması lazım ilerleyebilmem için
-    zorunlu bilgi girişleri tutmak ister miyiz ona göre db ayarlaması gerekebilir
-    kullanıcının gördüğü ama girmek istemediği kısımlar
-    kullanıcının görmediği ve ekstra eklemek istediği alanlar
-    bunlar ayarlanması lazım
-    filter search vb. komutlar database tarafından implement edilebilir onları nasıl edicez?
- */

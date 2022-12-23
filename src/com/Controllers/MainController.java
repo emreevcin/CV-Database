@@ -1,6 +1,7 @@
 package com.Controllers;
 
 import com.Classes.CV;
+import com.Classes.DatabaseConnection;
 import com.Classes.Main;
 import com.Controllers.Add.*;
 import javafx.fxml.FXML;
@@ -21,6 +22,12 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
+    DatabaseConnection d = new DatabaseConnection();
+
+    public DatabaseConnection getD() {
+        return d;
+    }
 
     private Main main ;
 

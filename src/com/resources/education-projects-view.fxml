@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
    <children>
       <Label layoutX="14.0" layoutY="6.0" text="Education" />
       <Separator layoutX="11.0" layoutY="22.0" prefHeight="0.0" prefWidth="578.0" />
@@ -40,7 +40,7 @@
       <TextArea layoutX="17.0" layoutY="304.0" prefHeight="49.0" prefWidth="572.0" />
       <ButtonBar layoutX="388.0" layoutY="353.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#back" text="Previous" />
+          <Button mnemonicParsing="false" onAction="#back" text="Back" />
             <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
         </buttons>
       </ButtonBar>

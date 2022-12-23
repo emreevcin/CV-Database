@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="417.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
    <children>
       <Label layoutX="164.0" layoutY="14.0" text="Personal Information" />
@@ -38,5 +40,11 @@
       <Button layoutX="39.0" layoutY="369.0" mnemonicParsing="false" text="Add" />
       <Label layoutX="168.0" layoutY="94.0" text="Title" />
       <TextField layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
+      <TextArea fx:id="careerObjectiveTA" layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
+      <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imgs/sample_avatar.jpg" />
+         </image></ImageView>
+      <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
    </children>
 </AnchorPane>
