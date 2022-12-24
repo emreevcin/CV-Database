@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -19,7 +21,34 @@ public class Controller_S4_CS implements Initializable {
     private Scene scene ;
 
     @FXML
+    private Button backButton;
+
+    @FXML
+    private DatePicker certificateDate;
+
+    @FXML
+    private TextField companyTF;
+
+    @FXML
+    private TextField educationTF;
+
+    @FXML
+    private TextField hardTF;
+
+    @FXML
+    private TextField motherTF;
+
+    @FXML
     private Button nextButton;
+
+    @FXML
+    private TextField otherTF;
+
+    @FXML
+    private TextField softTF;
+
+    @FXML
+    private TextField titleTF;
 
     public Scene getScene() {
         return scene;
@@ -50,6 +79,14 @@ public class Controller_S4_CS implements Initializable {
     }
     public void next(){
         try{
+            this.getMainController().getInformation().put("education", educationTF.getText());
+            this.getMainController().getInformation().put("company", companyTF.getText());
+            this.getMainController().getInformation().put("dateC", certificateDate.getValue().toString());
+            this.getMainController().getInformation().put("mother", motherTF.getText());
+            this.getMainController().getInformation().put("otherLanguage", otherTF.getText());
+            this.getMainController().getInformation().put("softSkills", softTF.getText());
+            this.getMainController().getInformation().put("hardSkills", hardTF.getText());
+            this.getMainController().getInformation().put("descriptionHI", titleTF.getText());
             Scene scene5 = this.getMainController().getSceneList().get(4);
             this.getMainController().getAddStage().setScene(scene5);
 

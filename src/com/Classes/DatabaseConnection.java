@@ -52,6 +52,7 @@ public class DatabaseConnection {
                         "first_name TEXT, " +
                         "last_name TEXT, " +
                         "title TEXT, " +
+                        "career_objective TEXT, " +
                         "email TEXT, " +
                         "phone TEXT, " +
                         "city TEXT, " +
@@ -77,11 +78,9 @@ public class DatabaseConnection {
                         "institution TEXT, " +
                         "department TEXT, " +
                         "gpa REAL, " +
-                        "country TEXT, " +
                         "starting_date BLOB, " +
                         "ending_date BLOB, " +
                         "ongoing BLOB, " +
-                        "activities_responsibilities TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statCertificate.executeUpdate("CREATE TABLE certificates(" +
@@ -138,8 +137,8 @@ public class DatabaseConnection {
 
             insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
 
-            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, image_url, first_name, last_name, title, " +
-                    "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, image_url, first_name, last_name, title, career_objective, " +
+                    "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
             insertSQLWork = conn.prepareStatement("INSERT INTO  works(cv_id, occupation, employer, city, country, " +
                     "starting_date, ending_date, ongoing, activities_responsibilities) values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -182,7 +181,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void addPerson(int cvId, String imageUrl, String firstName, String lastName, String title,
+    public void addPerson(int cvId, String imageUrl, String firstName, String lastName, String title, String careerObjective,
                           String email, String phone, String city, String country) {
         try {
             insertSQLPersonal.setInt(1, cvId);
@@ -190,10 +189,11 @@ public class DatabaseConnection {
             insertSQLPersonal.setString(3, firstName);
             insertSQLPersonal.setString(4, lastName);
             insertSQLPersonal.setString(5, title);
-            insertSQLPersonal.setString(6, email);
-            insertSQLPersonal.setString(7, phone);
-            insertSQLPersonal.setString(8, city);
-            insertSQLPersonal.setString(9, country);
+            insertSQLPersonal.setString(6, careerObjective);
+            insertSQLPersonal.setString(7, email);
+            insertSQLPersonal.setString(8, phone);
+            insertSQLPersonal.setString(9, city);
+            insertSQLPersonal.setString(10, country);
             insertSQLPersonal.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -201,16 +201,16 @@ public class DatabaseConnection {
     }
 
     public void addWork(int cvId, String occupation, String employer, String city, String country,
-                        Date startingDate, Date endingDate, boolean ongoing, String activitiesResponsibilities) {
+                        String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
             insertSQLWork.setInt(1, cvId);
             insertSQLWork.setString(2, occupation);
             insertSQLWork.setString(3, employer);
             insertSQLWork.setString(4, city);
             insertSQLWork.setString(5, country);
-            insertSQLWork.setDate(6, startingDate);
-            insertSQLWork.setDate(7, endingDate);
-            insertSQLWork.setBoolean(8, ongoing);
+            insertSQLWork.setString(6, startingDate);
+            insertSQLWork.setString(7, endingDate);
+            insertSQLWork.setString(8, ongoing);
             insertSQLWork.setString(9, activitiesResponsibilities);
             insertSQLWork.execute();
         } catch (SQLException e) {
@@ -218,29 +218,28 @@ public class DatabaseConnection {
         }
     }
 
-    public void addEducation(int cvId, String institution, String department, double gpa, Date startingDate,
-                             Date endingDate, boolean ongoing, String activitiesResponsibilities) {
+    public void addEducation(int cvId, String institution, String department, String gpa, String startingDate,
+                             String endingDate, String ongoing, String description) {
         try {
             insertSQLEducation.setInt(1, cvId);
             insertSQLEducation.setString(2, institution);
             insertSQLEducation.setString(3, department);
-            insertSQLEducation.setDouble(4, gpa);
-            insertSQLEducation.setDate(5, startingDate);
-            insertSQLEducation.setDate(6, endingDate);
-            insertSQLEducation.setBoolean(7, ongoing);
-            insertSQLEducation.setString(8, activitiesResponsibilities);
+            insertSQLEducation.setString(4, gpa);
+            insertSQLEducation.setString(5, startingDate);
+            insertSQLEducation.setString(6, endingDate);
+            insertSQLEducation.setString(7, ongoing);
             insertSQLEducation.execute();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void addCertificates(int cvId, String educationName, String company, Date verifiedDate) {
+    public void addCertificates(int cvId, String educationName, String company, String verifiedDate) {
         try {
             insertSQLCertificate.setInt(1, cvId);
             insertSQLCertificate.setString(2, educationName);
             insertSQLCertificate.setString(3, company);
-            insertSQLCertificate.setDate(4, verifiedDate);
+            insertSQLCertificate.setString(4, verifiedDate);
             insertSQLCertificate.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -262,14 +261,14 @@ public class DatabaseConnection {
         }
     }
 
-    public void addProjects(int cvId, String title, Date startingDate, Date endingDate, Boolean ongoing,
+    public void addProjects(int cvId, String title, String startingDate, String endingDate, String ongoing,
                             String description) {
         try {
             insertSQLProject.setInt(1, cvId);
             insertSQLProject.setString(2, title);
-            insertSQLProject.setDate(3, startingDate);
-            insertSQLProject.setDate(4, endingDate);
-            insertSQLProject.setBoolean(5, ongoing);
+            insertSQLProject.setString(3, startingDate);
+            insertSQLProject.setString(4, endingDate);
+            insertSQLProject.setString(5, ongoing);
             insertSQLProject.setString(6, description);
             insertSQLProject.execute();
         } catch (SQLException e) {

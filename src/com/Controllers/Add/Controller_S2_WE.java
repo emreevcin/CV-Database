@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -21,10 +21,35 @@ public class Controller_S2_WE implements Initializable {
     private Scene scene ;
 
 
-    @FXML private Button nextButton;
+    @FXML
+    private Button backButton;
 
+    @FXML
+    private TextField cityTF;
 
-    @FXML private Button backButton;
+    @FXML
+    private TextField countryTF;
+
+    @FXML
+    private TextField employerTF;
+
+    @FXML
+    private TextArea explanationTA;
+
+    @FXML
+    private DatePicker fromDate;
+
+    @FXML
+    private CheckBox isOngoing;
+
+    @FXML
+    private Button nextButton;
+
+    @FXML
+    private TextField occupationTF;
+
+    @FXML
+    private DatePicker toDate;
 
 
 
@@ -58,6 +83,14 @@ public class Controller_S2_WE implements Initializable {
     @FXML
     public void next(){
         try{
+            this.getMainController().getInformation().put("occupation", occupationTF.getText());
+            this.getMainController().getInformation().put("employer", employerTF.getText());
+            this.getMainController().getInformation().put("cityWE", cityTF.getText());
+            this.getMainController().getInformation().put("countryWE", countryTF.getText());
+            this.getMainController().getInformation().put("fromWE", fromDate.getValue().toString());
+            this.getMainController().getInformation().put("toWE", toDate.getValue().toString());
+            this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+            this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
             Scene scene3 = this.getMainController().getSceneList().get(2);
             this.getMainController().getAddStage().setScene(scene3);
         }catch (Exception e){

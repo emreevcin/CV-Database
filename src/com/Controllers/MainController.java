@@ -19,6 +19,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -42,6 +43,8 @@ public class MainController implements Initializable {
     private Scene scene3;
     private Scene scene4;
     private Scene scene5;
+
+    protected HashMap<String, String> information = new HashMap<>();
 
     private HashMap<String,CV> cvMap;
 
@@ -280,5 +283,34 @@ public class MainController implements Initializable {
             }
         }
         return null;
+    }
+
+
+    public Controller_S1_PI getController_s1_pi() {
+        return controller_s1_pi;
+    }
+
+    public Controller_S2_WE getController_s2_we() {
+        return controller_s2_we;
+    }
+
+    public Controller_S3_EP getController_s3_ep() {
+        return controller_s3_ep;
+    }
+
+    public Controller_S4_CS getController_s4_cs() {
+        return controller_s4_cs;
+    }
+
+    public Controller_S5_RO getController_s5_ro() {
+        return controller_s5_ro;
+    }
+
+    public HashMap<String, String> getInformation() {
+        return information;
+    }
+
+    public void setInformation(HashMap<String, String> information) {
+        this.information = information;
     }
 }

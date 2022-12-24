@@ -64,6 +64,14 @@ public class Controller_S1_PI implements Initializable {
     @FXML
     public void next(ActionEvent actionEvent) {
         try{
+            this.getMainController().getInformation().put("firstName", firstNameTF.getText());
+            this.getMainController().getInformation().put("lastName", lastNameTF.getText());
+            this.getMainController().getInformation().put("titlePI", titleTF.getText());
+            this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
+            this.getMainController().getInformation().put("emailPI", emailTF.getText());
+            this.getMainController().getInformation().put("phonePI", phoneTF.getText());
+            this.getMainController().getInformation().put("cityPI", cityTF.getText());
+            this.getMainController().getInformation().put("countryPI", countryTF.getText());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../resources/work-experience-view.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
