@@ -17,6 +17,7 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLOther;
     private PreparedStatement insertSQLTags;
     private PreparedStatement selectSQLCVID;
+    private PreparedStatement selectSQLCVName;
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -165,6 +166,8 @@ public class DatabaseConnection {
 
 
             selectSQLCVID = conn.prepareStatement("SELECT id FROM cvs ORDER BY id DESC LIMIT 1;");
+
+            selectSQLCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -319,6 +322,19 @@ public class DatabaseConnection {
             System.out.println(e);
         }
         return cvID;
+    }
+
+    public String getCVName() {
+        String cvName = "EMPTY";
+        try {
+            ResultSet rs = selectSQLCVName.executeQuery();
+            while (rs.next()) {
+                cvName = rs.getString("cv_name");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return cvName;
     }
 
 }

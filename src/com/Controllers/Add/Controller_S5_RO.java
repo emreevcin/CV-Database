@@ -164,7 +164,8 @@ public class Controller_S5_RO implements Initializable {
             scenes.add(this.getMainController().getSceneList().get(i));
         }
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
-        cv.setTitle("a");
+        String cvName = this.getMainController().getD().getCVName();
+        cv.setTitle(cvName);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
     }
