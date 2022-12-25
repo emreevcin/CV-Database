@@ -93,18 +93,13 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("otherAddition", otherTF.getText());
         this.getMainController().getInformation().put("titleAddition", titleTF.getText());
         this.getMainController().getInformation().put("descriptionAddition", descriptionOTA.getText());
-        ArrayList<Scene> scenes = new ArrayList<>();
-        for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {
-            scenes.add(this.getMainController().getSceneList().get(i));
-        }
-        CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
-        cv.setTitle("a");
-        this.getMainController().getCvList().getItems().add(cv.getTitle());
-        this.getMainController().getCvMap().put(cv.getTitle(), cv);
+
 
         this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
+        int cvID = this.getMainController().getD().getCVID();
 
-        this.getMainController().getD().addPerson(1, "imgurl",
+        this.getMainController().getD().addPerson(cvID,
+                "imgurl",
                 this.getMainController().getInformation().get("firstName"),
                 this.getMainController().getInformation().get("lastName"),
                 this.getMainController().getInformation().get("titlePI"),
@@ -114,7 +109,8 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("cityPI"),
                 this.getMainController().getInformation().get("countryPI"));
 
-        this.getMainController().getD().addWork(1, this.getMainController().getInformation().get("occupation"),
+        this.getMainController().getD().addWork(cvID,
+                this.getMainController().getInformation().get("occupation"),
                 this.getMainController().getInformation().get("employer"),
                 this.getMainController().getInformation().get("cityWE"),
                 this.getMainController().getInformation().get("countryWE"),
@@ -123,39 +119,54 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("ongoingWE"),
                 this.getMainController().getInformation().get("explanationWE"));
 
-        this.getMainController().getD().addEducation(1, this.getMainController().getInformation().get("institution"),
+        this.getMainController().getD().addEducation(cvID,
+                this.getMainController().getInformation().get("institution"),
                 this.getMainController().getInformation().get("department"),
                 this.getMainController().getInformation().get("gpa"),
                 this.getMainController().getInformation().get("fromE"),
                 this.getMainController().getInformation().get("toE"),
-                this.getMainController().getInformation().get("ongoingE"),
-                this.getMainController().getInformation().get("descriptionE"));
+                this.getMainController().getInformation().get("ongoingE"));
 
-        this.getMainController().getD().addProjects(1, this.getMainController().getInformation().get("titleP"),
+        this.getMainController().getD().addProjects(cvID,
+                this.getMainController().getInformation().get("titleP"),
                 this.getMainController().getInformation().get("fromP"),
                 this.getMainController().getInformation().get("toD"),
                 this.getMainController().getInformation().get("ongoingP"),
                 this.getMainController().getInformation().get("descriptionP"));
 
-        this.getMainController().getD().addCertificates(1, this.getMainController().getInformation().get("education"),
+        this.getMainController().getD().addCertificates(cvID,
+                this.getMainController().getInformation().get("education"),
                 this.getMainController().getInformation().get("company"),
                 this.getMainController().getInformation().get("dateC"));
 
-        this.getMainController().getD().addSkills(1, this.getMainController().getInformation().get("mother"),
+        this.getMainController().getD().addSkills(cvID,
+                this.getMainController().getInformation().get("mother"),
                 this.getMainController().getInformation().get("otherLanguage"),
                 this.getMainController().getInformation().get("softSkills"),
                 this.getMainController().getInformation().get("hardSkills"),
                 this.getMainController().getInformation().get("descriptionHI"));
 
-        this.getMainController().getD().addRecommendations(1, this.getMainController().getInformation().get("nameR"),
+        this.getMainController().getD().addRecommendations(cvID,
+                this.getMainController().getInformation().get("nameR"),
                 this.getMainController().getInformation().get("roleR"),
                 this.getMainController().getInformation().get("emailR"),
                 this.getMainController().getInformation().get("descriptionR"),
                 this.getMainController().getInformation().get("phoneR"));
 
-        this.getMainController().getD().addOthers(1, this.getMainController().getInformation().get("otherAddition"),
+        this.getMainController().getD().addOthers(cvID,
+                this.getMainController().getInformation().get("otherAddition"),
                 this.getMainController().getInformation().get("titleAddition"),
                 this.getMainController().getInformation().get("descriptionAddition"));
+
+
+        ArrayList<Scene> scenes = new ArrayList<>();
+        for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {
+            scenes.add(this.getMainController().getSceneList().get(i));
+        }
+        CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
+        cv.setTitle("a");
+        this.getMainController().getCvList().getItems().add(cv.getTitle());
+        this.getMainController().getCvMap().put(cv.getTitle(), cv);
     }
 
     @Override

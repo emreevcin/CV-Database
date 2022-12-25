@@ -16,7 +16,7 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLRecommendation;
     private PreparedStatement insertSQLOther;
     private PreparedStatement insertSQLTags;
-    private PreparedStatement selectSQL;
+    private PreparedStatement selectSQLCVID;
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -66,9 +66,9 @@ public class DatabaseConnection {
                         "employer TEXT, " +
                         "city TEXT, " +
                         "country TEXT, " +
-                        "starting_date BLOB, " +
-                        "ending_date BLOB, " +
-                        "ongoing BLOB, " +
+                        "starting_date TEXT, " +
+                        "ending_date TEXT, " +
+                        "ongoing TEXT, " +
                         "activities_responsibilities TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
@@ -77,10 +77,10 @@ public class DatabaseConnection {
                         "cv_id INTEGER REFERENCES cvs(id), " +
                         "institution TEXT, " +
                         "department TEXT, " +
-                        "gpa REAL, " +
-                        "starting_date BLOB, " +
-                        "ending_date BLOB, " +
-                        "ongoing BLOB, " +
+                        "gpa TEXT, " +
+                        "starting_date TEXT, " +
+                        "ending_date TEXT, " +
+                        "ongoing TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statCertificate.executeUpdate("CREATE TABLE certificates(" +
@@ -88,7 +88,7 @@ public class DatabaseConnection {
                         "cv_id INTEGER REFERENCES cvs(id), " +
                         "education_name TEXT, " +
                         "company TEXT, " +
-                        "verified_date BLOB, " +
+                        "verified_date TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statSkill.executeUpdate("CREATE TABLE skills(" +
@@ -105,9 +105,9 @@ public class DatabaseConnection {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id), " +
                         "title TEXT, " +
-                        "starting_date BLOB, " +
-                        "ending_date BLOB, " +
-                        "ongoing BLOB, " +
+                        "starting_date TEXT, " +
+                        "ending_date TEXT, " +
+                        "ongoing TEXT, " +
                         "description TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
@@ -164,7 +164,7 @@ public class DatabaseConnection {
             insertSQLTags = conn.prepareStatement("INSERT INTO  tags(tag_name) values (?);");
 
 
-            selectSQL = conn.prepareStatement("SELECT * FROM cvs ORDER BY created_at;");
+            selectSQLCVID = conn.prepareStatement("SELECT id FROM cvs ORDER BY id DESC LIMIT 1;");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -184,15 +184,7 @@ public class DatabaseConnection {
     public void addPerson(int cvId, String imageUrl, String firstName, String lastName, String title, String careerObjective,
                           String email, String phone, String city, String country) {
         try {
-            insertSQLPersonal.setInt(1, cvId);
-            insertSQLPersonal.setString(2, imageUrl);
-            insertSQLPersonal.setString(3, firstName);
-            insertSQLPersonal.setString(4, lastName);
-            insertSQLPersonal.setString(5, title);
-            insertSQLPersonal.setString(6, careerObjective);
-            insertSQLPersonal.setString(7, email);
-            insertSQLPersonal.setString(8, phone);
-            insertSQLPersonal.setString(9, city);
+            setCommonSQLCommand(cvId, imageUrl, firstName, lastName, title, careerObjective, email, phone, city, insertSQLPersonal);
             insertSQLPersonal.setString(10, country);
             insertSQLPersonal.execute();
         } catch (SQLException e) {
@@ -200,18 +192,22 @@ public class DatabaseConnection {
         }
     }
 
+    private void setCommonSQLCommand(int cvId, String imageUrl, String firstName, String lastName, String title, String careerObjective, String email, String phone, String city, PreparedStatement insertSQLPersonal) throws SQLException {
+        insertSQLPersonal.setInt(1, cvId);
+        insertSQLPersonal.setString(2, imageUrl);
+        insertSQLPersonal.setString(3, firstName);
+        insertSQLPersonal.setString(4, lastName);
+        insertSQLPersonal.setString(5, title);
+        insertSQLPersonal.setString(6, careerObjective);
+        insertSQLPersonal.setString(7, email);
+        insertSQLPersonal.setString(8, phone);
+        insertSQLPersonal.setString(9, city);
+    }
+
     public void addWork(int cvId, String occupation, String employer, String city, String country,
                         String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
-            insertSQLWork.setInt(1, cvId);
-            insertSQLWork.setString(2, occupation);
-            insertSQLWork.setString(3, employer);
-            insertSQLWork.setString(4, city);
-            insertSQLWork.setString(5, country);
-            insertSQLWork.setString(6, startingDate);
-            insertSQLWork.setString(7, endingDate);
-            insertSQLWork.setString(8, ongoing);
-            insertSQLWork.setString(9, activitiesResponsibilities);
+            setCommonSQLCommand(cvId, occupation, employer, city, country, startingDate, endingDate, ongoing, activitiesResponsibilities, insertSQLWork);
             insertSQLWork.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -219,7 +215,7 @@ public class DatabaseConnection {
     }
 
     public void addEducation(int cvId, String institution, String department, String gpa, String startingDate,
-                             String endingDate, String ongoing, String description) {
+                             String endingDate, String ongoing) {
         try {
             insertSQLEducation.setInt(1, cvId);
             insertSQLEducation.setString(2, institution);
@@ -312,16 +308,17 @@ public class DatabaseConnection {
         }
     }
 
-//    public void listContacts() {
-//        try {
-//            ResultSet rs = selectSQL.executeQuery();
-//            while (rs.next()) {
-//                System.out.println(rs.getString("name") + ", "
-//                        + rs.getString("email"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//    }
+    public int getCVID() {
+        int cvID = 0;
+        try {
+            ResultSet rs = selectSQLCVID.executeQuery();
+            while (rs.next()) {
+                cvID = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return cvID;
+    }
 
 }

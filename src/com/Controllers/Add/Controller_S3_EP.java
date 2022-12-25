@@ -112,8 +112,6 @@ public class Controller_S3_EP implements Initializable {
     public void back(){
         Scene scene2 = this.getMainController().getSceneList().get(1);
         this.getMainController().getAddStage().setScene(scene2);
-
-
     }
 
     @Override
