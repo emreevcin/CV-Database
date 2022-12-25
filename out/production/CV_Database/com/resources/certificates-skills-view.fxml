@@ -13,31 +13,31 @@
       <Label layoutX="14.0" layoutY="6.0" text="Certificate" />
       <Separator layoutX="14.0" layoutY="25.0" prefHeight="0.0" prefWidth="577.0" />
       <Label layoutX="14.0" layoutY="28.0" text="Education Name" />
-      <TextField layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="580.0" promptText="Title of the certificate" />
+      <TextField fx:id="educationTF" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="580.0" promptText="Title of the certificate" />
       <Label layoutX="14.0" layoutY="70.0" text="Company" />
-      <TextField layoutX="14.0" layoutY="87.0" prefHeight="25.0" prefWidth="276.0" />
+      <TextField fx:id="companyTF" layoutX="14.0" layoutY="87.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="310.0" layoutY="70.0" text="Date" />
-      <DatePicker layoutX="310.0" layoutY="87.0" prefHeight="25.0" prefWidth="276.0" />
+      <DatePicker fx:id="certificateDate" layoutX="310.0" layoutY="87.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="14.0" layoutY="112.0" text="Language skills" />
       <Label layoutX="14.0" layoutY="131.0" text="Mother tongue" />
       <Separator layoutX="14.0" layoutY="128.0" prefHeight="3.0" prefWidth="577.0" />
-      <TextField layoutX="14.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
+      <TextField fx:id="motherTF" layoutX="14.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="310.0" layoutY="131.0" text="Other languages" />
-      <TextField layoutX="310.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
+      <TextField fx:id="otherTF" layoutX="310.0" layoutY="148.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="14.0" layoutY="173.0" text="Skills" />
-      <TextField layoutX="14.0" layoutY="209.0" prefHeight="25.0" prefWidth="276.0" />
+      <TextField fx:id="softTF" layoutX="14.0" layoutY="209.0" prefHeight="25.0" prefWidth="276.0" />
       <Separator layoutX="14.0" layoutY="189.0" prefHeight="3.0" prefWidth="577.0" />
       <Label layoutX="14.0" layoutY="192.0" text="Soft skills" />
-      <TextField layoutX="310.0" layoutY="209.0" prefHeight="25.0" prefWidth="276.0" />
+      <TextField fx:id="hardTF" layoutX="310.0" layoutY="209.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="310.0" layoutY="192.0" text="Hard skills" />
       <Label layoutX="14.0" layoutY="234.0" text="Hobbies and interests" />
       <Separator layoutX="14.0" layoutY="243.0" prefHeight="17.0" prefWidth="577.0" />
       <Label layoutX="14.0" layoutY="252.0" text="Title" />
-      <TextField layoutX="14.0" layoutY="269.0" prefHeight="25.0" prefWidth="577.0" promptText="Chess, listening music, etc." />
+      <TextField fx:id="titleTF" layoutX="14.0" layoutY="269.0" prefHeight="25.0" prefWidth="577.0" promptText="Chess, listening music, etc." />
       <Button layoutX="28.0" layoutY="300.0" mnemonicParsing="false" text="Add" />
       <ButtonBar layoutX="386.0" layoutY="293.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#back" text="Back" />
+          <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
             <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
         </buttons>
       </ButtonBar>

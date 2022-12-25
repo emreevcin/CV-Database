@@ -16,31 +16,31 @@
       <Separator layoutX="11.0" layoutY="22.0" prefHeight="0.0" prefWidth="578.0" />
       <Label layoutX="14.0" layoutY="25.0" />
       <Label layoutX="14.0" layoutY="25.0" text="Institution" />
-      <TextField layoutX="14.0" layoutY="42.0" prefHeight="25.0" prefWidth="578.0" promptText="Name of the education institution" />
+      <TextField fx:id="institutionTF" layoutX="14.0" layoutY="42.0" prefHeight="25.0" prefWidth="578.0" promptText="Name of the education institution" />
       <Label layoutX="14.0" layoutY="67.0" text="Department" />
-      <TextField layoutX="14.0" layoutY="84.0" prefHeight="25.0" prefWidth="578.0" />
+      <TextField fx:id="departmentTF" layoutX="14.0" layoutY="84.0" prefHeight="25.0" prefWidth="578.0" />
       <Label layoutX="14.0" layoutY="109.0" text="GPA" />
-      <TextField layoutX="14.0" layoutY="126.0" prefHeight="25.0" prefWidth="45.0" />
+      <TextField fx:id="gpaTF" layoutX="14.0" layoutY="126.0" prefHeight="25.0" prefWidth="45.0" />
       <Label layoutX="67.0" layoutY="130.0" text="/ 4.0" />
       <Label layoutX="127.0" layoutY="109.0" text="From" />
-      <DatePicker layoutX="127.0" layoutY="126.0" />
+      <DatePicker fx:id="fromDateE" layoutX="127.0" layoutY="126.0" />
       <Label layoutX="353.0" layoutY="109.0" text="To" />
-      <DatePicker layoutX="353.0" layoutY="126.0" />
-      <CheckBox layoutX="453.0" layoutY="159.0" mnemonicParsing="false" text="Ongoing" />
+      <DatePicker fx:id="toDateE" layoutX="353.0" layoutY="126.0" />
+      <CheckBox fx:id="isOngoingE" layoutX="453.0" layoutY="159.0" mnemonicParsing="false" text="Ongoing" />
       <Label layoutX="16.0" layoutY="168.0" text="Projects" />
       <Separator layoutX="14.0" layoutY="184.0" prefHeight="3.0" prefWidth="578.0" />
       <Label layoutX="14.0" layoutY="192.0" text="Title" />
-      <TextField layoutX="14.0" layoutY="209.0" prefHeight="25.0" prefWidth="578.0" />
+      <TextField fx:id="titleTF" layoutX="14.0" layoutY="209.0" prefHeight="25.0" prefWidth="578.0" />
       <Label layoutX="23.0" layoutY="237.0" text="From" />
-      <DatePicker layoutX="17.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
+      <DatePicker fx:id="fromDateP" layoutX="17.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
       <Label layoutX="316.0" layoutY="237.0" text="To" />
-      <DatePicker layoutX="316.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
-      <CheckBox layoutX="518.0" layoutY="279.0" mnemonicParsing="false" text="Ongoing" />
+      <DatePicker fx:id="toDateP" layoutX="316.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
+      <CheckBox fx:id="isOngoingP" layoutX="518.0" layoutY="279.0" mnemonicParsing="false" text="Ongoing" />
       <Label layoutX="19.0" layoutY="287.0" text="Description" />
-      <TextArea layoutX="17.0" layoutY="304.0" prefHeight="49.0" prefWidth="572.0" />
+      <TextArea fx:id="descriptionTA" layoutX="17.0" layoutY="304.0" prefHeight="49.0" prefWidth="572.0" />
       <ButtonBar layoutX="388.0" layoutY="353.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#back" text="Back" />
+          <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
             <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
         </buttons>
       </ButtonBar>
