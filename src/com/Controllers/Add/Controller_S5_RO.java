@@ -99,7 +99,7 @@ public class Controller_S5_RO implements Initializable {
         int cvID = this.getMainController().getD().getCVID();
 
         this.getMainController().getD().addPerson(cvID,
-                "imgurl",
+                this.getMainController().getInformation().get("photo"),
                 this.getMainController().getInformation().get("firstName"),
                 this.getMainController().getInformation().get("lastName"),
                 this.getMainController().getInformation().get("titlePI"),

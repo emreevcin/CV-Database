@@ -18,8 +18,9 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class Controller_S1_PI implements Initializable {
@@ -65,11 +66,14 @@ public class Controller_S1_PI implements Initializable {
     @FXML
     private TextField titleTF;
 
+    private ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
     @FXML
     public void next(ActionEvent actionEvent) {
         try{
             this.getMainController().getInformation().put("firstName", firstNameTF.getText());
             this.getMainController().getInformation().put("lastName", lastNameTF.getText());
+            this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
             this.getMainController().getInformation().put("titlePI", titleTF.getText());
             this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
             this.getMainController().getInformation().put("emailPI", emailTF.getText());
@@ -135,8 +139,10 @@ public class Controller_S1_PI implements Initializable {
 
     }
 
-    public void loadPhoto() {
+    public void loadPhoto() throws IOException {
         FileChooser fc = new FileChooser();
+
+        FileInputStream fis;
 
         FileChooser.ExtensionFilter extensionFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extensionFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
@@ -144,6 +150,14 @@ public class Controller_S1_PI implements Initializable {
         fc.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG);
 
         File file = fc.showOpenDialog(null);
+
+        fis = new FileInputStream(file);
+
+        byte[] buf = new byte[1024];
+        for (int readNum; (readNum = fis.read(buf)) != -1;) {
+            bos.write(buf, 0, readNum);
+        }
+        fis.close();
 
         Image image = new Image(file.getAbsolutePath());
 

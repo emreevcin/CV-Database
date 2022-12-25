@@ -184,10 +184,10 @@ public class DatabaseConnection {
         }
     }
 
-    public void addPerson(int cvId, String imageUrl, String firstName, String lastName, String title, String careerObjective,
+    public void addPerson(int cvId, String photo, String firstName, String lastName, String title, String careerObjective,
                           String email, String phone, String city, String country) {
         try {
-            setCommonSQLCommand(cvId, imageUrl, firstName, lastName, title, careerObjective, email, phone, city, insertSQLPersonal);
+            setCommonSQLCommand(cvId, photo, firstName, lastName, title, careerObjective, email, phone, city, insertSQLPersonal);
             insertSQLPersonal.setString(10, country);
             insertSQLPersonal.execute();
         } catch (SQLException e) {
