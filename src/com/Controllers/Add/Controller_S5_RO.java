@@ -9,8 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 
+import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -22,6 +25,9 @@ public class Controller_S5_RO implements Initializable {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private Button addCVButton;
 
     @FXML
     private TextArea descriptionOTA;
@@ -49,6 +55,8 @@ public class Controller_S5_RO implements Initializable {
 
     @FXML
     private TextField titleTF;
+
+    private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
     public Scene getScene() {
         return scene;
@@ -93,6 +101,7 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("otherAddition", otherTF.getText());
         this.getMainController().getInformation().put("titleAddition", titleTF.getText());
         this.getMainController().getInformation().put("descriptionAddition", descriptionOTA.getText());
+        this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
         this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
@@ -156,7 +165,8 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getD().addOthers(cvID,
                 this.getMainController().getInformation().get("otherAddition"),
                 this.getMainController().getInformation().get("titleAddition"),
-                this.getMainController().getInformation().get("descriptionAddition"));
+                this.getMainController().getInformation().get("descriptionAddition"),
+                this.getMainController().getInformation().get("originalFile"));
 
 
         ArrayList<Scene> scenes = new ArrayList<>();
@@ -173,5 +183,27 @@ public class Controller_S5_RO implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    @FXML
+    void loadCV() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        FileInputStream fis;
+
+        FileChooser.ExtensionFilter extensionFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
+        FileChooser.ExtensionFilter extensionFilterDOCX = new FileChooser.ExtensionFilter("DOCX files (*.docx)", "*.DOCX");
+
+        fileChooser.getExtensionFilters().addAll(extensionFilterPDF, extensionFilterDOCX);
+
+        File file = fileChooser.showOpenDialog(null);
+
+        fis = new FileInputStream(file);
+
+        byte[] buf = new byte[1024];
+        for (int readNum; (readNum = fis.read(buf)) != -1;) {
+            bos.write(buf, 0, readNum);
+        }
+        fis.close();
     }
 }

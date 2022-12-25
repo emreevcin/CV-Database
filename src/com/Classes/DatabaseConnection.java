@@ -128,6 +128,7 @@ public class DatabaseConnection {
                         "header TEXT, " +
                         "title TEXT, " +
                         "description TEXT, " +
+                        "original_file BLOB, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statTag.executeUpdate("CREATE TABLE tags(" +
@@ -159,8 +160,8 @@ public class DatabaseConnection {
             insertSQLRecommendation = conn.prepareStatement("INSERT INTO  recommendations(cv_id, name_, role_, email, phone, " +
                     "description) values (?, ?, ?, ?, ?, ?);");
 
-            insertSQLOther = conn.prepareStatement("INSERT INTO  others(cv_id, header, title, description) " +
-                    "values (?, ?, ?, ?);");
+            insertSQLOther = conn.prepareStatement("INSERT INTO  others(cv_id, header, title, description, original_file) " +
+                    "values (?, ?, ?, ?, ?);");
 
             insertSQLTags = conn.prepareStatement("INSERT INTO  tags(tag_name) values (?);");
 
@@ -290,12 +291,13 @@ public class DatabaseConnection {
         }
     }
 
-    public void addOthers(int cvId, String header, String title, String description) {
+    public void addOthers(int cvId, String header, String title, String description, String originalFile) {
         try {
             insertSQLOther.setInt(1, cvId);
             insertSQLOther.setString(2, header);
             insertSQLOther.setString(3, title);
             insertSQLOther.setString(4, description);
+            insertSQLOther.setString(5, originalFile);
             insertSQLOther.execute();
         } catch (SQLException e) {
             System.out.println(e);

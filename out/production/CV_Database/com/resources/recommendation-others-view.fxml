@@ -35,6 +35,6 @@
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#submit" text="Save" />
         </buttons>
       </ButtonBar>
-      <Button layoutX="23.0" layoutY="384.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addCVButton" layoutX="23.0" layoutY="384.0" mnemonicParsing="false" onAction="#loadCV" text="Load CV" />
    </children>
 </AnchorPane>
