@@ -11,10 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -132,5 +136,21 @@ public class Controller_S1_PI implements Initializable {
     }
 
     public void loadPhoto() {
+        FileChooser fc = new FileChooser();
+
+        FileChooser.ExtensionFilter extensionFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extensionFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+
+        fc.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG);
+
+        File file = fc.showOpenDialog(null);
+
+        Image image = new Image(file.getAbsolutePath());
+
+        personImageView.setImage(image);
+        personImageView.setFitHeight(100);
+        personImageView.setPreserveRatio(true);
+        personImageView.setSmooth(true);
+        personImageView.setCache(true);
     }
 }

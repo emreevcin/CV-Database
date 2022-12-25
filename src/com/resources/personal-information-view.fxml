@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -41,10 +40,7 @@
       <Label layoutX="168.0" layoutY="94.0" text="Title" />
       <TextField fx:id="titleTF" layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
       <TextArea fx:id="careerObjectiveTA" layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
-      <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@imgs/sample_avatar.jpg" />
-         </image></ImageView>
+      <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
    </children>
 </AnchorPane>

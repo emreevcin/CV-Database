@@ -49,7 +49,7 @@ public class DatabaseConnection {
                 statPersonal.executeUpdate("CREATE TABLE people(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id), " +
-                        "image_url TEXT, " +
+                        "photo BLOB, " +
                         "first_name TEXT, " +
                         "last_name TEXT, " +
                         "title TEXT, " +
@@ -138,7 +138,7 @@ public class DatabaseConnection {
 
             insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
 
-            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, image_url, first_name, last_name, title, career_objective, " +
+            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, photo, first_name, last_name, title, career_objective, " +
                     "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
             insertSQLWork = conn.prepareStatement("INSERT INTO  works(cv_id, occupation, employer, city, country, " +
