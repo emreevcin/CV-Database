@@ -251,7 +251,7 @@ public class MainController implements Initializable {
     @FXML
     public void deleteCV(){
         // delete selected cv from listview and data structure that holds the selected cv
-        String s  =cvList.getSelectionModel().getSelectedItem();
+        String s = cvList.getSelectionModel().getSelectedItem();
         if(s.equals("")) {
             return ;
         }

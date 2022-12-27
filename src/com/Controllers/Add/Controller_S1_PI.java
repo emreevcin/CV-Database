@@ -80,13 +80,9 @@ public class Controller_S1_PI implements Initializable {
             this.getMainController().getInformation().put("phonePI", phoneTF.getText());
             this.getMainController().getInformation().put("cityPI", cityTF.getText());
             this.getMainController().getInformation().put("countryPI", countryTF.getText());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../resources/work-experience-view.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = this.getMainController().getAddStage();
-            Controller_S2_WE controller_s2_we = loader.getController();
-            controller_s2_we.init(this.getMainController());
-            stage.setScene(scene);
+
+            Scene scene2 = this.getMainController().getSceneList().get(1);
+            this.getMainController().getAddStage().setScene(scene2);
 
 
         }catch (Exception e){
@@ -120,17 +116,6 @@ public class Controller_S1_PI implements Initializable {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    @FXML
-    public void next(){
-        try{
-            Scene scene2 = this.getMainController().getSceneList().get(1);
-            this.getMainController().getAddStage().setScene(scene2);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
 
