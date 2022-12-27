@@ -24,37 +24,13 @@ public class Controller_S5_RO implements Initializable {
     private Scene scene;
 
     @FXML
-    private Button backButton;
+    private Button backButton,addCVButton,saveButton;
 
     @FXML
-    private Button addCVButton;
-
+    private TextArea descriptionOTA,descriptionRTA;
     @FXML
-    private TextArea descriptionOTA;
+    private TextField emailTF,nameTF,otherTF,phoneTF,roleTF,titleTF;
 
-    @FXML
-    private TextArea descriptionRTA;
-
-    @FXML
-    private TextField emailTF;
-
-    @FXML
-    private TextField nameTF;
-
-    @FXML
-    private TextField otherTF;
-
-    @FXML
-    private TextField phoneTF;
-
-    @FXML
-    private TextField roleTF;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private TextField titleTF;
 
     private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 

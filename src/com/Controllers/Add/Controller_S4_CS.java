@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -21,34 +22,15 @@ public class Controller_S4_CS implements Initializable {
     private Scene scene ;
 
     @FXML
-    private Button backButton;
+    private Button backButton,nextButton;
 
     @FXML
     private DatePicker certificateDate;
 
     @FXML
-    private TextField companyTF;
+    private TextField companyTF,educationTF,hardTF,
+                      motherTF,otherTF,softTF,titleTF;
 
-    @FXML
-    private TextField educationTF;
-
-    @FXML
-    private TextField hardTF;
-
-    @FXML
-    private TextField motherTF;
-
-    @FXML
-    private Button nextButton;
-
-    @FXML
-    private TextField otherTF;
-
-    @FXML
-    private TextField softTF;
-
-    @FXML
-    private TextField titleTF;
 
     public Scene getScene() {
         return scene;
@@ -77,26 +59,66 @@ public class Controller_S4_CS implements Initializable {
     public void init (MainController mainController){
         setMainController(mainController);
     }
-    public void next(){
-        try{
-            this.getMainController().getInformation().put("education", educationTF.getText());
-            this.getMainController().getInformation().put("company", companyTF.getText());
+
+
+    private void AlertMethod(String contentText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("PROBLEM:");
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
+
+    //All things that need to be done when the scene is loaded
+    public void allInfo(boolean IncludeDate){
+        this.getMainController().getInformation().put("education", educationTF.getText());
+        this.getMainController().getInformation().put("company", companyTF.getText());
+        if(IncludeDate){
             this.getMainController().getInformation().put("dateC", certificateDate.getValue().toString());
-            this.getMainController().getInformation().put("mother", motherTF.getText());
-            this.getMainController().getInformation().put("otherLanguage", otherTF.getText());
-            this.getMainController().getInformation().put("softSkills", softTF.getText());
-            this.getMainController().getInformation().put("hardSkills", hardTF.getText());
-            this.getMainController().getInformation().put("descriptionHI", titleTF.getText());
-            Scene scene5 = this.getMainController().getSceneList().get(4);
-            this.getMainController().getAddStage().setScene(scene5);
-
-
-        }catch (Exception e){
-            e.printStackTrace();
         }
+        this.getMainController().getInformation().put("mother", motherTF.getText());
+        this.getMainController().getInformation().put("otherLanguage", otherTF.getText());
+        this.getMainController().getInformation().put("softSkills", softTF.getText());
+        this.getMainController().getInformation().put("hardSkills", hardTF.getText());
+        this.getMainController().getInformation().put("descriptionHI", titleTF.getText());
+        Scene scene5 = this.getMainController().getSceneList().get(4);
+        this.getMainController().getAddStage().setScene(scene5);
+    }
+
+
+
+    public void next() {
+        //If the date is not null and the education field is empty
+        if (certificateDate.getValue() != null && educationTF.getText().isEmpty() ){
+            AlertMethod ("Please fill in education name field and try again");
+        }
+        //If the date is not null and the education field is not empty
+        else if (certificateDate.getValue() != null && !educationTF.getText().isEmpty()){
+            allInfo(true);
+        }
+        //If the date is null and the education field is not empty
+        else if (certificateDate.getValue() == null && !educationTF.getText().isEmpty()){
+            allInfo(false);
+        }
+        else if (certificateDate.getValue() != null) {
+            try {
+                allInfo(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (certificateDate.getValue() == null) {
+            try {
+                allInfo(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
     public void back(){
+
         Scene scene3 = this.getMainController().getSceneList().get(2);
         this.getMainController().getAddStage().setScene(scene3);
     }

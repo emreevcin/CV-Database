@@ -22,34 +22,19 @@ public class Controller_S2_WE implements Initializable {
 
 
     @FXML
-    private Button backButton;
+    private Button backButton,nextButton;
 
     @FXML
-    private TextField cityTF;
-
-    @FXML
-    private TextField countryTF;
-
-    @FXML
-    private TextField employerTF;
+    private TextField cityTF,countryTF,employerTF,occupationTF;
 
     @FXML
     private TextArea explanationTA;
 
     @FXML
-    private DatePicker fromDate;
+    private DatePicker fromDate,toDate;
 
     @FXML
     private CheckBox isOngoing;
-
-    @FXML
-    private Button nextButton;
-
-    @FXML
-    private TextField occupationTF;
-
-    @FXML
-    private DatePicker toDate;
 
 
 
@@ -80,35 +65,103 @@ public class Controller_S2_WE implements Initializable {
     public void init (MainController mainController){
         setMainController(mainController);
     }
+
+    //Alert method
+    private void AlertMethod(String contentText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("PROBLEM:");
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
     @FXML
     public void next(){
-        try{
-            this.getMainController().getInformation().put("occupation", occupationTF.getText());
-            this.getMainController().getInformation().put("employer", employerTF.getText());
-            this.getMainController().getInformation().put("cityWE", cityTF.getText());
-            this.getMainController().getInformation().put("countryWE", countryTF.getText());
-            this.getMainController().getInformation().put("fromWE", fromDate.getValue().toString());
-            this.getMainController().getInformation().put("toWE", toDate.getValue().toString());
-            this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
-            this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
-            Scene scene3 = this.getMainController().getSceneList().get(2);
-            this.getMainController().getAddStage().setScene(scene3);
-        }catch (Exception e){
-            e.printStackTrace();
+
+        if(toDate.getValue() !=null && isOngoing.isSelected()){
+            AlertMethod("You can't fill in 'to' field and 'OnGoing' checkbox at the same time");}
+        else if(fromDate.getValue() ==null && isOngoing.isSelected() && toDate.getValue() == null){
+            AlertMethod("You can't check the 'OnGoing' checkbox without filling in the from field");
+        }
+           /* else if(toDate.getValue().isBefore(fromDate.getValue())){//if I implement this, it gives errors
+                Alerting("The 'to' date can't be before the 'from' date");
+            }*/
+        else if(fromDate.getValue() ==null && toDate.getValue() != null){
+            AlertMethod("You can't fill in 'to Date' field without filling in the from field");
+        }
+        else if(fromDate.getValue() !=null && toDate.getValue() ==null && !isOngoing.isSelected()){
+            AlertMethod("You can't leave 'to' field empty without checking the 'OnGoing' checkbox");
+        }
+        else if(fromDate.getValue() !=null && toDate.getValue() !=null && fromDate.getValue().isAfter(toDate.getValue())){
+            AlertMethod("The 'from' date can't be after the 'to' date");
+        }
+
+        //date picker fields filled
+        else if (fromDate.getValue() != null && toDate.getValue() != null){
+            try{
+                this.getMainController().getInformation().put("fromWE", fromDate.getValue().toString());
+                this.getMainController().getInformation().put("toWE", toDate.getValue().toString());
+                this.getMainController().getInformation().put("occupation", occupationTF.getText());
+                this.getMainController().getInformation().put("employer", employerTF.getText());
+                this.getMainController().getInformation().put("cityWE", cityTF.getText());
+                this.getMainController().getInformation().put("countryWE", countryTF.getText());
+                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
+                Scene scene3 = this.getMainController().getSceneList().get(2);
+                this.getMainController().getAddStage().setScene(scene3);
+
+            }   catch (Exception e){e.printStackTrace();}}
+
+        //date picker fields is not filled in
+        else if(fromDate.getValue() == null || toDate.getValue() == null) {
+            try{
+                this.getMainController().getInformation().put("occupation", occupationTF.getText());
+                this.getMainController().getInformation().put("employer", employerTF.getText());
+                this.getMainController().getInformation().put("cityWE", cityTF.getText());
+                this.getMainController().getInformation().put("countryWE", countryTF.getText());
+                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
+                Scene scene3 = this.getMainController().getSceneList().get(2);
+                this.getMainController().getAddStage().setScene(scene3);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            //Work is going on and fromDate is filled in
+        }else if (fromDate.getValue() != null && toDate.getValue() ==null && isOngoing.isSelected()){
+            try{
+                this.getMainController().getInformation().put("fromWE", fromDate.getValue().toString());
+                this.getMainController().getInformation().put("occupation", occupationTF.getText());
+                this.getMainController().getInformation().put("employer", employerTF.getText());
+                this.getMainController().getInformation().put("cityWE", cityTF.getText());
+                this.getMainController().getInformation().put("countryWE", countryTF.getText());
+                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
+                Scene scene3 = this.getMainController().getSceneList().get(2);
+                this.getMainController().getAddStage().setScene(scene3);
+
+            }   catch (Exception e){e.printStackTrace();}
+
+        }
+
+        else {
+            AlertMethod("Something went wrong");
         }
     }
     @FXML
     public void back(){
-      try{
-          Scene scene1 = this.getMainController().getSceneList().get(0);
-          this.getMainController().getAddStage().setScene(scene1);
+        try{
+            Scene scene1 = this.getMainController().getSceneList().get(0);
+            this.getMainController().getAddStage().setScene(scene1);
         }catch(Exception e){
             e.printStackTrace();
         }
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 }
+

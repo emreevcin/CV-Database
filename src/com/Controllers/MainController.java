@@ -163,6 +163,9 @@ public class MainController implements Initializable {
             addScene = scene1;
             addStage.setScene(addScene);
             addStage.show();
+            //When we click on create button main scene will be hidden
+            Stage stage = (Stage) cvList.getScene().getWindow();
+            stage.hide();
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -31,40 +31,17 @@ public class Controller_S1_PI implements Initializable {
     private Scene scene ;
 
     @FXML
-    private Button cancelButton;
+    private Button cancelButton,loadPhotoButton
+                   ,nextButton,addButton;
     @FXML
     private ImageView personImageView;
-    @FXML
-    private Button loadPhotoButton;
+
     @FXML
     private TextArea careerObjectiveTA;
 
     @FXML
-    private TextField cityTF;
-
-    @FXML
-    private TextField countryTF;
-
-    @FXML
-    private TextField emailTF;
-
-    @FXML
-    private TextField firstNameTF;
-
-    @FXML
-    private TextField lastNameTF;
-
-    @FXML
-    private Button nextButton;
-
-    @FXML
-    private Button addButton;
-
-    @FXML
-    private TextField phoneTF;
-
-    @FXML
-    private TextField titleTF;
+    private TextField cityTF,countryTF,emailTF,firstNameTF,lastNameTF
+                     ,phoneTF,titleTF;
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
