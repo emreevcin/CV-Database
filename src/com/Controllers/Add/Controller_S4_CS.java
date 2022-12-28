@@ -93,6 +93,24 @@ public class Controller_S4_CS implements Initializable {
         if (certificateDate.getValue() != null && educationTF.getText().isEmpty() ){
             AlertMethod ("Please fill in education name field and try again");
         }
+        else if (educationTF.getText().isEmpty() && !companyTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
+        else if (educationTF.getText().isEmpty() && !motherTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
+        else if (educationTF.getText().isEmpty() && !otherTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
+        else if (educationTF.getText().isEmpty() && !softTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
+        else if (educationTF.getText().isEmpty() && !hardTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
+        else if (educationTF.getText().isEmpty() && !titleTF.getText().isEmpty() ) {
+            AlertMethod("Please fill in education name field and try again");
+        }
         //If the date is not null and the education field is not empty
         else if (certificateDate.getValue() != null && !educationTF.getText().isEmpty()){
             allInfo(true);
@@ -114,7 +132,6 @@ public class Controller_S4_CS implements Initializable {
                 e.printStackTrace();
             }
         }
-
 
     }
     public void back(){
