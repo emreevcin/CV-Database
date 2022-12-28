@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -45,27 +46,46 @@ public class Controller_S1_PI implements Initializable {
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
+    private void AlertMethod(String contentText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("PROBLEM:");
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
+    private void allInfo(){
+        this.getMainController().getInformation().put("firstName", firstNameTF.getText());
+        this.getMainController().getInformation().put("lastName", lastNameTF.getText());
+        this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
+        this.getMainController().getInformation().put("titlePI", titleTF.getText());
+        this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
+        this.getMainController().getInformation().put("emailPI", emailTF.getText());
+        this.getMainController().getInformation().put("phonePI", phoneTF.getText());
+        this.getMainController().getInformation().put("cityPI", cityTF.getText());
+        this.getMainController().getInformation().put("countryPI", countryTF.getText());
+        Scene scene2 = this.getMainController().getSceneList().get(1);
+        this.getMainController().getAddStage().setScene(scene2);
+
+    }
+
     @FXML
     public void next(ActionEvent actionEvent) {
-        try{
-            this.getMainController().getInformation().put("firstName", firstNameTF.getText());
-            this.getMainController().getInformation().put("lastName", lastNameTF.getText());
-            this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
-            this.getMainController().getInformation().put("titlePI", titleTF.getText());
-            this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
-            this.getMainController().getInformation().put("emailPI", emailTF.getText());
-            this.getMainController().getInformation().put("phonePI", phoneTF.getText());
-            this.getMainController().getInformation().put("cityPI", cityTF.getText());
-            this.getMainController().getInformation().put("countryPI", countryTF.getText());
+            if(firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()) {
+                AlertMethod("Please enter the first Name and last name and try again");
+            }
+            else if (!firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()){
+                AlertMethod("Also you need to enter last name");
+            }
 
-            Scene scene2 = this.getMainController().getSceneList().get(1);
-            this.getMainController().getAddStage().setScene(scene2);
+            else if(titleTF.getText().isEmpty()){
+                AlertMethod("Please enter the title and try again");
+            }
 
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+            else
+                try{allInfo();}
+                catch (Exception e){e.printStackTrace();}
+            }
 
     public Scene getScene() {
         return scene;

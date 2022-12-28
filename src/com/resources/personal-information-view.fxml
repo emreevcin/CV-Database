@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="417.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
+<AnchorPane prefHeight="417.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
    <children>
       <Label layoutX="164.0" layoutY="14.0" text="Personal Information" />
       <Separator layoutX="164.0" layoutY="33.0" prefHeight="0.0" prefWidth="431.0" />
@@ -42,5 +42,8 @@
       <TextArea fx:id="careerObjectiveTA" layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
       <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
+      <Label layoutX="232.0" layoutY="36.0" text="*" textFill="#ff0303" />
+      <Label layoutX="449.0" layoutY="36.0" text="*" textFill="#ff0303" />
+      <Label layoutX="195.0" layoutY="94.0" text="*" textFill="#ff0303" />
    </children>
 </AnchorPane>

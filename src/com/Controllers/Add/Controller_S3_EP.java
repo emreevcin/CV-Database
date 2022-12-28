@@ -37,6 +37,7 @@ public class Controller_S3_EP implements Initializable {
 
 
 
+
     public Scene getScene() {
         return scene;
     }
@@ -105,6 +106,17 @@ public class Controller_S3_EP implements Initializable {
         }
         else if (fromDateE.getValue()==null && isOngoingE.isSelected() && toDateE.getValue() == null){
             AlertMethod("You can't check the 'OnGoing' checkbox without filling in the from field");
+        }
+        else if(institutionTF.getText().isEmpty() && !departmentTF.getText().isEmpty() ||((!institutionTF.getText().isEmpty())&& departmentTF.getText().isEmpty()) ){
+            AlertMethod("If you want to add an education, fill institution and department fields");
+        }
+        else if (!institutionTF.getText().isEmpty() && !departmentTF.getText().isEmpty() && gpaTF.getText().isEmpty() ){
+            AlertMethod("If you want to add an education, fill gpa field");
+
+        }
+        else if (!gpaTF.getText().isEmpty() && !gpaTF.getText().matches("^[0-4]\\.[0-9][0-9]$") && !gpaTF.getText().matches("^[0-4]\\.[0-9]$") && !gpaTF.getText().matches("^[0-4]$"))
+        {
+            AlertMethod("Write GPA in right format (3.83,2.1)");
         }
         else if (fromDateE.getValue()==null && toDateE.getValue() != null){
             AlertMethod("You can't fill in the 'to' field without filling in the 'from' field");

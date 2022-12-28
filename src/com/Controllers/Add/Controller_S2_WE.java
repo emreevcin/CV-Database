@@ -83,9 +83,9 @@ public class Controller_S2_WE implements Initializable {
         else if(fromDate.getValue() ==null && isOngoing.isSelected() && toDate.getValue() == null){
             AlertMethod("You can't check the 'OnGoing' checkbox without filling in the from field");
         }
-           /* else if(toDate.getValue().isBefore(fromDate.getValue())){//if I implement this, it gives errors
-                Alerting("The 'to' date can't be before the 'from' date");
-            }*/
+        else if(toDate.getValue() != null &&toDate.getValue().isBefore(fromDate.getValue())){//if I implement this, it gives errors
+            AlertMethod("The 'to' date can't be before the 'from' date");
+        }
         else if(fromDate.getValue() ==null && toDate.getValue() != null){
             AlertMethod("You can't fill in 'to Date' field without filling in the from field");
         }
@@ -94,6 +94,21 @@ public class Controller_S2_WE implements Initializable {
         }
         else if(fromDate.getValue() !=null && toDate.getValue() !=null && fromDate.getValue().isAfter(toDate.getValue())){
             AlertMethod("The 'from' date can't be after the 'to' date");
+        }
+        else if(occupationTF.getText().isEmpty() &&!employerTF.getText().isEmpty()){
+            AlertMethod("You can't leave the occupation field empty");
+        }
+        else if (occupationTF.getText().isEmpty() && !cityTF.getText().isEmpty()){
+            AlertMethod("You can't leave the occupation field empty");
+        }
+        else if (occupationTF.getText().isEmpty() && !countryTF.getText().isEmpty()){
+            AlertMethod("You can't leave the occupation field empty");
+        }
+        else if((!countryTF.getText().isEmpty() && cityTF.getText().isEmpty() && occupationTF.getText().isEmpty())){
+            AlertMethod("You can't leave the occupation and city fields empty if you fill in the country field");
+        }
+        else if (!cityTF.getText().isEmpty() && countryTF.getText().isEmpty()&& occupationTF.getText().isEmpty()){
+            AlertMethod("You can't leave the occupation and country fields empty if you fill in the city field");
         }
 
         //date picker fields filled
