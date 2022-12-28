@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 public class CV {
 
     private String title ;
+    private String tag;
     private Scene scene1;
     private Scene scene2;
     private Scene scene3;
@@ -76,5 +77,11 @@ public class CV {
 
     public void setCreatedNew(boolean createdNew) {
         isCreatedNew = createdNew;
+    }
+    public String getTag() {
+        return tag;
+    }
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

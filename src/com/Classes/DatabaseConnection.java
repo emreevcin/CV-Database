@@ -18,6 +18,7 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLTags;
     private PreparedStatement selectSQLCVID;
     private PreparedStatement selectSQLCVName;
+    private PreparedStatement selectSQLCVTag;
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -170,13 +171,15 @@ public class DatabaseConnection {
 
             selectSQLCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
 
+            selectSQLCVTag = conn.prepareStatement("SELECT tag_name FROM tags ORDER BY id DESC LIMIT 1;");
+
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
     }
 
-    public void addCV(String firstName , String lastName) {
-        String cvName = firstName + "_" + lastName + "_CV";
+    public void addCV(String Tag,String firstName , String lastName) {
+        String cvName ="[" + Tag + "]" + firstName + "_" + lastName + "_CV";
         try {
             insertSQL.setString(1, cvName);
             insertSQL.execute();
@@ -304,7 +307,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void addTags(String tagName) {
+    public void addTags(int cvID, String tagName) {
         try {
             insertSQLTags.setString(1, tagName);
             insertSQLTags.execute();
@@ -337,6 +340,18 @@ public class DatabaseConnection {
             System.out.println(e);
         }
         return cvName;
+    }
+    public String getCVTag() {
+        String tag = "EMPTY";
+        try {
+            ResultSet rs = selectSQLCVTag.executeQuery();
+            while (rs.next()) {
+                tag = rs.getString("tag_name");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return tag;
     }
 
 }

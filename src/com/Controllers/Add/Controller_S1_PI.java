@@ -41,7 +41,7 @@ public class Controller_S1_PI implements Initializable {
 
     @FXML
     private TextField cityTF,countryTF,emailTF,firstNameTF,lastNameTF
-                     ,phoneTF,titleTF;
+                     ,phoneTF,titleTF,tagTF;
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -52,6 +52,7 @@ public class Controller_S1_PI implements Initializable {
             this.getMainController().getInformation().put("lastName", lastNameTF.getText());
             this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
             this.getMainController().getInformation().put("titlePI", titleTF.getText());
+            this.getMainController().getInformation().put("tagPI", tagTF.getText());
             this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
             this.getMainController().getInformation().put("emailPI", emailTF.getText());
             this.getMainController().getInformation().put("phonePI", phoneTF.getText());
@@ -129,4 +130,19 @@ public class Controller_S1_PI implements Initializable {
         personImageView.setSmooth(true);
         personImageView.setCache(true);
     }
+    public void cancel(ActionEvent actionEvent) {
+        this.getMainController().getAddStage().close();
+    }
+
+//    public void addTag(){
+//        String tag = tagTF.getText();
+//        this.getMainController().getInformation().put("tagPI", tag);
+//        tagTF.clear();
+//    }
+    public void addTag(){
+        String tag = tagTF.getText();
+        this.getMainController().getInformation().put("tagPI", tag);
+        tagTF.clear();
+    }
+
 }

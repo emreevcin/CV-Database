@@ -9,38 +9,39 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="417.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
-   <children>
-      <Label layoutX="164.0" layoutY="14.0" text="Personal Information" />
-      <Separator layoutX="164.0" layoutY="33.0" prefHeight="0.0" prefWidth="431.0" />
-      <Label layoutX="164.0" layoutY="36.0" text="First name(s)" />
-      <TextField fx:id="firstNameTF" layoutX="164.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
-      <Label layoutX="383.0" layoutY="36.0" text="Last name(s)" />
-      <TextField fx:id="lastNameTF" layoutX="380.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
-      <Label layoutX="168.0" layoutY="136.0" text="Career Objective" />
-      <Label layoutX="66.0" layoutY="221.0" text="Contact" />
-      <Separator layoutX="9.0" layoutY="239.0" prefHeight="3.0" prefWidth="600.0" />
-      <ButtonBar layoutX="408.0" layoutY="364.0" prefHeight="40.0" prefWidth="200.0">
-        <buttons>
-          <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" text="Next" />
-        </buttons>
-      </ButtonBar>
-      <Label layoutX="112.0" layoutY="244.0" text="Email address" />
-      <TextField fx:id="emailTF" layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
-      <Label layoutX="109.0" layoutY="266.0" text="Phone number" />
-      <TextField fx:id="phoneTF" layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
-      <Label layoutX="64.0" layoutY="284.0" text="Address" />
-      <Separator layoutX="6.0" layoutY="302.0" prefHeight="3.0" prefWidth="589.0" />
-      <Label layoutX="141.0" layoutY="307.0" text="City" />
-      <Label layoutX="130.0" layoutY="338.0" text="Country" />
-      <TextField fx:id="cityTF" layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
-      <TextField fx:id="countryTF" layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
-      <Button layoutX="39.0" layoutY="369.0" mnemonicParsing="false" text="Add" />
-      <Label layoutX="168.0" layoutY="94.0" text="Title" />
-      <TextField fx:id="titleTF" layoutX="216.0" layoutY="90.0" prefHeight="26.0" prefWidth="204.0" />
-      <TextArea fx:id="careerObjectiveTA" layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
-      <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
-   </children>
+<AnchorPane prefHeight="417.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
+   <Label layoutX="164.0" layoutY="14.0" text="Personal Information" />
+   <Separator layoutX="164.0" layoutY="33.0" prefHeight="0.0" prefWidth="431.0" />
+   <Label layoutX="164.0" layoutY="36.0" text="First name(s)" />
+   <TextField fx:id="firstNameTF" layoutX="164.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
+   <Label layoutX="383.0" layoutY="36.0" text="Last name(s)" />
+   <TextField fx:id="lastNameTF" layoutX="380.0" layoutY="51.0" prefHeight="26.0" prefWidth="204.0" />
+   <Label layoutX="168.0" layoutY="136.0" text="Career Objective" />
+   <Label layoutX="66.0" layoutY="221.0" text="Contact" />
+   <Separator layoutX="9.0" layoutY="239.0" prefHeight="3.0" prefWidth="600.0" />
+   <ButtonBar layoutX="408.0" layoutY="364.0" prefHeight="40.0" prefWidth="200.0">
+      <buttons>
+         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+         <Button fx:id="nextButton" mnemonicParsing="false" onAction="#next" text="Next" />
+      </buttons>
+   </ButtonBar>
+   <Label layoutX="112.0" layoutY="244.0" text="Email address" />
+   <TextField fx:id="emailTF" layoutX="229.0" layoutY="240.0" prefHeight="26.0" prefWidth="279.0" />
+   <Label layoutX="109.0" layoutY="266.0" text="Phone number" />
+   <TextField fx:id="phoneTF" layoutX="229.0" layoutY="262.0" prefHeight="26.0" prefWidth="279.0" />
+   <Label layoutX="64.0" layoutY="284.0" text="Address" />
+   <Separator layoutX="6.0" layoutY="302.0" prefHeight="3.0" prefWidth="589.0" />
+   <Label layoutX="141.0" layoutY="307.0" text="City" />
+   <Label layoutX="130.0" layoutY="338.0" text="Country" />
+   <TextField fx:id="cityTF" layoutX="229.0" layoutY="303.0" prefHeight="26.0" prefWidth="279.0" />
+   <TextField fx:id="countryTF" layoutX="229.0" layoutY="334.0" prefHeight="26.0" prefWidth="279.0" />
+   <Button layoutX="39.0" layoutY="369.0" mnemonicParsing="false" text="Add" />
+   <Label layoutX="168.0" layoutY="94.0" text="Title" />
+   <TextField fx:id="titleTF" layoutX="216.0" layoutY="83.0" prefHeight="26.0" prefWidth="204.0" />
+   <TextArea fx:id="careerObjectiveTA" layoutX="166.0" layoutY="153.0" prefHeight="75.0" prefWidth="431.0" />
+   <ImageView fx:id="personImageView" fitHeight="131.0" fitWidth="138.0" layoutX="12.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+   <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
+   <TextField fx:id="tagTF" layoutX="217.0" layoutY="110.0" prefHeight="26.0" prefWidth="204.0" />
+   <Label layoutX="167.0" layoutY="113.0" text="Tag" />
+   <Button layoutX="430.0" layoutY="111.0" mnemonicParsing="false"  text="Add Tag" />
 </AnchorPane>

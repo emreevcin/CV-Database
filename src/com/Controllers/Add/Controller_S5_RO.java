@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -80,8 +81,9 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
-        this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
+        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tagPI") ,this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
         int cvID = this.getMainController().getD().getCVID();
+
 
         this.getMainController().getD().addPerson(cvID,
                 this.getMainController().getInformation().get("photo"),
@@ -93,6 +95,10 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("phonePI"),
                 this.getMainController().getInformation().get("cityPI"),
                 this.getMainController().getInformation().get("countryPI"));
+
+        this.getMainController().getD().addTags(cvID,
+                this.getMainController().getInformation().get("tagPI"));
+
 
         this.getMainController().getD().addWork(cvID,
                 this.getMainController().getInformation().get("occupation"),
@@ -152,8 +158,16 @@ public class Controller_S5_RO implements Initializable {
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
         String cvName = this.getMainController().getD().getCVName();
         cv.setTitle(cvName);
+        String cvTag = this.getMainController().getD().getCVTag();
+        cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
+//        this.getMainController().getCvList().getItems().add(cv.getTag());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
+//        this.getMainController().getCvMap().put(cv.getTag(), cv);
+        Scene scene5 = this.getMainController().getSceneList().get(4);
+        scene5.getWindow().hide();
+        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
+        stage.show();
     }
 
     @Override
