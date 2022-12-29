@@ -15,6 +15,7 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLSkill;
     private PreparedStatement insertSQLRecommendation;
     private PreparedStatement insertSQLOther;
+    private PreparedStatement insertSQLTags;
     private PreparedStatement selectSQLCVID;
     private PreparedStatement selectSQLCVName;
     private PreparedStatement selectSQLCVTag;
@@ -39,6 +40,7 @@ public class DatabaseConnection {
                 Statement statSkill = conn.createStatement();
                 Statement statRecommendation = conn.createStatement();
                 Statement statOther = conn.createStatement();
+                Statement statTag = conn.createStatement();
 
                 stat.executeUpdate("CREATE TABLE cvs(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -49,7 +51,6 @@ public class DatabaseConnection {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id), " +
                         "photo BLOB, " +
-                        "tag TEXT, " +
                         "first_name TEXT, " +
                         "last_name TEXT, " +
                         "title TEXT, " +
@@ -130,12 +131,17 @@ public class DatabaseConnection {
                         "description TEXT, " +
                         "original_file BLOB, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                statTag.executeUpdate("CREATE TABLE tags(" +
+                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "tag_name TEXT, " +
+                        "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
             }
 
             insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
 
-            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, photo, tag, first_name, last_name, title, career_objective, " +
-                    "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, photo, first_name, last_name, title, career_objective, " +
+                    "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
             insertSQLWork = conn.prepareStatement("INSERT INTO  works(cv_id, occupation, employer, city, country, " +
                     "starting_date, ending_date, ongoing, activities_responsibilities) values (?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -158,11 +164,14 @@ public class DatabaseConnection {
             insertSQLOther = conn.prepareStatement("INSERT INTO  others(cv_id, header, title, description, original_file) " +
                     "values (?, ?, ?, ?, ?);");
 
+            insertSQLTags = conn.prepareStatement("INSERT INTO  tags(tag_name) values (?);");
+
+
             selectSQLCVID = conn.prepareStatement("SELECT id FROM cvs ORDER BY id DESC LIMIT 1;");
 
             selectSQLCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
 
-            selectSQLCVTag = conn.prepareStatement("SELECT tag FROM people ORDER BY id DESC LIMIT 1;");
+            selectSQLCVTag = conn.prepareStatement("SELECT tag_name FROM tags ORDER BY id DESC LIMIT 1;");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -170,7 +179,7 @@ public class DatabaseConnection {
     }
 
     public void addCV(String Tag,String firstName , String lastName) {
-        String cvName ="[" + Tag + "]  " + firstName + "_" + lastName + "_CV";
+        String cvName ="[" + Tag + "]" + firstName + "_" + lastName + "_CV";
         try {
             insertSQL.setString(1, cvName);
             insertSQL.execute();
@@ -179,42 +188,33 @@ public class DatabaseConnection {
         }
     }
 
-    public void addPerson(int cvId, String photo, String tag, String firstName, String lastName, String title, String careerObjective,
+    public void addPerson(int cvId, String photo, String firstName, String lastName, String title, String careerObjective,
                           String email, String phone, String city, String country) {
         try {
-            setCommonSQLCommand(cvId, photo, tag, firstName, lastName, title, careerObjective, email, phone, city, insertSQLPersonal);
-            insertSQLPersonal.setString(11, country);
+            setCommonSQLCommand(cvId, photo, firstName, lastName, title, careerObjective, email, phone, city, insertSQLPersonal);
+            insertSQLPersonal.setString(10, country);
             insertSQLPersonal.execute();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
-    private void setCommonSQLCommand(int cvId, String imageUrl, String tag, String firstName, String lastName, String title, String careerObjective, String email, String phone, String city, PreparedStatement insertSQLPersonal) throws SQLException {
+    private void setCommonSQLCommand(int cvId, String imageUrl, String firstName, String lastName, String title, String careerObjective, String email, String phone, String city, PreparedStatement insertSQLPersonal) throws SQLException {
         insertSQLPersonal.setInt(1, cvId);
         insertSQLPersonal.setString(2, imageUrl);
-        insertSQLPersonal.setString(3, tag);
-        insertSQLPersonal.setString(4, firstName);
-        insertSQLPersonal.setString(5, lastName);
-        insertSQLPersonal.setString(6, title);
-        insertSQLPersonal.setString(7, careerObjective);
-        insertSQLPersonal.setString(8, email);
-        insertSQLPersonal.setString(9, phone);
-        insertSQLPersonal.setString(10, city);
+        insertSQLPersonal.setString(3, firstName);
+        insertSQLPersonal.setString(4, lastName);
+        insertSQLPersonal.setString(5, title);
+        insertSQLPersonal.setString(6, careerObjective);
+        insertSQLPersonal.setString(7, email);
+        insertSQLPersonal.setString(8, phone);
+        insertSQLPersonal.setString(9, city);
     }
 
     public void addWork(int cvId, String occupation, String employer, String city, String country,
                         String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
-            insertSQLWork.setInt(1, cvId);
-            insertSQLWork.setString(2, occupation);
-            insertSQLWork.setString(3, employer);
-            insertSQLWork.setString(4, city);
-            insertSQLWork.setString(5, country);
-            insertSQLWork.setString(6, startingDate);
-            insertSQLWork.setString(7, endingDate);
-            insertSQLWork.setString(8, ongoing);
-            insertSQLWork.setString(9, activitiesResponsibilities);
+            setCommonSQLCommand(cvId, occupation, employer, city, country, startingDate, endingDate, ongoing, activitiesResponsibilities, insertSQLWork);
             insertSQLWork.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -307,6 +307,14 @@ public class DatabaseConnection {
         }
     }
 
+    public void addTags(int cvID, String tagName) {
+        try {
+            insertSQLTags.setString(1, tagName);
+            insertSQLTags.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
     public int getCVID() {
         int cvID = 0;
@@ -338,7 +346,7 @@ public class DatabaseConnection {
         try {
             ResultSet rs = selectSQLCVTag.executeQuery();
             while (rs.next()) {
-                tag = rs.getString("tag");
+                tag = rs.getString("tag_name");
             }
         } catch (SQLException e) {
             System.out.println(e);

@@ -132,8 +132,6 @@ public class Controller_S1_PI implements Initializable {
     }
     public void cancel(ActionEvent actionEvent) {
         this.getMainController().getAddStage().close();
-        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
-        stage.show();
     }
 
 //    public void addTag(){

@@ -43,5 +43,5 @@
    <Button fx:id="loadPhotoButton" layoutX="39.0" layoutY="163.0" mnemonicParsing="false" onMouseClicked="#loadPhoto" text="Load Photo" />
    <TextField fx:id="tagTF" layoutX="217.0" layoutY="110.0" prefHeight="26.0" prefWidth="204.0" />
    <Label layoutX="167.0" layoutY="113.0" text="Tag" />
-   <Button layoutX="430.0" layoutY="111.0" mnemonicParsing="false" onMouseClicked="#addTag" text="Add Tag" />
+   <Button layoutX="430.0" layoutY="111.0" mnemonicParsing="false"  text="Add Tag" />
 </AnchorPane>

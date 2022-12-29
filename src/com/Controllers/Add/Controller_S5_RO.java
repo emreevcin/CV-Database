@@ -87,7 +87,6 @@ public class Controller_S5_RO implements Initializable {
 
         this.getMainController().getD().addPerson(cvID,
                 this.getMainController().getInformation().get("photo"),
-                this.getMainController().getInformation().get("tagPI"),
                 this.getMainController().getInformation().get("firstName"),
                 this.getMainController().getInformation().get("lastName"),
                 this.getMainController().getInformation().get("titlePI"),
@@ -97,6 +96,8 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("cityPI"),
                 this.getMainController().getInformation().get("countryPI"));
 
+        this.getMainController().getD().addTags(cvID,
+                this.getMainController().getInformation().get("tagPI"));
 
 
         this.getMainController().getD().addWork(cvID,
