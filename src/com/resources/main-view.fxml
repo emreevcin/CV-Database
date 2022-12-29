@@ -8,10 +8,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
     <children>
         <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -47,25 +50,43 @@
             <Button mnemonicParsing="false" onAction="#openEditScreen" text="Edit" />
             </buttons>
         </ButtonBar>
-        <ListView fx:id="pdfList" layoutX="379.0" layoutY="100.0" prefHeight="439.0" prefWidth="254.0" />
+        <ListView fx:id="pdfList" layoutX="478.0" layoutY="100.0" prefHeight="439.0" prefWidth="171.0" />
         <ListView fx:id="cvList" layoutX="34.0" layoutY="100.0" prefHeight="439.0" prefWidth="254.0" />
-      <ButtonBar layoutX="366.0" layoutY="540.0" prefHeight="40.0" prefWidth="226.0">
+      <ButtonBar layoutX="395.0" layoutY="552.0" prefHeight="40.0" prefWidth="226.0">
         <buttons>
               <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonClick" text="Add" />
-              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClick" text="Delete" />
               <Button fx:id="openButton" mnemonicParsing="false" onAction="#openButtonClick" text="Open" />
+              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClick" text="Delete" />
         </buttons>
       </ButtonBar>
-      <Button layoutX="303.0" layoutY="108.0" mnemonicParsing="false" onAction="#openShowCV" prefHeight="26.0" prefWidth="63.0" text="INFO" />
+      <Button layoutX="306.0" layoutY="61.0" mnemonicParsing="false" onAction="#openShowCV" prefHeight="26.0" prefWidth="63.0" text="INFO" />
       <Label layoutX="112.0" layoutY="57.0" prefHeight="34.0" prefWidth="150.0" text="CV LIST">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Label layoutX="427.0" layoutY="57.0" prefHeight="34.0" prefWidth="177.0" text="IMPORTED CVs">
+      <Label layoutX="482.0" layoutY="57.0" prefHeight="34.0" prefWidth="171.0" text="IMPORTED CVs">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
+      <Text layoutX="306.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CV Information">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Label layoutX="306.0" layoutY="230.0" prefHeight="18.0" prefWidth="98.0" text="Creation Date:" AnchorPane.bottomAnchor="357.6" AnchorPane.leftAnchor="306.0" AnchorPane.rightAnchor="272.6" AnchorPane.topAnchor="230.0" />
+      <Label fx:id="labelCreationDate" layoutX="305.0" layoutY="248.0" prefHeight="18.0" prefWidth="121.0" AnchorPane.topAnchor="248.0" />
+      <Label layoutX="306.0" layoutY="266.0" text="Person Title: " AnchorPane.topAnchor="266.0" />
+      <Label fx:id="labelPersonTitle" layoutX="305.0" layoutY="284.0" prefHeight="18.0" prefWidth="121.0" AnchorPane.topAnchor="284.0" />
+      <ImageView fx:id="personImage" fitHeight="150.0" fitWidth="122.0" layoutX="305.0" layoutY="366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@imgs/sample_avatar.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="306.0" layoutY="158.0" text="Name:" />
+      <Label fx:id="labelPersonName" layoutX="306.0" layoutY="176.0" prefHeight="18.0" prefWidth="122.0" />
+      <Label layoutX="306.0" layoutY="194.0" prefHeight="18.0" prefWidth="63.0" text="Surname:" />
+      <Label fx:id="labelPersonSurname" layoutX="306.0" layoutY="212.0" prefHeight="18.0" prefWidth="121.0" />
     </children>
 </AnchorPane>

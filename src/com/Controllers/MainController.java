@@ -4,22 +4,33 @@ import com.Classes.CV;
 import com.Classes.DatabaseConnection;
 import com.Classes.Main;
 import com.Controllers.Add.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
+import org.w3c.dom.events.EventException;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -52,6 +63,16 @@ public class MainController implements Initializable {
     private ListView<String> cvList;
     @FXML
     private ListView<String> pdfList;
+    @FXML
+    private Label labelCreationDate;
+    @FXML
+    private Label labelPersonTitle;
+    @FXML
+    private Label labelPersonName;
+    @FXML
+    private Label labelPersonSurname;
+    @FXML
+    private ImageView personImage;
 
     private ArrayList<Scene> sceneList;
 
@@ -109,6 +130,16 @@ public class MainController implements Initializable {
     public ListView<String> getCvList() {
         return cvList;
     }
+    private Connection conn;
+    private PreparedStatement getCreatedDate;
+    private PreparedStatement getPersonTitle;
+    private PreparedStatement getPersonImage;
+    private PreparedStatement getPersonName;
+    private PreparedStatement getPersonSurname;
+    private PreparedStatement pull;
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,6 +150,65 @@ public class MainController implements Initializable {
         controller_s5_ro.init(this);
 
         pullFiles();
+
+        String fileName = "cvdb.db";
+        try {
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        cvList.setOnMouseClicked(mouseEvent->{
+           String dbCvName = cvList.getSelectionModel().getSelectedItem();
+            try {
+                 getCreatedDate =conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name ='"+dbCvName+"';");
+                 ResultSet gcdResultSet = getCreatedDate.executeQuery();
+                 String selectedCvDate = gcdResultSet.getString("created_at");
+
+                 getPersonTitle = conn.prepareStatement("SELECT p.title, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
+                 ResultSet gptResultSet = getPersonTitle.executeQuery();
+                 String selectedCvPersonTitle = gptResultSet.getString("title");
+
+                 getPersonName = conn.prepareStatement("SELECT p.first_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
+                 ResultSet gpnResultSet = getPersonName.executeQuery();
+                 String selectedCvPersonName = gpnResultSet.getString("first_name");
+
+                 getPersonSurname = conn.prepareStatement("SELECT p.last_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
+                 ResultSet gpsResultSet = getPersonSurname.executeQuery();
+                 String selectedCvSurname = gpsResultSet.getString("last_name");
+
+                /**
+                getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
+                ResultSet gpiResultSet = getPersonImage.executeQuery();
+
+                Blob imageBlob = gpiResultSet.getBlob("photo");
+
+
+                byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+                BufferedImage imagePpl = ImageIO.read(inputStream);
+                Image image = SwingFXUtils.toFXImage(imagePpl, null);
+
+                personImage.setImage(image);
+
+                */
+
+
+                 labelPersonName.setText(selectedCvPersonName);
+                 labelPersonSurname.setText(selectedCvSurname);
+                 labelCreationDate.setText(selectedCvDate);
+                 labelPersonTitle.setText(selectedCvPersonTitle);
+
+
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+
+
+        });
+
+
+
     }
 
     @FXML
