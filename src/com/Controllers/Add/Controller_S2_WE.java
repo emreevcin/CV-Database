@@ -110,6 +110,9 @@ public class Controller_S2_WE implements Initializable {
         else if (!cityTF.getText().isEmpty() && countryTF.getText().isEmpty()&& occupationTF.getText().isEmpty()){
             AlertMethod("You can't leave the occupation and country fields empty if you fill in the city field");
         }
+        else if (!explanationTA.getText().isEmpty() && occupationTF.getText().isEmpty()){
+            AlertMethod("You can't leave the occupation field empty if you fill in the explanation field");
+        }
 
         //date picker fields filled
         else if (fromDate.getValue() != null && toDate.getValue() != null){

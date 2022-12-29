@@ -6,6 +6,7 @@ import com.Controllers.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -22,7 +23,9 @@ public class Controller_S5_RO implements Initializable {
 
     private MainController mainController ;
     private Main main ;
-    private Scene scene;
+    private Scene scene ;
+
+
 
     @FXML
     private Button backButton,addCVButton,saveButton;
@@ -63,13 +66,7 @@ public class Controller_S5_RO implements Initializable {
         setMainController(mainController);
     }
 
-    public void back(){
-        Scene scene4 = this.getMainController().getSceneList().get(3);
-        this.getMainController().getAddStage().setScene(scene4);
-    }
-
-    @FXML
-    public void submit(){
+    public void AllInfo(){
         this.getMainController().getInformation().put("nameR", nameTF.getText());
         this.getMainController().getInformation().put("roleR", roleTF.getText());
         this.getMainController().getInformation().put("emailR", emailTF.getText());
@@ -81,9 +78,8 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
-        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tagPI") ,this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
+        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tag"),this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
         int cvID = this.getMainController().getD().getCVID();
-
 
         this.getMainController().getD().addPerson(cvID,
                 this.getMainController().getInformation().get("photo"),
@@ -95,10 +91,6 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("phonePI"),
                 this.getMainController().getInformation().get("cityPI"),
                 this.getMainController().getInformation().get("countryPI"));
-
-        this.getMainController().getD().addTags(cvID,
-                this.getMainController().getInformation().get("tagPI"));
-
 
         this.getMainController().getD().addWork(cvID,
                 this.getMainController().getInformation().get("occupation"),
@@ -158,16 +150,61 @@ public class Controller_S5_RO implements Initializable {
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
         String cvName = this.getMainController().getD().getCVName();
         cv.setTitle(cvName);
-        String cvTag = this.getMainController().getD().getCVTag();
-        cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
-//        this.getMainController().getCvList().getItems().add(cv.getTag());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
-//        this.getMainController().getCvMap().put(cv.getTag(), cv);
-        Scene scene5 = this.getMainController().getSceneList().get(4);
-        scene5.getWindow().hide();
+        //when clickled submit button the stage will be closed
         Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
         stage.show();
+        //last stage will be close when you click submit button
+        Stage stage2 = (Stage) cv.getScene5().getWindow();
+        stage2.close();
+    }
+
+    public void back(){
+        Scene scene4 = this.getMainController().getSceneList().get(3);
+        this.getMainController().getAddStage().setScene(scene4);
+    }
+
+    private void AlertMethod(String contentText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("PROBLEM:");
+        alert.setContentText(contentText);
+        alert.show();
+    }
+    private void submitMethod(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Submit");
+        alert.setHeaderText("Submit");
+        alert.setContentText("Your CV is submitted");
+        alert.show();
+    }
+    @FXML
+    public void submit(){
+        if (roleTF.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+            AlertMethod("You can't submit unless all the important fields are filled");
+        }
+        else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+") && phoneTF.getText().length() != 10){
+            AlertMethod("Please enter a valid phone number");
+        }
+        else if (!emailTF.getText().isEmpty() &&!emailTF.getText().contains("@")){
+            AlertMethod("Please enter a valid email address");
+        }
+        else if (nameTF.getText().isEmpty()  && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+            AlertMethod("You can't fill these field unless all the important fields are filled");
+        }
+        else if (descriptionRTA.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+            AlertMethod("You can't fill these field unless all the important fields are filled");
+        }
+        else if (emailTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+            AlertMethod("You can't fill these field unless all the important fields are filled");
+        }
+        else if (phoneTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+            AlertMethod("You can't fill these field unless all the important fields are filled");
+        }
+
+        else
+            AllInfo();
     }
 
     @Override
