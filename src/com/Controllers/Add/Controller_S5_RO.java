@@ -78,7 +78,7 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
-        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tagPI"),this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
+        this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
         int cvID = this.getMainController().getD().getCVID();
 
         this.getMainController().getD().addPerson(cvID,
@@ -144,6 +144,7 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("originalFile"));
 
 
+
         ArrayList<Scene> scenes = new ArrayList<>();
         for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {
             scenes.add(this.getMainController().getSceneList().get(i));
@@ -155,7 +156,7 @@ public class Controller_S5_RO implements Initializable {
         cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
-        //when clickled submit button the stage will be closed
+        //when clicked submit button the stage will be closed
         Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
         stage.show();
         //last stage will be close when you click submit button
@@ -210,11 +211,6 @@ public class Controller_S5_RO implements Initializable {
             AllInfo();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
     @FXML
     void loadCV() throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -236,4 +232,9 @@ public class Controller_S5_RO implements Initializable {
         }
         fis.close();
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
 }

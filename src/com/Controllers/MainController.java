@@ -10,20 +10,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import org.w3c.dom.events.EventException;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -55,24 +52,54 @@ public class MainController implements Initializable {
     private Scene scene4;
     private Scene scene5;
 
-    protected HashMap<String, String> information = new HashMap<>();
-
-    private HashMap<String,CV> cvMap;
+    @FXML
+    private ImageView createImage;
 
     @FXML
     private ListView<String> cvList;
+
     @FXML
-    private ListView<String> pdfList;
+    private Label cvNumberLabel;
+
     @FXML
-    private Label labelCreationDate;
+    private ImageView deleteImage;
+
     @FXML
-    private Label labelPersonTitle;
+    private ImageView editImage;
+
     @FXML
-    private Label labelPersonName;
+    private ImageView filterImage;
+
     @FXML
-    private Label labelPersonSurname;
+    private Label firstNamePreview;
+
     @FXML
-    private ImageView personImage;
+    private ImageView imagePreview;
+
+    @FXML
+    private Label lastNamePreview;
+
+    @FXML
+    private TextField searchBarTF;
+
+    @FXML
+    private ImageView searchIcon;
+
+    @FXML
+    private ComboBox<?> searchSelectionList;
+
+    @FXML
+    private ImageView sourceCVPreview;
+
+    @FXML
+    private Label tagsPreview;
+
+    @FXML
+    private Label titlePreview;
+
+    protected HashMap<String, String> information = new HashMap<>();
+
+    private HashMap<String,CV> cvMap;
 
     private ArrayList<Scene> sceneList;
 
@@ -149,7 +176,7 @@ public class MainController implements Initializable {
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
 
-        pullFiles();
+//        pullFiles();
 
         String fileName = "cvdb.db";
         try {
@@ -194,25 +221,19 @@ public class MainController implements Initializable {
                 */
 
 
-                 labelPersonName.setText(selectedCvPersonName);
-                 labelPersonSurname.setText(selectedCvSurname);
-                 labelCreationDate.setText(selectedCvDate);
-                 labelPersonTitle.setText(selectedCvPersonTitle);
+                 firstNamePreview.setText(selectedCvPersonName);
+                 lastNamePreview.setText(selectedCvSurname);
+                 titlePreview.setText(selectedCvPersonTitle);
 
 
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
-
-
         });
-
-
-
     }
 
     @FXML
-    public void openCreateScreen(){
+    public void createCV(){
         try{
             FXMLLoader addLoader1 = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
             FXMLLoader addLoader2 = new FXMLLoader(getClass().getResource("../resources/work-experience-view.fxml"));
@@ -261,87 +282,6 @@ public class MainController implements Initializable {
         }
     }
     @FXML
-    public void openShowCV() {
-        // needs to show both created and imported cvs
-        Desktop desktop = Desktop.getDesktop();
-        try {
-            //desktop.open(new java.io.File("")); //irrelevant path.
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openButtonClick() throws IOException {
-        File fileToOpen = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
-
-        if(!fileToOpen.exists()){
-            String alertText = "File does not exist!";
-            Alerting(alertText);
-            pullFiles();
-        }else {
-            Desktop.getDesktop().open(fileToOpen);
-        }
-    }
-    private void Alerting(String contentText){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("PROBLEM:");
-        alert.setContentText(contentText);
-        alert.show();
-    }
-    private void pullFiles(){
-        File folder = new File("../resources/PDFs/");
-        File[] listOfFiles = folder.listFiles();
-        pdfList.getItems().clear();
-        if(listOfFiles == null)
-            return;
-        for(File file : listOfFiles){
-            if(file.isFile()){
-                pdfList.getItems().add(file.getName());
-            }
-        }
-    }
-    private static void copyFileUsingStream(File source, File dest) throws IOException {
-        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        }
-    }
-    @FXML
-    private void addButtonClick() throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF (*.PDF, *.pdf)", "*.pdf","*.PDF"));
-        File f = fc.showOpenDialog(null);
-
-        if(f!=null){
-            File src = new File(f.getPath());
-            File dest = new File("../resources/PDFs/"+f.getName());
-            if (dest.exists()){
-                String alertText = "File already exist!";
-                Alerting(alertText);
-            }else{
-                copyFileUsingStream(src,dest);
-                pullFiles();
-            }
-        }
-    }
-    @FXML
-    private void deleteButtonClick(ActionEvent event){
-        File fileToDelete = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
-        if(!fileToDelete.exists()){
-            String alertText = "File does not exist!";
-            Alerting(alertText);
-        }
-        else{
-            fileToDelete.delete();
-        }
-        pullFiles();
-    }
-    @FXML
     public void deleteCV(){
         // delete selected cv from listview and data structure that holds the selected cv
         String s = cvList.getSelectionModel().getSelectedItem();
@@ -353,7 +293,7 @@ public class MainController implements Initializable {
 
     }
     @FXML
-    public void openEditScreen(){    // If selected CV exist edit screen openable
+    public void editCV(){    // If selected CV exist edit screen openable
         try{
             String title = cvList.getSelectionModel().getSelectedItem();
             CV cv = checkCV(title);
@@ -367,7 +307,7 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-    public CV checkCV(String s){ //Checking CV is exist if exist return selected CV otherwise return null
+    public CV checkCV(String s){ //Checking CV is exists if exist return selected CV otherwise return null
         if(s!= null){
             for (String key : cvMap.keySet()) {
                 if(key.equals(s)){
@@ -376,6 +316,21 @@ public class MainController implements Initializable {
             }
         }
         return null;
+    }
+
+    @FXML
+    void filter() {
+
+    }
+
+    @FXML
+    void search() {
+
+    }
+
+    @FXML
+    void showSourceCV() {
+
     }
 
 
@@ -407,3 +362,77 @@ public class MainController implements Initializable {
         this.information = information;
     }
 }
+
+
+
+
+//    @FXML
+//    private void openButtonClick() throws IOException {
+//        File fileToOpen = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
+//
+//        if(!fileToOpen.exists()){
+//            String alertText = "File does not exist!";
+//            Alerting(alertText);
+//            pullFiles();
+//        }else {
+//            Desktop.getDesktop().open(fileToOpen);
+//        }
+//    }
+//    private void Alerting(String contentText){
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Error");
+//        alert.setHeaderText("PROBLEM:");
+//        alert.setContentText(contentText);
+//        alert.show();
+//    }
+//    private void pullFiles(){
+//        File folder = new File("../resources/PDFs/");
+//        File[] listOfFiles = folder.listFiles();
+//        pdfList.getItems().clear();
+//        if(listOfFiles == null)
+//            return;
+//        for(File file : listOfFiles){
+//            if(file.isFile()){
+//                pdfList.getItems().add(file.getName());
+//            }
+//        }
+//    }
+//    private static void copyFileUsingStream(File source, File dest) throws IOException {
+//        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = is.read(buffer)) > 0) {
+//                os.write(buffer, 0, length);
+//            }
+//        }
+//    }
+//    @FXML
+//    private void addButtonClick() throws IOException {
+//        FileChooser fc = new FileChooser();
+//        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF (*.PDF, *.pdf)", "*.pdf","*.PDF"));
+//        File f = fc.showOpenDialog(null);
+//
+//        if(f!=null){
+//            File src = new File(f.getPath());
+//            File dest = new File("../resources/PDFs/"+f.getName());
+//            if (dest.exists()){
+//                String alertText = "File already exist!";
+//                Alerting(alertText);
+//            }else{
+//                copyFileUsingStream(src,dest);
+//                pullFiles();
+//            }
+//        }
+//    }
+//    @FXML
+//    private void deleteButtonClick(ActionEvent event){
+//        File fileToDelete = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
+//        if(!fileToDelete.exists()){
+//            String alertText = "File does not exist!";
+//            Alerting(alertText);
+//        }
+//        else{
+//            fileToDelete.delete();
+//        }
+//        pullFiles();
+//    }

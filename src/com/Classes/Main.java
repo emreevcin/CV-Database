@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -78,8 +79,11 @@ public class Main extends Application {
         mainController.setController_s4_cs(controller_s4_cs);
         mainController.setController_s5_ro(controller_s5_ro);
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("CV DATABASE");
+        primaryStage.getIcons().add(new Image("com\\resources\\icons\\application_icon.png"));
         primaryStage.setScene(mainScene);
+        primaryStage.setMinWidth(602);
+        primaryStage.setMinHeight(432);
         primaryStage.show();
     }
 

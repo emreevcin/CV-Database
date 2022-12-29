@@ -171,8 +171,8 @@ public class DatabaseConnection {
         }
     }
 
-    public void addCV(String Tag,String firstName , String lastName) {
-        String cvName ="[" + Tag + "] " + firstName + "_" + lastName + "_CV";
+    public void addCV(String firstName , String lastName) {
+        String cvName = firstName + "_" + lastName;
         try {
             insertSQL.setString(1, cvName);
             insertSQL.execute();
@@ -193,6 +193,11 @@ public class DatabaseConnection {
     }
 
     private void setCommonSQLCommand(int cvId, String imageUrl, String tag, String firstName, String lastName, String title, String careerObjective, String email, String phone, String city, PreparedStatement insertSQLPersonal) throws SQLException {
+        duplicateInsertMethods(cvId, imageUrl, tag, firstName, lastName, title, careerObjective, email, phone, insertSQLPersonal);
+        insertSQLPersonal.setString(10, city);
+    }
+
+    private void duplicateInsertMethods(int cvId, String imageUrl, String tag, String firstName, String lastName, String title, String careerObjective, String email, String phone, PreparedStatement insertSQLPersonal) throws SQLException {
         insertSQLPersonal.setInt(1, cvId);
         insertSQLPersonal.setString(2, imageUrl);
         insertSQLPersonal.setString(3, tag);
@@ -202,21 +207,12 @@ public class DatabaseConnection {
         insertSQLPersonal.setString(7, careerObjective);
         insertSQLPersonal.setString(8, email);
         insertSQLPersonal.setString(9, phone);
-        insertSQLPersonal.setString(10, city);
     }
 
     public void addWork(int cvId, String occupation, String employer, String city, String country,
                         String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
-            insertSQLWork.setInt(1, cvId);
-            insertSQLWork.setString(2, occupation);
-            insertSQLWork.setString(3, employer);
-            insertSQLWork.setString(4, city);
-            insertSQLWork.setString(5, country);
-            insertSQLWork.setString(6, startingDate);
-            insertSQLWork.setString(7, endingDate);
-            insertSQLWork.setString(8, ongoing);
-            insertSQLWork.setString(9, activitiesResponsibilities);
+            duplicateInsertMethods(cvId, occupation, employer, city, country, startingDate, endingDate, ongoing, activitiesResponsibilities, insertSQLWork);
             insertSQLWork.execute();
         } catch (SQLException e) {
             System.out.println(e);
