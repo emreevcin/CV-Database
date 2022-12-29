@@ -57,6 +57,7 @@ public class Controller_S1_PI implements Initializable {
     private void allInfo(){
         this.getMainController().getInformation().put("firstName", firstNameTF.getText());
         this.getMainController().getInformation().put("lastName", lastNameTF.getText());
+        this.getMainController().getInformation().put("tagPI", tagTF.getText());
         this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
         this.getMainController().getInformation().put("titlePI", titleTF.getText());
         this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
@@ -159,5 +160,7 @@ public class Controller_S1_PI implements Initializable {
 
     public void cancel(ActionEvent actionEvent) {
         this.getMainController().getAddStage().close();
+        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
+        stage.show();
     }
 }

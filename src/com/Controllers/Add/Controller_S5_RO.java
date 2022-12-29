@@ -78,11 +78,12 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
-        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tag"),this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
+        this.getMainController().getD().addCV(this.getMainController().getInformation().get("tagPI"),this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
         int cvID = this.getMainController().getD().getCVID();
 
         this.getMainController().getD().addPerson(cvID,
                 this.getMainController().getInformation().get("photo"),
+                this.getMainController().getInformation().get("tagPI"),
                 this.getMainController().getInformation().get("firstName"),
                 this.getMainController().getInformation().get("lastName"),
                 this.getMainController().getInformation().get("titlePI"),
@@ -150,6 +151,8 @@ public class Controller_S5_RO implements Initializable {
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
         String cvName = this.getMainController().getD().getCVName();
         cv.setTitle(cvName);
+        String cvTag = this.getMainController().getD().getCVTag();
+        cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
         //when clickled submit button the stage will be closed
