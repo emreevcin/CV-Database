@@ -143,7 +143,8 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getInformation().get("descriptionAddition"),
                 this.getMainController().getInformation().get("originalFile"));
 
-
+        String stringNumberOfCV = Integer.toString(this.getMainController().getD().getNumberOfCV());
+        this.getMainController().getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
 
         ArrayList<Scene> scenes = new ArrayList<>();
         for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {

@@ -97,6 +97,9 @@ public class MainController implements Initializable {
     @FXML
     private Label titlePreview;
 
+    @FXML
+    private Label createdAtPreview;
+
     protected HashMap<String, String> information = new HashMap<>();
 
     private HashMap<String,CV> cvMap;
@@ -146,6 +149,13 @@ public class MainController implements Initializable {
         return addStage;
     }
 
+    public Label getCvNumberLabel() {
+        return cvNumberLabel;
+    }
+
+    public void setCvNumberLabel(Label cvNumberLabel) {
+        this.cvNumberLabel = cvNumberLabel;
+    }
 
     public ArrayList<Scene> getSceneList() {
         return sceneList;
@@ -176,60 +186,9 @@ public class MainController implements Initializable {
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
 
-//        pullFiles();
-
-        String fileName = "cvdb.db";
-        try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        cvList.setOnMouseClicked(mouseEvent->{
-           String dbCvName = cvList.getSelectionModel().getSelectedItem();
-            try {
-                 getCreatedDate =conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name ='"+dbCvName+"';");
-                 ResultSet gcdResultSet = getCreatedDate.executeQuery();
-                 String selectedCvDate = gcdResultSet.getString("created_at");
-
-                 getPersonTitle = conn.prepareStatement("SELECT p.title, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gptResultSet = getPersonTitle.executeQuery();
-                 String selectedCvPersonTitle = gptResultSet.getString("title");
-
-                 getPersonName = conn.prepareStatement("SELECT p.first_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gpnResultSet = getPersonName.executeQuery();
-                 String selectedCvPersonName = gpnResultSet.getString("first_name");
-
-                 getPersonSurname = conn.prepareStatement("SELECT p.last_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gpsResultSet = getPersonSurname.executeQuery();
-                 String selectedCvSurname = gpsResultSet.getString("last_name");
-
-                /**
-                getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
-                ResultSet gpiResultSet = getPersonImage.executeQuery();
-
-                Blob imageBlob = gpiResultSet.getBlob("photo");
-
-
-                byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-                BufferedImage imagePpl = ImageIO.read(inputStream);
-                Image image = SwingFXUtils.toFXImage(imagePpl, null);
-
-                personImage.setImage(image);
-
-                */
-
-
-                 firstNamePreview.setText(selectedCvPersonName);
-                 lastNamePreview.setText(selectedCvSurname);
-                 titlePreview.setText(selectedCvPersonTitle);
-
-
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
-        });
+        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
+        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
+        
     }
 
     @FXML
@@ -362,77 +321,3 @@ public class MainController implements Initializable {
         this.information = information;
     }
 }
-
-
-
-
-//    @FXML
-//    private void openButtonClick() throws IOException {
-//        File fileToOpen = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
-//
-//        if(!fileToOpen.exists()){
-//            String alertText = "File does not exist!";
-//            Alerting(alertText);
-//            pullFiles();
-//        }else {
-//            Desktop.getDesktop().open(fileToOpen);
-//        }
-//    }
-//    private void Alerting(String contentText){
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Error");
-//        alert.setHeaderText("PROBLEM:");
-//        alert.setContentText(contentText);
-//        alert.show();
-//    }
-//    private void pullFiles(){
-//        File folder = new File("../resources/PDFs/");
-//        File[] listOfFiles = folder.listFiles();
-//        pdfList.getItems().clear();
-//        if(listOfFiles == null)
-//            return;
-//        for(File file : listOfFiles){
-//            if(file.isFile()){
-//                pdfList.getItems().add(file.getName());
-//            }
-//        }
-//    }
-//    private static void copyFileUsingStream(File source, File dest) throws IOException {
-//        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            while ((length = is.read(buffer)) > 0) {
-//                os.write(buffer, 0, length);
-//            }
-//        }
-//    }
-//    @FXML
-//    private void addButtonClick() throws IOException {
-//        FileChooser fc = new FileChooser();
-//        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF (*.PDF, *.pdf)", "*.pdf","*.PDF"));
-//        File f = fc.showOpenDialog(null);
-//
-//        if(f!=null){
-//            File src = new File(f.getPath());
-//            File dest = new File("../resources/PDFs/"+f.getName());
-//            if (dest.exists()){
-//                String alertText = "File already exist!";
-//                Alerting(alertText);
-//            }else{
-//                copyFileUsingStream(src,dest);
-//                pullFiles();
-//            }
-//        }
-//    }
-//    @FXML
-//    private void deleteButtonClick(ActionEvent event){
-//        File fileToDelete = new File("../resources/PDFs/"+pdfList.getSelectionModel().getSelectedItem());
-//        if(!fileToDelete.exists()){
-//            String alertText = "File does not exist!";
-//            Alerting(alertText);
-//        }
-//        else{
-//            fileToDelete.delete();
-//        }
-//        pullFiles();
-//    }

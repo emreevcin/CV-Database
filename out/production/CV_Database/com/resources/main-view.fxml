@@ -107,7 +107,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </ListView>
-                        <Pane prefHeight="283.0" prefWidth="254.0">
+                        <Pane fx:id="panePreview" prefHeight="283.0" prefWidth="254.0" visible="false">
                            <children>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
@@ -123,7 +123,7 @@
                                                 <Image url="@icons/application_icon.png" />
                                              </image>
                                              <HBox.margin>
-                                                <Insets left="80.0" />
+                                                <Insets left="60.0" />
                                              </HBox.margin>
                                           </ImageView>
                                        </children>
@@ -190,6 +190,23 @@
                                              </HBox.margin>
                                           </Text>
                                           <Label fx:id="tagsPreview" text="Mobile Developer, JAVA">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="0.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Created at">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Label fx:id="createdAtPreview" text="01.02.2000">
                                              <HBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </HBox.margin>

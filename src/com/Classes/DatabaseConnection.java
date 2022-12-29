@@ -16,8 +16,10 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLRecommendation;
     private PreparedStatement insertSQLOther;
     private PreparedStatement selectSQLCVID;
-    private PreparedStatement selectSQLCVName;
+    private PreparedStatement selectSQLLastCVName;
     private PreparedStatement selectSQLCVTag;
+    private PreparedStatement selectSQLCounterCV;
+    private PreparedStatement selectSQLCVNames;
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -162,9 +164,13 @@ public class DatabaseConnection {
 
             selectSQLCVID = conn.prepareStatement("SELECT id FROM cvs ORDER BY id DESC LIMIT 1;");
 
-            selectSQLCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
+            selectSQLLastCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
 
             selectSQLCVTag = conn.prepareStatement("SELECT tag FROM people ORDER BY id DESC LIMIT 1;");
+
+            selectSQLCounterCV = conn.prepareStatement("SELECT COUNT(*) FROM cvs;");
+
+            selectSQLCVNames = conn.prepareStatement("SELECT cv_name FROM cvs");
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -305,6 +311,19 @@ public class DatabaseConnection {
         }
     }
 
+    public int getNumberOfCV() {
+        int numberOfCV = 0;
+        try {
+            ResultSet rs = selectSQLCounterCV.executeQuery();
+            if (rs.next()) {
+                numberOfCV = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return numberOfCV;
+    }
+
     public int getCVID() {
         int cvID = 0;
         try {
@@ -321,7 +340,7 @@ public class DatabaseConnection {
     public String getCVName() {
         String cvName = "EMPTY";
         try {
-            ResultSet rs = selectSQLCVName.executeQuery();
+            ResultSet rs = selectSQLLastCVName.executeQuery();
             while (rs.next()) {
                 cvName = rs.getString("cv_name");
             }
