@@ -80,7 +80,7 @@ public class Main extends Application {
         mainController.setController_s5_ro(controller_s5_ro);
 
         primaryStage.setTitle("CV DATABASE");
-        primaryStage.getIcons().add(new Image("C:\\Users\\erdem\\Documents\\GitHub\\CV-Database\\src\\com\\resources\\icons\\application_icon.png"));
+        primaryStage.getIcons().add(new Image("com\\resources\\icons\\application_icon.png"));
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(602);
         primaryStage.setMinHeight(432);
