@@ -2,6 +2,8 @@ package com.Classes;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DatabaseConnection {
     private final String fileName;
@@ -18,6 +20,7 @@ public class DatabaseConnection {
     private PreparedStatement selectSQLCVID;
     private PreparedStatement selectSQLCVName;
     private PreparedStatement selectSQLCVTag;
+    private PreparedStatement searchCV ;
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -342,5 +345,63 @@ public class DatabaseConnection {
         }
         return tag;
     }
+    public HashMap<Integer,String> searchCV(String key , String field ) throws SQLException {
+        PreparedStatement statement ;
+
+        if(!key.equals("")){
+            switch (field){
+                case "Name":{
+                    statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM people INNER JOIN cvs ON cvs.id = people.cv_id WHERE first_name LIKE '%"+key+"%'");;
+                    break;
+                }
+                case "Surname":{
+                    statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM people INNER JOIN cvs ON cvs.id = people.cv_id WHERE last_name LIKE '%" +
+                            key+"%' ");
+                    break;
+                }
+                case "Name-Surname":{
+                    String[] s = key.trim().split(" ");
+                    if(s.length!=2)
+                        return null;
+                    String name = s[0];
+                    String surname = s[1];
+                    System.out.println(name+""+surname);
+                    statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM people INNER JOIN cvs ON cvs.id = people.cv_id WHERE first_name LIKE '%" +
+                            name+"%' AND last_name LIKE '%"+surname+"%'");
+                    break;
+                }
+                case "Institution":{
+                    statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM education INNER JOIN cvs ON cvs.id = education.cv_id WHERE instituion LIKE '%" +
+                            key+"%'");;
+                    break;
+                }
+                case"Title":{
+                    statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM works INNER JOIN cvs ON cvs.id = works.cv_id WHERE employer LIKE '%" +
+                            key+"%'");;
+                    break;
+                }
+                default:
+                    throw new IllegalStateException("Unexpected value: " + field);
+            }
+        }
+        else {
+            statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
+        }
+        if(statement==null)
+            return null;
+
+        HashMap<Integer ,String> cvs =new HashMap<>();
+
+        ResultSet resultSet = statement.executeQuery();
+
+
+        while (resultSet.next()){
+            Integer cv_id = resultSet.getInt("id");
+            String cv_name = resultSet.getString("cv_name");
+            cvs.put(cv_id,cv_name);
+        }
+        return cvs ;
+    }
+
 
 }

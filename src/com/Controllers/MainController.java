@@ -4,6 +4,8 @@ import com.Classes.CV;
 import com.Classes.DatabaseConnection;
 import com.Classes.Main;
 import com.Controllers.Add.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,10 +27,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainController implements Initializable {
 
@@ -38,19 +37,13 @@ public class MainController implements Initializable {
         return d;
     }
 
-    private Main main ;
+    private Main main;
 
-    private Controller_S1_PI controller_s1_pi ;
-    private Controller_S2_WE controller_s2_we ;
-    private Controller_S3_EP controller_s3_ep ;
-    private Controller_S4_CS controller_s4_cs ;
-    private Controller_S5_RO controller_s5_ro ;
-
-    private Scene scene1;
-    private Scene scene2;
-    private Scene scene3;
-    private Scene scene4;
-    private Scene scene5;
+    private Controller_S1_PI controller_s1_pi;
+    private Controller_S2_WE controller_s2_we;
+    private Controller_S3_EP controller_s3_ep;
+    private Controller_S4_CS controller_s4_cs;
+    private Controller_S5_RO controller_s5_ro;
 
     @FXML
     private ImageView createImage;
@@ -86,7 +79,10 @@ public class MainController implements Initializable {
     private ImageView searchIcon;
 
     @FXML
-    private ComboBox<?> searchSelectionList;
+    private ComboBox<String> searchSelectionList;
+    @FXML
+    private ComboBox<String> filterSelection ;
+
 
     @FXML
     private ImageView sourceCVPreview;
@@ -97,13 +93,13 @@ public class MainController implements Initializable {
     @FXML
     private Label titlePreview;
 
-    protected HashMap<String, String> information = new HashMap<>();
+    protected HashMap<String, String> information;
 
-    private HashMap<String,CV> cvMap;
+    private HashMap<String, CV> cvMap;
 
     private ArrayList<Scene> sceneList;
 
-    private Scene addScene ;
+    private Scene addScene;
     private Stage addStage;
 
     public MainController() {
@@ -114,7 +110,8 @@ public class MainController implements Initializable {
         this.controller_s5_ro = new Controller_S5_RO();
         addStage = new Stage();
         cvMap = new HashMap<>();
-        sceneList= new ArrayList<>();
+        sceneList = new ArrayList<>();
+        information = new HashMap<>();
     }
 
     public void setMain(Main main) {
@@ -141,15 +138,17 @@ public class MainController implements Initializable {
         this.controller_s5_ro = controller_s5_ro;
     }
 
-
+    public HashMap<String, String> getInformation() {
+        return information;
+    }
     public Stage getAddStage() {
         return addStage;
     }
 
-
     public ArrayList<Scene> getSceneList() {
         return sceneList;
     }
+
     public HashMap<String, CV> getCvMap() {
         return cvMap;
     }
@@ -157,6 +156,7 @@ public class MainController implements Initializable {
     public ListView<String> getCvList() {
         return cvList;
     }
+
     private Connection conn;
     private PreparedStatement getCreatedDate;
     private PreparedStatement getPersonTitle;
@@ -165,9 +165,6 @@ public class MainController implements Initializable {
     private PreparedStatement getPersonSurname;
     private PreparedStatement pull;
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -175,6 +172,9 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
+
+        searchSelectionList.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
+        filterSelection.getItems().addAll("A-Z","Z-A");
 
 //        pullFiles();
 
@@ -185,45 +185,45 @@ public class MainController implements Initializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        cvList.setOnMouseClicked(mouseEvent->{
-           String dbCvName = cvList.getSelectionModel().getSelectedItem();
+        cvList.setOnMouseClicked(mouseEvent -> {
+            String dbCvName = cvList.getSelectionModel().getSelectedItem();
             try {
-                 getCreatedDate =conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name ='"+dbCvName+"';");
-                 ResultSet gcdResultSet = getCreatedDate.executeQuery();
-                 String selectedCvDate = gcdResultSet.getString("created_at");
+                getCreatedDate = conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name ='" + dbCvName + "';");
+                ResultSet gcdResultSet = getCreatedDate.executeQuery();
+                String selectedCvDate = gcdResultSet.getString("created_at");
 
-                 getPersonTitle = conn.prepareStatement("SELECT p.title, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gptResultSet = getPersonTitle.executeQuery();
-                 String selectedCvPersonTitle = gptResultSet.getString("title");
+                getPersonTitle = conn.prepareStatement("SELECT p.title, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
+                ResultSet gptResultSet = getPersonTitle.executeQuery();
+                String selectedCvPersonTitle = gptResultSet.getString("title");
 
-                 getPersonName = conn.prepareStatement("SELECT p.first_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gpnResultSet = getPersonName.executeQuery();
-                 String selectedCvPersonName = gpnResultSet.getString("first_name");
+                getPersonName = conn.prepareStatement("SELECT p.first_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
+                ResultSet gpnResultSet = getPersonName.executeQuery();
+                String selectedCvPersonName = gpnResultSet.getString("first_name");
 
-                 getPersonSurname = conn.prepareStatement("SELECT p.last_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                 ResultSet gpsResultSet = getPersonSurname.executeQuery();
-                 String selectedCvSurname = gpsResultSet.getString("last_name");
+                getPersonSurname = conn.prepareStatement("SELECT p.last_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
+                ResultSet gpsResultSet = getPersonSurname.executeQuery();
+                String selectedCvSurname = gpsResultSet.getString("last_name");
 
                 /**
-                getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
-                ResultSet gpiResultSet = getPersonImage.executeQuery();
+                 getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
+                 ResultSet gpiResultSet = getPersonImage.executeQuery();
 
-                Blob imageBlob = gpiResultSet.getBlob("photo");
-
-
-                byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-                BufferedImage imagePpl = ImageIO.read(inputStream);
-                Image image = SwingFXUtils.toFXImage(imagePpl, null);
-
-                personImage.setImage(image);
-
-                */
+                 Blob imageBlob = gpiResultSet.getBlob("photo");
 
 
-                 firstNamePreview.setText(selectedCvPersonName);
-                 lastNamePreview.setText(selectedCvSurname);
-                 titlePreview.setText(selectedCvPersonTitle);
+                 byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
+                 ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+                 BufferedImage imagePpl = ImageIO.read(inputStream);
+                 Image image = SwingFXUtils.toFXImage(imagePpl, null);
+
+                 personImage.setImage(image);
+
+                 */
+
+
+                firstNamePreview.setText(selectedCvPersonName);
+                lastNamePreview.setText(selectedCvSurname);
+                titlePreview.setText(selectedCvPersonTitle);
 
 
             } catch (SQLException exception) {
@@ -233,8 +233,8 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void createCV(){
-        try{
+    public void createCV() {
+        try {
             FXMLLoader addLoader1 = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
             FXMLLoader addLoader2 = new FXMLLoader(getClass().getResource("../resources/work-experience-view.fxml"));
             FXMLLoader addLoader3 = new FXMLLoader(getClass().getResource("../resources/education-projects-view.fxml"));
@@ -277,40 +277,43 @@ public class MainController implements Initializable {
             //When we click on create button main scene will be hidden
             Stage stage = (Stage) cvList.getScene().getWindow();
             stage.hide();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @FXML
-    public void deleteCV(){
+    public void deleteCV() {
         // delete selected cv from listview and data structure that holds the selected cv
         String s = cvList.getSelectionModel().getSelectedItem();
-        if(s.equals("")) {
-            return ;
+        if (s.equals("")) {
+            return;
         }
         cvList.getItems().remove(s);
         cvMap.remove(s);
 
     }
+
     @FXML
-    public void editCV(){    // If selected CV exist edit screen openable
-        try{
+    public void editCV() {    // If selected CV exist edit screen openable
+        try {
             String title = cvList.getSelectionModel().getSelectedItem();
             CV cv = checkCV(title);
-            if(cv==null){
+            if (cv == null) {
                 return;
             }
             Stage stage = new Stage();
             stage.setScene(cv.getScene1());
             stage.show();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public CV checkCV(String s){ //Checking CV is exists if exist return selected CV otherwise return null
-        if(s!= null){
+
+    public CV checkCV(String s) { //Checking CV is exists if exist return selected CV otherwise return null
+        if (s != null) {
             for (String key : cvMap.keySet()) {
-                if(key.equals(s)){
+                if (key.equals(s)) {
                     return cvMap.get(key);
                 }
             }
@@ -320,11 +323,45 @@ public class MainController implements Initializable {
 
     @FXML
     void filter() {
+        ObservableList<String> cv_names = FXCollections.observableArrayList();
+        cv_names.addAll(cvList.getItems());
+        String sortingAs = filterSelection.getSelectionModel().getSelectedItem();
 
+        if(sortingAs.equals("A-Z")){
+            cv_names.sort(String::compareTo);
+        }
+        else if(sortingAs.equals("Z-A")){
+            cv_names.sort(Collections.reverseOrder(String::compareToIgnoreCase));
+        }
+        cvList.getItems().clear();
+        cvList.getItems().addAll(cv_names);
     }
 
     @FXML
-    void search() {
+    void search() throws SQLException {
+        String key = searchBarTF.getText();
+        String field = searchSelectionList.getSelectionModel().getSelectedItem();
+
+        System.out.println(key + " " + field);
+        if (field == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setContentText("Select the relevant field for searching");
+            alert.showAndWait();
+            return;
+        }
+
+        HashMap<Integer, String> showList = d.searchCV(key, field);
+
+        if (showList == null || showList.isEmpty())
+            return;
+
+        cvList.getItems().clear();
+
+        for (Integer k : showList.keySet()) {
+            cvList.getItems().add(showList.get(k));
+        }
+
 
     }
 
@@ -333,36 +370,7 @@ public class MainController implements Initializable {
 
     }
 
-
-    public Controller_S1_PI getController_s1_pi() {
-        return controller_s1_pi;
-    }
-
-    public Controller_S2_WE getController_s2_we() {
-        return controller_s2_we;
-    }
-
-    public Controller_S3_EP getController_s3_ep() {
-        return controller_s3_ep;
-    }
-
-    public Controller_S4_CS getController_s4_cs() {
-        return controller_s4_cs;
-    }
-
-    public Controller_S5_RO getController_s5_ro() {
-        return controller_s5_ro;
-    }
-
-    public HashMap<String, String> getInformation() {
-        return information;
-    }
-
-    public void setInformation(HashMap<String, String> information) {
-        this.information = information;
-    }
 }
-
 
 
 
