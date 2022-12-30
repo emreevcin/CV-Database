@@ -188,6 +188,23 @@ public class MainController implements Initializable {
 
         String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
         cvNumberLabel.setText("CV Number " + stringNumberOfCV);
+        if (d.getNumberOfCV() != 0) {
+            try {
+                String fileName = "cvdb.db";
+                conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+                pull = conn.prepareStatement("SELECT * FROM cvs");
+                ResultSet rs = pull.executeQuery();
+                while (rs.next()) {
+                    String cvName = rs.getString("cv_name");
+                    cvList.getItems().add(cvName);
+                    CV cv = new CV(scene1, scene2, scene3, scene4, scene5);
+                    cvMap.put(cvName, cv);
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         
     }
 
@@ -240,18 +257,17 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+    // When we click on delete button, selected cv will be deleted in database and listview
     @FXML
     public void deleteCV(){
-        // delete selected cv from listview and data structure that holds the selected cv
-        String s = cvList.getSelectionModel().getSelectedItem();
-        if(s.equals("")) {
-            return ;
-        }
-        cvList.getItems().remove(s);
-        cvMap.remove(s);
-
+        String cvName = cvList.getSelectionModel().getSelectedItem();
+        cvList.getItems().remove(cvName);
+        cvMap.remove(cvName);
+        getD().deleteCV(d.getCVID());
+        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
+        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
     }
-    @FXML
+        @FXML
     public void editCV(){    // If selected CV exist edit screen openable
         try{
             String title = cvList.getSelectionModel().getSelectedItem();
@@ -291,6 +307,18 @@ public class MainController implements Initializable {
     void showSourceCV() {
 
     }
+
+    //Get data from database
+//    public void getDataFromDatabase(String cvName){
+//        try {
+//            pull = conn.prepareStatement("SELECT * FROM cvs");
+//            ResultSet rs = pull.executeQuery();
+//            cvList.getItems().add(cvName);
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
 
 
     public Controller_S1_PI getController_s1_pi() {
