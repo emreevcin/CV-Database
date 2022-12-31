@@ -32,19 +32,18 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <ComboBox fx:id="searchSelectionList" prefHeight="26.0" prefWidth="123.0" promptText="Select Field">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="filterSelection" prefHeight="26.0" prefWidth="76.0" promptText="Filter" />
                </children>
             </HBox>
             <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="540.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="442.0">
+                  <HBox alignment="BOTTOM_CENTER">
                      <children>
-                        <TextField fx:id="searchBarTF" alignment="CENTER" prefHeight="26.0" prefWidth="238.0">
+                        <ComboBox fx:id="searchSelectionList" prefHeight="25.0" prefWidth="160.0" promptText="Select Field to Search">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ComboBox>
+                        <TextField fx:id="searchBarTF">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
@@ -57,34 +56,38 @@
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </ImageView>
-                        <ImageView fx:id="filterImage" fitHeight="60.0" fitWidth="30.0" onMouseClicked="#filter" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/filter_icon.png" />
-                           </image>
-                        </ImageView>
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="233.0" prefWidth="580.0">
+                  <HBox alignment="CENTER" prefHeight="300.0" prefWidth="250.0">
                      <children>
-                        <ListView fx:id="cvList" prefHeight="223.0" prefWidth="242.0">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </HBox.margin>
-                        </ListView>
                         <VBox alignment="CENTER_RIGHT">
                            <children>
+                              <ImageView fx:id="filterImage" fitHeight="60.0" fitWidth="30.0" onMouseClicked="#filter" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/filter_icon.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </ImageView>
                               <ImageView fx:id="createImage" fitHeight="60.0" fitWidth="30.0" onMouseClicked="#createCV" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons/create_icon.jpg" />
                                  </image>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
                               </ImageView>
                               <ImageView fx:id="editImage" fitHeight="60.0" fitWidth="30.0" onMouseClicked="#editCV" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@icons/edit_icon.png" />
                                  </image>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
                               </ImageView>
                               <ImageView fx:id="deleteImage" fitHeight="60.0" fitWidth="30.0" onMouseClicked="#deleteCV" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -99,7 +102,12 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </VBox>
-                        <Pane prefHeight="283.0" prefWidth="254.0">
+                        <ListView fx:id="cvList">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </ListView>
+                        <Pane fx:id="panePreview" prefHeight="283.0" prefWidth="254.0" visible="false">
                            <children>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
@@ -115,7 +123,7 @@
                                                 <Image url="@icons/application_icon.png" />
                                              </image>
                                              <HBox.margin>
-                                                <Insets left="80.0" />
+                                                <Insets left="60.0" />
                                              </HBox.margin>
                                           </ImageView>
                                        </children>
@@ -182,6 +190,23 @@
                                              </HBox.margin>
                                           </Text>
                                           <Label fx:id="tagsPreview" text="Mobile Developer, JAVA">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="0.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Created at">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Label fx:id="createdAtPreview" text="01.02.2000">
                                              <HBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </HBox.margin>

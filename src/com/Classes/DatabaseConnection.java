@@ -18,8 +18,11 @@ public class DatabaseConnection {
     private PreparedStatement insertSQLRecommendation;
     private PreparedStatement insertSQLOther;
     private PreparedStatement selectSQLCVID;
-    private PreparedStatement selectSQLCVName;
+    private PreparedStatement selectSQLLastCVName;
     private PreparedStatement selectSQLCVTag;
+    private PreparedStatement selectSQLCounterCV;
+    private PreparedStatement selectSQLCVNames;
+    private PreparedStatement deleteSQL;
     private PreparedStatement searchCV ;
 
     public DatabaseConnection() {
@@ -51,7 +54,7 @@ public class DatabaseConnection {
 
                 statPersonal.executeUpdate("CREATE TABLE people(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "photo BLOB, " +
                         "tag TEXT," +
                         "first_name TEXT, " +
@@ -66,7 +69,7 @@ public class DatabaseConnection {
 
                 statWork.executeUpdate("CREATE TABLE works(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "occupation TEXT, " +
                         "employer TEXT, " +
                         "city TEXT, " +
@@ -79,7 +82,7 @@ public class DatabaseConnection {
 
                 statEducation.executeUpdate("CREATE TABLE educations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "institution TEXT, " +
                         "department TEXT, " +
                         "gpa TEXT, " +
@@ -90,7 +93,7 @@ public class DatabaseConnection {
 
                 statCertificate.executeUpdate("CREATE TABLE certificates(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "education_name TEXT, " +
                         "company TEXT, " +
                         "verified_date TEXT, " +
@@ -98,7 +101,7 @@ public class DatabaseConnection {
 
                 statSkill.executeUpdate("CREATE TABLE skills(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "mother_tongue TEXT, " +
                         "other_languages TEXT, " +
                         "soft_skills TEXT, " +
@@ -108,7 +111,7 @@ public class DatabaseConnection {
 
                 statProject.executeUpdate("CREATE TABLE projects(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "title TEXT, " +
                         "starting_date TEXT, " +
                         "ending_date TEXT, " +
@@ -118,7 +121,7 @@ public class DatabaseConnection {
 
                 statRecommendation.executeUpdate("CREATE TABLE recommendations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "name_ TEXT, " +
                         "role_ TEXT, " +
                         "email TEXT, " +
@@ -128,7 +131,7 @@ public class DatabaseConnection {
 
                 statOther.executeUpdate("CREATE TABLE others(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "cv_id INTEGER REFERENCES cvs(id), " +
+                        "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "header TEXT, " +
                         "title TEXT, " +
                         "description TEXT, " +
@@ -165,10 +168,15 @@ public class DatabaseConnection {
 
             selectSQLCVID = conn.prepareStatement("SELECT id FROM cvs ORDER BY id DESC LIMIT 1;");
 
-            selectSQLCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
+            selectSQLLastCVName = conn.prepareStatement("SELECT cv_name FROM cvs ORDER BY id DESC LIMIT 1;");
 
             selectSQLCVTag = conn.prepareStatement("SELECT tag FROM people ORDER BY id DESC LIMIT 1;");
 
+            selectSQLCounterCV = conn.prepareStatement("SELECT COUNT(*) FROM cvs;");
+
+            selectSQLCVNames = conn.prepareStatement("SELECT cv_name FROM cvs");
+
+            deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
@@ -308,6 +316,19 @@ public class DatabaseConnection {
         }
     }
 
+    public int getNumberOfCV() {
+        int numberOfCV = 0;
+        try {
+            ResultSet rs = selectSQLCounterCV.executeQuery();
+            if (rs.next()) {
+                numberOfCV = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return numberOfCV;
+    }
+
     public int getCVID() {
         int cvID = 0;
         try {
@@ -324,7 +345,7 @@ public class DatabaseConnection {
     public String getCVName() {
         String cvName = "EMPTY";
         try {
-            ResultSet rs = selectSQLCVName.executeQuery();
+            ResultSet rs = selectSQLLastCVName.executeQuery();
             while (rs.next()) {
                 cvName = rs.getString("cv_name");
             }
@@ -344,6 +365,15 @@ public class DatabaseConnection {
             System.out.println(e);
         }
         return tag;
+    }
+    // Delete CV from database with Cascade
+    public void deleteCV(int cvId) {
+        try {
+            deleteSQL.setInt(1, cvId);
+            deleteSQL.execute();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
     public HashMap<Integer,String> searchCV(String key , String field ) throws SQLException {
         PreparedStatement statement ;
