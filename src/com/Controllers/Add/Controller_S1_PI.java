@@ -122,6 +122,13 @@ public class Controller_S1_PI implements Initializable {
 
     }
 
+
+
+    private String attachedPhotoFolderPath = "./src/com/resources/attachedPhoto";
+    private File cvPhotoFolder = new File(attachedPhotoFolderPath);
+    public File chosenPhoto;
+
+
     public void loadPhoto() throws IOException {
         FileChooser fc = new FileChooser();
 
@@ -131,9 +138,10 @@ public class Controller_S1_PI implements Initializable {
         FileChooser.ExtensionFilter extensionFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
 
         fc.getExtensionFilters().addAll(extensionFilterJPG, extensionFilterPNG);
-
-        File file = fc.showOpenDialog(null);
-
+        Controller_S5_RO a = new Controller_S5_RO();
+        chosenPhoto = fc.showOpenDialog(null);
+        System.out.println(chosenPhoto);
+        /**
         fis = new FileInputStream(file);
 
         byte[] buf = new byte[1024];
@@ -141,8 +149,22 @@ public class Controller_S1_PI implements Initializable {
             bos.write(buf, 0, readNum);
         }
         fis.close();
+         */
+        Image image = new Image(chosenPhoto.getAbsolutePath());
+        Controller_S5_RO controller_s5_ro = new Controller_S5_RO();
+        if (!cvPhotoFolder.exists()){
+            cvPhotoFolder.mkdir();
+            File destinationPhoto = new File(attachedPhotoFolderPath +"/" + this.getMainController().getD().getCVName()+".png");
+            File sourcePhoto = new File(chosenPhoto.getPath());
 
-        Image image = new Image(file.getAbsolutePath());
+            controller_s5_ro.copyFileUsingStream(sourcePhoto,destinationPhoto);
+        }
+        else {
+
+            File destinationPhoto = new File(attachedPhotoFolderPath +"/" + this.getMainController().getD().getCVName()+".png");
+            File sourcePhoto = new File(chosenPhoto.getPath());
+            controller_s5_ro.copyFileUsingStream(sourcePhoto,destinationPhoto);
+        }
 
         personImageView.setImage(image);
         personImageView.setFitHeight(100);

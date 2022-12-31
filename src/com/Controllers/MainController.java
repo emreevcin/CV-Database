@@ -54,6 +54,10 @@ public class MainController implements Initializable {
     @FXML
     private Label cvNumberLabel;
 
+    public Label getCvNumberLabel() {
+        return cvNumberLabel;
+    }
+
     @FXML
     private ImageView deleteImage;
 
@@ -71,6 +75,8 @@ public class MainController implements Initializable {
 
     @FXML
     private Label lastNamePreview;
+    @FXML
+    private Label createdAtPreview;
 
     @FXML
     private TextField searchBarTF;
@@ -163,7 +169,11 @@ public class MainController implements Initializable {
     private PreparedStatement getPersonImage;
     private PreparedStatement getPersonName;
     private PreparedStatement getPersonSurname;
+    private PreparedStatement getPersonTags;
     private PreparedStatement pull;
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -204,6 +214,11 @@ public class MainController implements Initializable {
                 ResultSet gpsResultSet = getPersonSurname.executeQuery();
                 String selectedCvSurname = gpsResultSet.getString("last_name");
 
+                getPersonTags = conn.prepareStatement("SELECT p.tag, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
+                ResultSet gptgsResultSet = getPersonTags.executeQuery();
+                String selectedCvTags = gptgsResultSet.getString("tag");
+
+
                 /**
                  getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
                  ResultSet gpiResultSet = getPersonImage.executeQuery();
@@ -224,6 +239,14 @@ public class MainController implements Initializable {
                 firstNamePreview.setText(selectedCvPersonName);
                 lastNamePreview.setText(selectedCvSurname);
                 titlePreview.setText(selectedCvPersonTitle);
+                createdAtPreview.setText(selectedCvDate);
+                tagsPreview.setText(selectedCvTags);
+
+                /**
+                Image photo = new Image("./src/com/resources/attachedPhoto/"+dbCvName+".png");
+                imagePreview.setImage(photo);
+                */
+
 
 
             } catch (SQLException exception) {

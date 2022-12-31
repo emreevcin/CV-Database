@@ -1,6 +1,7 @@
 package com.Controllers.Add;
 
 import com.Classes.CV;
+import com.Classes.DatabaseConnection;
 import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -184,8 +186,15 @@ public class Controller_S5_RO implements Initializable {
         alert.setContentText("Your CV is submitted");
         alert.show();
     }
+
+
+    private String attachedCvFolderPath = "./src/com/resources/attachedCvs";
+    private File cvDocFolder = new File(attachedCvFolderPath);
+    private File chosenPDF ;
+
+
     @FXML
-    public void submit(){
+    public void submit() throws IOException {
         if (roleTF.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
             AlertMethod("You can't submit unless all the important fields are filled");
         }
@@ -208,10 +217,40 @@ public class Controller_S5_RO implements Initializable {
             AlertMethod("You can't fill these field unless all the important fields are filled");
         }
 
-        else
+        else {
             AllInfo();
+
+            if (!cvDocFolder.exists()){
+                cvDocFolder.mkdir();
+                File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
+                File sourceCv = new File(chosenPDF.getPath());
+                copyFileUsingStream(sourceCv,destinationCv);
+            }
+            else {
+
+                File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
+                File sourceCv = new File(chosenPDF.getPath());
+                copyFileUsingStream(sourceCv,destinationCv);
+            }
+
+
+
+        }
+
     }
 
+
+
+
+    public static void copyFileUsingStream(File source, File dest) throws IOException {
+        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        }
+    }
     @FXML
     void loadCV() throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -223,16 +262,27 @@ public class Controller_S5_RO implements Initializable {
 
         fileChooser.getExtensionFilters().addAll(extensionFilterPDF, extensionFilterDOCX);
 
-        File file = fileChooser.showOpenDialog(null);
 
+        chosenPDF = fileChooser.showOpenDialog(null);
+        if(chosenPDF != null){
+            addCVButton.setDisable(true);
+        }
+
+
+
+
+        /**
         fis = new FileInputStream(file);
 
         byte[] buf = new byte[1024];
         for (int readNum; (readNum = fis.read(buf)) != -1;) {
             bos.write(buf, 0, readNum);
         }
-        fis.close();
+        fis.close();*/
     }
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

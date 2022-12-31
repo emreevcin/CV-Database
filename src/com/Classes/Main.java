@@ -18,7 +18,7 @@ public class Main extends Application {
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/main-view.fxml"));
-        Scene mainScene = new Scene(loader.<Parent>load());
+        Scene mainScene = new Scene(loader.<Parent> load());
 
         MainController mainController =new MainController();
         mainController.setMain(this);

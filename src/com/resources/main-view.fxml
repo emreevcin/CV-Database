@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.MainController">
     <children>
       <VBox alignment="CENTER" layoutX="1.0" layoutY="1.0">
          <children>
@@ -56,6 +56,7 @@
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </ImageView>
+                        <ComboBox fx:id="filterSelection" prefWidth="150.0" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -107,7 +108,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </HBox.margin>
                         </ListView>
-                        <Pane fx:id="panePreview" prefHeight="283.0" prefWidth="254.0" visible="false">
+                        <Pane fx:id="panePreview" prefHeight="283.0" prefWidth="254.0">
                            <children>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
