@@ -44,7 +44,7 @@ public class MainController implements Initializable {
     private Controller_S5_RO controller_s5_ro;
 
     @FXML
-    private ListView<String> cvList;
+    private ListView<String> cvList = new ListView<>();
 
     @FXML
     private Label cvNumberLabel;
@@ -143,7 +143,7 @@ public class MainController implements Initializable {
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
 
-//        d.reloadCV(cvList);
+        d.reloadCV(this.getCvList());
 
         }
 

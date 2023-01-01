@@ -201,16 +201,7 @@ public class DatabaseConnection {
         }
     }
 
-//    public void reloadCV(ListView <String> cvList){
-//        try {
-//            ResultSet rs = selectSQLLastCVName.executeQuery();
-//            while (rs.next()){
-//                cvList.getItems().add(getCVName());
-//        }
-//
-//        }catch(SQLException e){throw  new RuntimeException(e);}
-//
-//    }
+
 
     public void addCV(String firstName , String lastName) {
         String cvName = firstName + " " + lastName;
@@ -245,15 +236,15 @@ public class DatabaseConnection {
     public void addWork(int cvId, String occupation, String employer, String city, String country,
                         String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
-            insertSQLPersonal.setInt(1, cvId);
-            insertSQLPersonal.setString(2, occupation);
-            insertSQLPersonal.setString(3, employer);
-            insertSQLPersonal.setString(4, city);
-            insertSQLPersonal.setString(5, country);
-            insertSQLPersonal.setString(6, startingDate);
-            insertSQLPersonal.setString(7, endingDate);
-            insertSQLPersonal.setString(8, ongoing);
-            insertSQLPersonal.setString(9, activitiesResponsibilities);
+            insertSQLWork.setInt(1, cvId);
+            insertSQLWork.setString(2, occupation);
+            insertSQLWork.setString(3, employer);
+            insertSQLWork.setString(4, city);
+            insertSQLWork.setString(5, country);
+            insertSQLWork.setString(6, startingDate);
+            insertSQLWork.setString(7, endingDate);
+            insertSQLWork.setString(8, ongoing);
+            insertSQLWork.setString(9, activitiesResponsibilities);
             insertSQLWork.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -369,6 +360,18 @@ public class DatabaseConnection {
             System.out.println(e);
         }
         return cvID;
+    }
+
+    public void reloadCV(ListView <String> cvList){
+        try {
+            ResultSet rs = selectSQLLastCVName.executeQuery();
+            while (rs.next()){
+                cvList.getItems().add(getCVName());
+            }
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
     }
 
     public String getCVName() {

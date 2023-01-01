@@ -131,7 +131,7 @@ public class Controller_S2_WE implements Initializable {
                 this.getMainController().getInformation().put("employer", employerTF.getText());
                 this.getMainController().getInformation().put("cityWE", cityTF.getText());
                 this.getMainController().getInformation().put("countryWE", countryTF.getText());
-                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("ongoingWE", String.valueOf(isOngoing.isSelected()));
                 this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
                 Scene scene3 = this.getMainController().getSceneList().get(2);
                 this.getMainController().getAddStage().setScene(scene3);
@@ -145,7 +145,7 @@ public class Controller_S2_WE implements Initializable {
                 this.getMainController().getInformation().put("employer", employerTF.getText());
                 this.getMainController().getInformation().put("cityWE", cityTF.getText());
                 this.getMainController().getInformation().put("countryWE", countryTF.getText());
-                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("ongoingWE", String.valueOf(isOngoing.isSelected()));
                 this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
                 Scene scene3 = this.getMainController().getSceneList().get(2);
                 this.getMainController().getAddStage().setScene(scene3);
@@ -161,7 +161,7 @@ public class Controller_S2_WE implements Initializable {
                 this.getMainController().getInformation().put("employer", employerTF.getText());
                 this.getMainController().getInformation().put("cityWE", cityTF.getText());
                 this.getMainController().getInformation().put("countryWE", countryTF.getText());
-                this.getMainController().getInformation().put("ongoingWE", isOngoing.getText());
+                this.getMainController().getInformation().put("ongoingWE", String.valueOf(isOngoing.isSelected()));
                 this.getMainController().getInformation().put("explanationWE", explanationTA.getText());
                 Scene scene3 = this.getMainController().getSceneList().get(2);
                 this.getMainController().getAddStage().setScene(scene3);

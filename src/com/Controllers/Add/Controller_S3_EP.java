@@ -91,9 +91,9 @@ public class Controller_S3_EP implements Initializable {
         else if(IncludetoP){
             this.getMainController().getInformation().put("toDateP", toDateP.getValue().toString());
         }
-        this.getMainController().getInformation().put("ongoingE", isOngoingE.getText());
+        this.getMainController().getInformation().put("ongoingE", String.valueOf(isOngoingE.isSelected()));
         this.getMainController().getInformation().put("titleP", titleTF.getText());
-        this.getMainController().getInformation().put("ongoingP", isOngoingP.getText());
+        this.getMainController().getInformation().put("ongoingP", String.valueOf(isOngoingP.isSelected()));
         this.getMainController().getInformation().put("descriptionP", descriptionTA.getText());
         Scene scene4 = this.getMainController().getSceneList().get(3);
         this.getMainController().getAddStage().setScene(scene4);
