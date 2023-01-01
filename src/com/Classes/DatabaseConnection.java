@@ -25,7 +25,9 @@ public class DatabaseConnection {
     private PreparedStatement selectSQLCounterCV;
     private PreparedStatement selectSQLCVNames;
     private PreparedStatement deleteSQL;
-    private PreparedStatement searchCV ;
+    private PreparedStatement multi ;
+
+
     private javafx.scene.control.ListView<String> cvList;
 
 
@@ -183,6 +185,7 @@ public class DatabaseConnection {
             selectSQLCVNames = conn.prepareStatement("SELECT cv_name FROM cvs");
 
             deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
+
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
@@ -449,6 +452,59 @@ public class DatabaseConnection {
         }
         return cvs ;
     }
+
+
+
+    public HashMap<Integer,ArrayList<HashMap<String,String>>> returnCV(Integer cv_id) throws SQLException {
+
+        HashMap<Integer,ArrayList<HashMap<String,String>>> result = new HashMap<>();
+
+        /**
+         * -Explanation for getting cv -
+         * CV
+         *  ->works
+         *      ->work1
+         *      ->work2
+         *  ->education
+         *      ->education1
+         *      ->education2
+         *
+         * finding cv example
+         * ->>>
+         * cv_id = 5
+         * cv_id 5 -work1
+         * cv_id 5 -work2
+         *
+         * to store data we use hashmap
+         * ->integer represents index. For example : 0 represents personal information
+         * ->For those values that have same indexes we store each of them in the Arraylist
+         * ->In the Arraylist -> work1, work2
+         * ->result.get(0) returns a ArrayList that stores multi personal information
+         * ->result.get(0).get(0) returns a HashMap which is a one of the personal information for in this context
+         * ->In the hashmap each key represents a attribute .For instance ,  result.get(0).get(0).put("firstName","Emre") stores data
+         *
+         * **/
+
+
+        PreparedStatement statement ;
+        String[] tableArr = {"certificates","cvs","educations","others","people","skills","recommendations","works" };
+
+        for (int i=0 ; i<tableArr.length ; i++){
+            String table = tableArr[i];
+            statement = conn.prepareStatement("SELECT * FROM "+table+"WHERE cv_id ="+cv_id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+            }
+        }
+
+
+
+
+        return  result ;
+    }
+
+
+
 
 
 }

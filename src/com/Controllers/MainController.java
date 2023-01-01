@@ -180,6 +180,7 @@ public class MainController implements Initializable {
         return cvList;
     }
 
+
     private Connection conn;
     private PreparedStatement getCreatedDate;
     private PreparedStatement getPersonTitle;
@@ -205,74 +206,7 @@ public class MainController implements Initializable {
 
         d.reloadCV(cvList);
 
-//        pullFiles();
-
-        String fileName = "cvdb.db";
-        try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
         }
-        cvList.setOnMouseClicked(mouseEvent -> {
-            String dbCvName = cvList.getSelectionModel().getSelectedItem();
-            try {
-                getCreatedDate = conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name ='" + dbCvName + "';");
-                ResultSet gcdResultSet = getCreatedDate.executeQuery();
-                String selectedCvDate = gcdResultSet.getString("created_at");
-
-                getPersonTitle = conn.prepareStatement("SELECT p.title, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
-                ResultSet gptResultSet = getPersonTitle.executeQuery();
-                String selectedCvPersonTitle = gptResultSet.getString("title");
-
-                getPersonName = conn.prepareStatement("SELECT p.first_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
-                ResultSet gpnResultSet = getPersonName.executeQuery();
-                String selectedCvPersonName = gpnResultSet.getString("first_name");
-
-                getPersonSurname = conn.prepareStatement("SELECT p.last_name, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '" + dbCvName + "' AND c.id = p.cv_id;");
-                ResultSet gpsResultSet = getPersonSurname.executeQuery();
-                String selectedCvSurname = gpsResultSet.getString("last_name");
-
-                getPersonTags = conn.prepareStatement("SELECT p.tag, c.id FROM people AS p, cvs AS c WHERE c.cv_name = '"+dbCvName+"' AND c.id = p.cv_id;");
-                ResultSet gptgsResultSet = getPersonTags.executeQuery();
-                String selectedCvTags = gptgsResultSet.getString("tag");
-
-
-                /**
-                 getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
-                 ResultSet gpiResultSet = getPersonImage.executeQuery();
-
-                 Blob imageBlob = gpiResultSet.getBlob("photo");
-
-
-                 byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
-                 ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-                 BufferedImage imagePpl = ImageIO.read(inputStream);
-                 Image image = SwingFXUtils.toFXImage(imagePpl, null);
-
-                 personImage.setImage(image);
-
-                 */
-
-
-                firstNamePreview.setText(selectedCvPersonName);
-                lastNamePreview.setText(selectedCvSurname);
-                titlePreview.setText(selectedCvPersonTitle);
-                createdAtPreview.setText(selectedCvDate);
-                tagsPreview.setText(selectedCvTags);
-
-                /**
-                Image photo = new Image("./src/com/resources/attachedPhoto/"+dbCvName+".png");
-                imagePreview.setImage(photo);
-                */
-
-
-
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
-        });
-    }
 
     @FXML
     public void createCV() {

@@ -50,6 +50,7 @@
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </TextField>
+                        <ComboBox fx:id="filterSelection" prefWidth="150.0" promptText="Filter" />
                         <ImageView fx:id="searchIcon" fitHeight="26.0" fitWidth="79.0" onMouseClicked="#search" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@icons/search_icon.png" />
