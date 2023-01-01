@@ -77,17 +77,15 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getInformation().put("otherAddition", otherTF.getText());
         this.getMainController().getInformation().put("titleAddition", titleTF.getText());
         this.getMainController().getInformation().put("descriptionAddition", descriptionOTA.getText());
-        this.getMainController().getInformation().put("originalFile", bos.toString(StandardCharsets.UTF_8));
 
 
         this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
         int cvID = this.getMainController().getD().getCVID();
 
         this.getMainController().getD().addPerson(cvID,
-                this.getMainController().getInformation().get("photo"),
-                this.getMainController().getInformation().get("tagPI"),
                 this.getMainController().getInformation().get("firstName"),
                 this.getMainController().getInformation().get("lastName"),
+                this.getMainController().getInformation().get("tagPI"),
                 this.getMainController().getInformation().get("titlePI"),
                 this.getMainController().getInformation().get("careerObjective"),
                 this.getMainController().getInformation().get("emailPI"),
@@ -142,8 +140,7 @@ public class Controller_S5_RO implements Initializable {
         this.getMainController().getD().addOthers(cvID,
                 this.getMainController().getInformation().get("otherAddition"),
                 this.getMainController().getInformation().get("titleAddition"),
-                this.getMainController().getInformation().get("descriptionAddition"),
-                this.getMainController().getInformation().get("originalFile"));
+                this.getMainController().getInformation().get("descriptionAddition"));
 
         String stringNumberOfCV = Integer.toString(this.getMainController().getD().getNumberOfCV());
         this.getMainController().getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
@@ -233,10 +230,9 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getCvList().getSelectionModel().select(new_cv_name);
 
                 this.getMainController().getD().addPerson(cvID,
-                        this.getMainController().getInformation().get("photo"),
-                        this.getMainController().getInformation().get("tagPI"),
                         this.getMainController().getInformation().get("firstName"),
                         this.getMainController().getInformation().get("lastName"),
+                        this.getMainController().getInformation().get("tagPI"),
                         this.getMainController().getInformation().get("titlePI"),
                         this.getMainController().getInformation().get("careerObjective"),
                         this.getMainController().getInformation().get("emailPI"),
@@ -291,8 +287,7 @@ public class Controller_S5_RO implements Initializable {
                 this.getMainController().getD().addOthers(cvID,
                         this.getMainController().getInformation().get("otherAddition"),
                         this.getMainController().getInformation().get("titleAddition"),
-                        this.getMainController().getInformation().get("descriptionAddition"),
-                        this.getMainController().getInformation().get("originalFile"));
+                        this.getMainController().getInformation().get("descriptionAddition"));
 
 
 

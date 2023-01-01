@@ -6,35 +6,22 @@ import com.Classes.Main;
 import com.Controllers.Add.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.stage.FileChooser;
 import org.w3c.dom.*;
-import org.w3c.dom.events.EventException;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
@@ -55,19 +42,6 @@ public class MainController implements Initializable {
     private Controller_S3_EP controller_s3_ep;
     private Controller_S4_CS controller_s4_cs;
     private Controller_S5_RO controller_s5_ro;
-    private JFileChooser fc;
-    private Document document;
-
-    private CV cvforedit;
-
-
-    private int cvIDcounter;
-
-    private boolean isFunctionRunned;
-
-    @FXML
-    private ImageView createImage;
-
 
     @FXML
     private ListView<String> cvList;
@@ -80,48 +54,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private ImageView deleteImage;
-
-    @FXML
-    private ImageView editImage;
-
-    @FXML
-    private ImageView filterImage;
-
-    @FXML
-    private Label firstNamePreview;
-
-    @FXML
-    private ImageView imagePreview;
-
-    @FXML
-    private Label lastNamePreview;
-    @FXML
-    private Label createdAtPreview;
-
-    @FXML
     private TextField searchBarTF;
 
     @FXML
-    private ImageView searchIcon;
-
-    @FXML
-    private ComboBox<String> searchSelectionList;
+    private ComboBox<String> searchFieldCB;
     @FXML
     private ComboBox<String> filterSelection ;
-
-
-    @FXML
-    private ImageView sourceCVPreview;
-
-    @FXML
-    private Label tagsPreview;
-
-    @FXML
-    private Label titlePreview;
-
-
-
 
     protected HashMap<String, String> information;
 
@@ -194,19 +132,6 @@ public class MainController implements Initializable {
         return cvList;
     }
 
-
-    private Connection conn;
-    private PreparedStatement getCreatedDate;
-    private PreparedStatement getPersonTitle;
-    private PreparedStatement getPersonImage;
-    private PreparedStatement getPersonName;
-    private PreparedStatement getPersonSurname;
-    private PreparedStatement getPersonTags;
-    private PreparedStatement pull;
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -215,10 +140,10 @@ public class MainController implements Initializable {
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
 
-        searchSelectionList.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
+        searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
 
-        d.reloadCV(cvList);
+//        d.reloadCV(cvList);
 
         }
 
@@ -272,52 +197,52 @@ public class MainController implements Initializable {
         }
     }
 
-    @FXML
-    public void createPdf(){
-        /*
-        // Create a file chooser
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showSaveDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            // Get the selected file
-
-            java.io.File selectedFile = fileChooser.getSelectedFile();
-            // Create a Path object for the file
-            Path filePath = Paths.get(selectedFile.getAbsolutePath());
-            try {
-                // Create the file
-                Files.createFile(filePath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-       /* final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showSaveDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            // User has selected a file, get the file path
-            String filePath = fc.getSelectedFile().getAbsolutePath();
-            if (!filePath.endsWith(".pdf")) {
-                // Append .pdf to the file name if it doesn't already have it
-                filePath += ".pdf";
-            }*/
-        String fileName =cvList.getSelectionModel().getSelectedItem()+".pdf";
-        // Create a file chooser
-        JFileChooser fileChooser = new JFileChooser();
-        // Set the file chooser to allow the user to select a directory, not just a file
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnValue = fileChooser.showSaveDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            // Get the selected directory
-            java.io.File selectedDirectory = fileChooser.getSelectedFile();
-            // Create a Path object for the file
-            Path filePath = Paths.get(selectedDirectory.getAbsolutePath(), fileName);
-            try {
-                // Create the file
-                Files.createFile(filePath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }}
+//    @FXML
+//    public void createPdf(){
+//        /*
+//        // Create a file chooser
+//        JFileChooser fileChooser = new JFileChooser();
+//        int returnValue = fileChooser.showSaveDialog(null);
+//        if (returnValue == JFileChooser.APPROVE_OPTION) {
+//            // Get the selected file
+//
+//            java.io.File selectedFile = fileChooser.getSelectedFile();
+//            // Create a Path object for the file
+//            Path filePath = Paths.get(selectedFile.getAbsolutePath());
+//            try {
+//                // Create the file
+//                Files.createFile(filePath);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//       /* final JFileChooser fc = new JFileChooser();
+//        int returnVal = fc.showSaveDialog(null);
+//        if (returnVal == JFileChooser.APPROVE_OPTION) {
+//            // User has selected a file, get the file path
+//            String filePath = fc.getSelectedFile().getAbsolutePath();
+//            if (!filePath.endsWith(".pdf")) {
+//                // Append .pdf to the file name if it doesn't already have it
+//                filePath += ".pdf";
+//            }*/
+//        String fileName =cvList.getSelectionModel().getSelectedItem()+".pdf";
+//        // Create a file chooser
+//        JFileChooser fileChooser = new JFileChooser();
+//        // Set the file chooser to allow the user to select a directory, not just a file
+//        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        int returnValue = fileChooser.showSaveDialog(null);
+//        if (returnValue == JFileChooser.APPROVE_OPTION) {
+//            // Get the selected directory
+//            java.io.File selectedDirectory = fileChooser.getSelectedFile();
+//            // Create a Path object for the file
+//            Path filePath = Paths.get(selectedDirectory.getAbsolutePath(), fileName);
+//            try {
+//                // Create the file
+//                Files.createFile(filePath);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//        }}
 
 
 
@@ -385,7 +310,7 @@ public class MainController implements Initializable {
     @FXML
     void search() throws SQLException {
         String key = searchBarTF.getText();
-        String field = searchSelectionList.getSelectionModel().getSelectedItem();
+        String field = searchFieldCB.getSelectionModel().getSelectedItem();
 
         System.out.println(key + " " + field);
         if (field == null) {

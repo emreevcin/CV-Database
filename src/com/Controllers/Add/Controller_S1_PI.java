@@ -47,38 +47,14 @@ public class Controller_S1_PI implements Initializable {
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-    private void AlertMethod(String contentText){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("PROBLEM:");
-        alert.setContentText(contentText);
-        alert.show();
-    }
-
-    private void allInfo(){
-        this.getMainController().getInformation().put("firstName", firstNameTF.getText());
-        this.getMainController().getInformation().put("lastName", lastNameTF.getText());
-        this.getMainController().getInformation().put("tagPI", tagTF.getText());
-        this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
-        this.getMainController().getInformation().put("titlePI", titleTF.getText());
-        this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
-        this.getMainController().getInformation().put("emailPI", emailTF.getText());
-        this.getMainController().getInformation().put("phonePI", phoneTF.getText());
-        this.getMainController().getInformation().put("cityPI", cityTF.getText());
-        this.getMainController().getInformation().put("countryPI", countryTF.getText());
-        Scene scene2 = this.getMainController().getSceneList().get(1);
-        this.getMainController().getAddStage().setScene(scene2);
-
-    }
-
     @FXML
-    public void next(ActionEvent actionEvent) {
+    public void next() {
         if(mainController.isEditFunctionRunned()){
 
             Stage stage = new Stage();
             stage.setScene(mainController.getSceneList().get(1));
             stage.show();
-            // this is the main stage and when you clickled edit screen it will be hidden
+            // this is the main stage and when you clicked edit screen it will be hidden
             Stage personalInfoView = (Stage) nextButton.getScene().getWindow();
             personalInfoView.hide();
         }
@@ -98,33 +74,14 @@ public class Controller_S1_PI implements Initializable {
             catch (Exception e){e.printStackTrace();}
     }
 
-    public Scene getScene() {
-        return scene;
+    @FXML
+    public void cancel(ActionEvent actionEvent) {
+        this.getMainController().getAddStage().close();
+        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
+        stage.show();
     }
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
 
-    public void init (MainController mainController){
-        setMainController(mainController);
-    }
-
-    public Main getMain() {
-        return main;
-    }
-
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
-    public MainController getMainController() {
-        return mainController;
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 
 
     @Override
@@ -138,7 +95,7 @@ public class Controller_S1_PI implements Initializable {
     private File cvPhotoFolder = new File(attachedPhotoFolderPath);
     public File chosenPhoto;
 
-
+    @FXML
     public void loadPhoto() throws IOException {
         FileChooser fc = new FileChooser();
 
@@ -184,15 +141,56 @@ public class Controller_S1_PI implements Initializable {
 
     }
 
-    public void addTag(){
-        String tag = tagTF.getText();
-        this.getMainController().getInformation().put("tagPI", tag);
-        tagTF.clear();
+
+    private void AlertMethod(String contentText){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("PROBLEM:");
+        alert.setContentText(contentText);
+        alert.show();
     }
 
-    public void cancel(ActionEvent actionEvent) {
-        this.getMainController().getAddStage().close();
-        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
-        stage.show();
+    private void allInfo(){
+        this.getMainController().getInformation().put("firstName", firstNameTF.getText());
+        this.getMainController().getInformation().put("lastName", lastNameTF.getText());
+        this.getMainController().getInformation().put("tagPI", tagTF.getText());
+        this.getMainController().getInformation().put("photo", bos.toString(StandardCharsets.UTF_8));
+        this.getMainController().getInformation().put("titlePI", titleTF.getText());
+        this.getMainController().getInformation().put("careerObjective", careerObjectiveTA.getText());
+        this.getMainController().getInformation().put("emailPI", emailTF.getText());
+        this.getMainController().getInformation().put("phonePI", phoneTF.getText());
+        this.getMainController().getInformation().put("cityPI", cityTF.getText());
+        this.getMainController().getInformation().put("countryPI", countryTF.getText());
+        Scene scene2 = this.getMainController().getSceneList().get(1);
+        this.getMainController().getAddStage().setScene(scene2);
+
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    public void init (MainController mainController){
+        setMainController(mainController);
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }
