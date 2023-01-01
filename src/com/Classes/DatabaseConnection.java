@@ -4,6 +4,8 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.control.ListView;
+
 
 public class DatabaseConnection {
     private final String fileName;
@@ -24,6 +26,10 @@ public class DatabaseConnection {
     private PreparedStatement selectSQLCVNames;
     private PreparedStatement deleteSQL;
     private PreparedStatement searchCV ;
+    private javafx.scene.control.ListView<String> cvList;
+
+
+
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -180,6 +186,17 @@ public class DatabaseConnection {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public void reloadCV(ListView <String> cvList){
+        try {
+            ResultSet rs = selectSQLLastCVName.executeQuery();
+            while (rs.next()){
+                cvList.getItems().add(getCVName());
+        }
+
+        }catch(SQLException e){throw  new RuntimeException(e);}
+
     }
 
     public void addCV(String firstName , String lastName) {
