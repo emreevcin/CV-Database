@@ -101,7 +101,15 @@ public class Controller_S3_EP implements Initializable {
 
 
     public void next(){
-        if(toDateE.getValue() != null && isOngoingE.isSelected()){
+        if(mainController.isEditFunctionRunned()){
+            Stage stage = new Stage();
+            stage.setScene(mainController.getSceneList().get(3));
+            stage.show();
+            // this is the main stage and when you clickled edit screen it will be hidden
+            Stage epView = (Stage) nextButton.getScene().getWindow();
+            epView.hide();
+        }
+        else if(toDateE.getValue() != null && isOngoingE.isSelected()){
             AlertMethod("You can't fill in 'to' field and 'OnGoing' checkbox at the same time");
         }
         else if(toDateP.getValue() != null && isOngoingP.isSelected()){

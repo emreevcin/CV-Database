@@ -153,9 +153,12 @@ public class Controller_S5_RO implements Initializable {
             scenes.add(this.getMainController().getSceneList().get(i));
         }
         CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
-        String cvName = this.getMainController().getD().getCVName();
+        //edit part
+        String name = this.getMainController().getInformation().get("firstName");
+        String surname =this.getMainController().getInformation().get("lastName");
+        String cvName = name+"_"+surname;
         cv.setTitle(cvName);
-        String cvTag = this.getMainController().getD().getCVTag();
+        String cvTag = this.getMainController().getInformation().get("tag");
         cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
@@ -195,32 +198,130 @@ public class Controller_S5_RO implements Initializable {
 
     @FXML
     public void submit() throws IOException {
-        if (roleTF.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-            AlertMethod("You can't submit unless all the important fields are filled");
-        }
-        else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+") && phoneTF.getText().length() != 10){
-            AlertMethod("Please enter a valid phone number");
-        }
-        else if (!emailTF.getText().isEmpty() &&!emailTF.getText().contains("@")){
-            AlertMethod("Please enter a valid email address");
-        }
-        else if (nameTF.getText().isEmpty()  && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-            AlertMethod("You can't fill these field unless all the important fields are filled");
-        }
-        else if (descriptionRTA.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-            AlertMethod("You can't fill these field unless all the important fields are filled");
-        }
-        else if (emailTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-            AlertMethod("You can't fill these field unless all the important fields are filled");
-        }
-        else if (phoneTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-            AlertMethod("You can't fill these field unless all the important fields are filled");
-        }
+        try {
+            if(mainController.isEditFunctionRunned()){
+                //get old
 
-        else {
-            AllInfo();
+                DatabaseConnection d = this.getMainController().getD();
+                String name = this.getMainController().getInformation().get("firstName");
+                String surname = this.getMainController().getInformation().get("lastName");
+                String new_cv_name = name+"_"+surname;
 
-            if (!cvDocFolder.exists()){
+
+                this.getMainController().getCvList().getItems().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
+                this.getMainController().getCvMap().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
+
+                String oldName = d.getCVName();
+                String old_cv_name = oldName;
+                int cvID = this.getMainController().getD().getCVID();
+
+                d.updateCV(old_cv_name,new_cv_name);
+                d.deleteFromTable("people",cvID);
+                d.deleteFromTable("works",cvID);
+                d.deleteFromTable("educations",cvID);
+                d.deleteFromTable("certificates",cvID);
+                d.deleteFromTable("skills",cvID);
+                d.deleteFromTable("projects",cvID);
+                d.deleteFromTable("recommendations",cvID);
+                d.deleteFromTable("others",cvID);
+
+
+                CV cv = this.getMainController().getCvMap().get(old_cv_name);
+                cv.setTitle(new_cv_name);
+                this.getMainController().getCvMap().put(new_cv_name,cv);
+                this.getMainController().getCvList().getItems().add(new_cv_name);
+                this.getMainController().getCvList().getSelectionModel().select(new_cv_name);
+
+                this.getMainController().getD().addPerson(cvID,
+                        this.getMainController().getInformation().get("photo"),
+                        this.getMainController().getInformation().get("tagPI"),
+                        this.getMainController().getInformation().get("firstName"),
+                        this.getMainController().getInformation().get("lastName"),
+                        this.getMainController().getInformation().get("titlePI"),
+                        this.getMainController().getInformation().get("careerObjective"),
+                        this.getMainController().getInformation().get("emailPI"),
+                        this.getMainController().getInformation().get("phonePI"),
+                        this.getMainController().getInformation().get("cityPI"),
+                        this.getMainController().getInformation().get("countryPI"));
+
+                this.getMainController().getD().addWork(cvID,
+                        this.getMainController().getInformation().get("occupation"),
+                        this.getMainController().getInformation().get("employer"),
+                        this.getMainController().getInformation().get("cityWE"),
+                        this.getMainController().getInformation().get("countryWE"),
+                        this.getMainController().getInformation().get("fromWE"),
+                        this.getMainController().getInformation().get("toWE"),
+                        this.getMainController().getInformation().get("ongoingWE"),
+                        this.getMainController().getInformation().get("explanationWE"));
+
+                this.getMainController().getD().addEducation(cvID,
+                        this.getMainController().getInformation().get("institution"),
+                        this.getMainController().getInformation().get("department"),
+                        this.getMainController().getInformation().get("gpa"),
+                        this.getMainController().getInformation().get("fromE"),
+                        this.getMainController().getInformation().get("toE"),
+                        this.getMainController().getInformation().get("ongoingE"));
+
+                this.getMainController().getD().addProjects(cvID,
+                        this.getMainController().getInformation().get("titleP"),
+                        this.getMainController().getInformation().get("fromP"),
+                        this.getMainController().getInformation().get("toD"),
+                        this.getMainController().getInformation().get("ongoingP"),
+                        this.getMainController().getInformation().get("descriptionP"));
+
+                this.getMainController().getD().addCertificates(cvID,
+                        this.getMainController().getInformation().get("education"),
+                        this.getMainController().getInformation().get("company"),
+                        this.getMainController().getInformation().get("dateC"));
+
+                this.getMainController().getD().addSkills(cvID,
+                        this.getMainController().getInformation().get("mother"),
+                        this.getMainController().getInformation().get("otherLanguage"),
+                        this.getMainController().getInformation().get("softSkills"),
+                        this.getMainController().getInformation().get("hardSkills"),
+                        this.getMainController().getInformation().get("descriptionHI"));
+
+                this.getMainController().getD().addRecommendations(cvID,
+                        this.getMainController().getInformation().get("nameR"),
+                        this.getMainController().getInformation().get("roleR"),
+                        this.getMainController().getInformation().get("emailR"),
+                        this.getMainController().getInformation().get("descriptionR"),
+                        this.getMainController().getInformation().get("phoneR"));
+
+                this.getMainController().getD().addOthers(cvID,
+                        this.getMainController().getInformation().get("otherAddition"),
+                        this.getMainController().getInformation().get("titleAddition"),
+                        this.getMainController().getInformation().get("descriptionAddition"),
+                        this.getMainController().getInformation().get("originalFile"));
+
+
+
+            }
+            else if (roleTF.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+                AlertMethod("You can't submit unless all the important fields are filled");
+            }
+            else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+") && phoneTF.getText().length() != 10){
+                AlertMethod("Please enter a valid phone number");
+            }
+            else if (!emailTF.getText().isEmpty() &&!emailTF.getText().contains("@")){
+                AlertMethod("Please enter a valid email address");
+            }
+            else if (nameTF.getText().isEmpty()  && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+                AlertMethod("You can't fill these field unless all the important fields are filled");
+            }
+            else if (descriptionRTA.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+                AlertMethod("You can't fill these field unless all the important fields are filled");
+            }
+            else if (emailTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+                AlertMethod("You can't fill these field unless all the important fields are filled");
+            }
+            else if (phoneTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
+                AlertMethod("You can't fill these field unless all the important fields are filled");
+            }
+
+            else
+                AllInfo();
+            /*if (!cvDocFolder.exists()){
                 cvDocFolder.mkdir();
                 File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
                 File sourceCv = new File(chosenPDF.getPath());
@@ -231,10 +332,10 @@ public class Controller_S5_RO implements Initializable {
                 File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
                 File sourceCv = new File(chosenPDF.getPath());
                 copyFileUsingStream(sourceCv,destinationCv);
-            }
-
-
-
+            }*/
+        }catch (Exception e){
+            e.printStackTrace();
+            AlertMethod("Please fill all the fields");
         }
 
     }

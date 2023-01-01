@@ -1,5 +1,6 @@
 package com.Controllers.Add;
 
+import com.Classes.CV;
 import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.event.ActionEvent;
@@ -72,7 +73,16 @@ public class Controller_S1_PI implements Initializable {
 
     @FXML
     public void next(ActionEvent actionEvent) {
-        if(firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()) {
+        if(mainController.isEditFunctionRunned()){
+
+            Stage stage = new Stage();
+            stage.setScene(mainController.getSceneList().get(1));
+            stage.show();
+            // this is the main stage and when you clickled edit screen it will be hidden
+            Stage personalInfoView = (Stage) nextButton.getScene().getWindow();
+            personalInfoView.hide();
+        }
+        else if(firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()) {
             AlertMethod("Please enter the first Name and last name and try again");
         }
         else if (!firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()){

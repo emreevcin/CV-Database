@@ -58,6 +58,13 @@ public class MainController implements Initializable {
     private JFileChooser fc;
     private Document document;
 
+    private CV cvforedit;
+
+
+    private int cvIDcounter;
+
+    private boolean isFunctionRunned;
+
     @FXML
     private ImageView createImage;
 
@@ -125,6 +132,13 @@ public class MainController implements Initializable {
     private Scene addScene;
     private Stage addStage;
 
+    private boolean isEditFunctionRunned;
+    public boolean isEditFunctionRunned() {
+        return isEditFunctionRunned;
+    }
+    public void setEditFunctionRunned(boolean editFunctionRunned) {
+        isEditFunctionRunned = editFunctionRunned;
+    }
     public MainController() {
         this.controller_s1_pi = new Controller_S1_PI();
         this.controller_s2_we = new Controller_S2_WE();
@@ -324,14 +338,18 @@ public class MainController implements Initializable {
     @FXML
     public void editCV() {    // If selected CV exist edit screen openable
         try {
+            isEditFunctionRunned = true;
             String title = cvList.getSelectionModel().getSelectedItem();
             CV cv = checkCV(title);
-            if (cv == null) {
+            if(cv==null){
                 return;
             }
             Stage stage = new Stage();
             stage.setScene(cv.getScene1());
             stage.show();
+            // this is the main stage and when you clickled edit screen it will be hidden
+            Stage mainStage = (Stage) getCvList().getScene().getWindow();
+            mainStage.hide();
         } catch (Exception e) {
             e.printStackTrace();
         }

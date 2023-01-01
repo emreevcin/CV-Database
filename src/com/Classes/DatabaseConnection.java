@@ -33,6 +33,10 @@ public class DatabaseConnection {
 
 
 
+    private PreparedStatement selectIDwithParam;
+    private PreparedStatement updateCV;
+    private PreparedStatement deleteFromTable;
+
     public DatabaseConnection() {
         fileName = "cvdb.db";
         File file = new File(fileName);
@@ -185,6 +189,14 @@ public class DatabaseConnection {
             selectSQLCVNames = conn.prepareStatement("SELECT cv_name FROM cvs");
 
             deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
+
+            //these are the part for edit
+            selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ?");
+
+            updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ?;");
+
+            deleteFromTable = conn.prepareStatement("DELETE FROM ? WHERE cv_id = ?;");
+
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -451,6 +463,41 @@ public class DatabaseConnection {
             cvs.put(cv_id,cv_name);
         }
         return cvs ;
+    }
+
+    public int getIDwithParam(String firstName, String lastName) {
+        int id = 0;
+        String param= firstName + "_" + lastName;
+        try {
+            selectIDwithParam.setString(1, param);
+            ResultSet rs = selectIDwithParam.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return id;
+    }
+    public void updateCV(String old_cv_name , String new_cv_name) {
+        try {
+            updateCV.setString(1, new_cv_name);
+            updateCV.setString(2, old_cv_name);
+            updateCV.execute();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void deleteFromTable(String table , int id) {
+        try {
+            deleteFromTable.setString(1, table);
+            deleteFromTable.setInt(2, id);
+            deleteFromTable.execute();
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.Controllers.Add;
 
+import com.Classes.CV;
 import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.fxml.FXML;
@@ -89,8 +90,21 @@ public class Controller_S4_CS implements Initializable {
 
 
     public void next() {
+        if(mainController.isEditFunctionRunned()){
+            String title = mainController.getCvList().getSelectionModel().getSelectedItem();
+            CV cv = mainController.checkCV(title);
+            if(cv==null){
+                return;
+            }
+            Scene scene5 = this.getMainController().getSceneList().get(4);
+            this.getMainController().getAddStage().setScene(scene5);
+            Stage stage = this.getMainController().getAddStage();
+            stage.show();
+            // this is the main stage and when you clickled edit screen it will be hidden
+
+        }
         //If the date is not null and the education field is empty
-        if (certificateDate.getValue() != null && educationTF.getText().isEmpty() ){
+        else if (certificateDate.getValue() != null && educationTF.getText().isEmpty() ){
             AlertMethod ("Please fill in education name field and try again");
         }
         else if (educationTF.getText().isEmpty() && !companyTF.getText().isEmpty() ) {

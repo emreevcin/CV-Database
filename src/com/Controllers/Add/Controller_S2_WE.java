@@ -77,8 +77,16 @@ public class Controller_S2_WE implements Initializable {
 
     @FXML
     public void next(){
+        if(mainController.isEditFunctionRunned()){
+            Stage stage = new Stage();
+            stage.setScene(mainController.getSceneList().get(2));
+            stage.show();
+            // this is the main stage and when you clickled edit screen it will be hidden
+            Stage weView = (Stage) nextButton.getScene().getWindow();
+            weView.hide();
+        }
 
-        if(toDate.getValue() !=null && isOngoing.isSelected()){
+        else if(toDate.getValue() !=null && isOngoing.isSelected()){
             AlertMethod("You can't fill in 'to' field and 'OnGoing' checkbox at the same time");}
         else if(fromDate.getValue() ==null && isOngoing.isSelected() && toDate.getValue() == null){
             AlertMethod("You can't check the 'OnGoing' checkbox without filling in the from field");
