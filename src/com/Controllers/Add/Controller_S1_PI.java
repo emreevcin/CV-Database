@@ -58,16 +58,20 @@ public class Controller_S1_PI implements Initializable {
             Stage personalInfoView = (Stage) nextButton.getScene().getWindow();
             personalInfoView.hide();
         }
+
         else if(firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()) {
             AlertMethod("Please enter the first Name and last name and try again");
+        }
+        else if(!emailTF.getText().isEmpty() && !emailTF.getText().contains("@") && !emailTF.getText().contains(".")) {
+            AlertMethod("Please enter the email correctly and try again");
+        }
+        else if(!phoneTF.getText().isEmpty() && phoneTF.getText().length() != 10) {
+            AlertMethod("Please enter the phone number correctly and try again");
         }
         else if (!firstNameTF.getText().isEmpty() && lastNameTF.getText().isEmpty()){
             AlertMethod("Also you need to enter last name");
         }
 
-        else if(titleTF.getText().isEmpty()){
-            AlertMethod("Please enter the title and try again");
-        }
 
         else
             try{allInfo();}

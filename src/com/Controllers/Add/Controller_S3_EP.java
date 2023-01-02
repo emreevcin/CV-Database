@@ -180,9 +180,6 @@ public class Controller_S3_EP implements Initializable {
         else if (toDateE.getValue() != null && fromDateE.getValue() != null && toDateE.getValue().isEqual(fromDateE.getValue())) {
             AlertMethod("The 'to' date can't be equal to the 'from' date");
         }
-        else if (!descriptionTA.getText().isEmpty() && titleTF.getText().isEmpty()){
-            AlertMethod("You can't leave the 'Title' field empty");
-        }
         else if ((!descriptionTA.getText().isEmpty() && (institutionTF.getText().isEmpty() || departmentTF.getText().isEmpty() || gpaTF.getText().isEmpty()))){
             AlertMethod("You can't leave the 'Institution', 'Department' or 'GPA' field empty if you want an education");
         }

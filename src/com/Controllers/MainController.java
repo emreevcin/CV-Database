@@ -36,6 +36,12 @@ public class MainController implements Initializable {
     }
 
     private Main main;
+    private Scene scene1;
+    private Scene scene2;
+    private Scene scene3;
+    private Scene scene4;
+    private Scene scene5;
+
 
     private Controller_S1_PI controller_s1_pi;
     private Controller_S2_WE controller_s2_we;
@@ -110,7 +116,6 @@ public class MainController implements Initializable {
     public void setMain(Main main) {
         this.main = main;
     }
-
     public void setController_s1_pi(Controller_S1_PI controller_s1_pi) {
         this.controller_s1_pi = controller_s1_pi;
     }
@@ -169,19 +174,33 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
-/*
-        if (this.getD().getNumberOfCV() != 0) {
-            String stringNumberOfCV = Integer.toString(this.getD().getNumberOfCV());
-            this.getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
+
+        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
+        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
+        if (d.getNumberOfCV() != 0) {
+            try {
+                String fileName = "cvdb.db";
+                conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+                pull = conn.prepareStatement("SELECT * FROM cvs");
+                ResultSet rs = pull.executeQuery();
+                while (rs.next()) {
+                    String cvName = rs.getString("cv_name");
+                    cvList.getItems().add(cvName);
+                    CV cv = new CV(scene1, scene2, scene3, scene4, scene5);
+                    cvMap.put(cvName, cv);
+
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
- */
+
 
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
 
-        d.reloadCV(cvList);
-
+        // d.reloadCV(cvList);
         filterSelection.setOnAction(actionEvent -> {
             String filter = filterSelection.getSelectionModel().getSelectedItem();
             filter(filter);
@@ -291,31 +310,12 @@ public class MainController implements Initializable {
 
     @FXML
     public void deleteCV() {
-        // delete selected cv from listview and data structure that holds the selected cv
-        String s = cvList.getSelectionModel().getSelectedItem();
-        int deleted_id = d.getIDwithParam((s));
-
-        System.out.println(s);
-        System.out.println(deleted_id);
-        if (s.equals("")) {
-            return;
-        }
-        /*
-        String[] tableArr = {"certificates","educations","other_information","people","projects","recommendations","skills","works" };
-        for (String value : tableArr) {
-            System.out.println(value);
-            d.deleteFromTable(value, deleted_id);
-        }
-         */
-        d.deleteCV(deleted_id);
-
-        cvList.getItems().remove(s);
-        cvMap.remove(s);
-/*
-        String stringNumberOfCV = Integer.toString(this.getD().getNumberOfCV());
-        this.getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
-
- */
+        String cvName = cvList.getSelectionModel().getSelectedItem();
+        cvList.getItems().remove(cvName);
+        cvMap.remove(cvName);
+        getD().deleteCV(d.getCVID());
+        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
+        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
 
     }
 

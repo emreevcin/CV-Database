@@ -11,10 +11,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+
 public class Main extends Application {
+    MainController mainController ;
+
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+    //this method is used to make bigger the image when vbox is fullscreen and smaller when it is not
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/main-view.fxml"));
         Scene mainScene = new Scene(loader.<Parent> load());
 
@@ -28,8 +39,6 @@ public class Main extends Application {
         FXMLLoader addLoader3 = new FXMLLoader(getClass().getResource("../resources/education-projects-view.fxml"));
         FXMLLoader addLoader4 = new FXMLLoader(getClass().getResource("../resources/certificates-skills-view.fxml"));
         FXMLLoader addLoader5 = new FXMLLoader(getClass().getResource("../resources/recommendation-others-view.fxml"));
-
-
 
 
         //scenes of adding process

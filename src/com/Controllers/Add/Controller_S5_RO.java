@@ -293,26 +293,33 @@ public class Controller_S5_RO implements Initializable {
 
 
             }
-            else if (roleTF.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-                AlertMethod("You can't submit unless all the important fields are filled");
+            else if(nameTF.getText().isEmpty() && !descriptionRTA.getText().isEmpty()) {
+                AlertMethod("Please enter the name");
+
+            }
+            else if (nameTF.getText().isEmpty() && !roleTF.getText().isEmpty()){
+                AlertMethod("Please enter the name");
+            }
+            else if(nameTF.getText().isEmpty() && !emailTF.getText().isEmpty() && !phoneTF.getText().isEmpty()) {
+                AlertMethod("Please enter the name");
+
+            }
+            else if(nameTF.getText().isEmpty() && !descriptionOTA.getText().isEmpty()){
+                AlertMethod("Please enter the name");
+
+            }
+            else if (nameTF.getText().isEmpty() && !titleTF.getText().isEmpty()){
+                AlertMethod("Please enter the name");
+            }
+            else if (nameTF.getText().isEmpty() && !otherTF.getText().isEmpty()){
+                AlertMethod("Please enter the name");
+            }
+
+            else if(!emailTF.getText().isEmpty() && !emailTF.getText().contains("@") && !emailTF.getText().contains(".")) {
+                AlertMethod("Please enter the email correctly and try again");
             }
             else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+") && phoneTF.getText().length() != 10){
                 AlertMethod("Please enter a valid phone number");
-            }
-            else if (!emailTF.getText().isEmpty() &&!emailTF.getText().contains("@")){
-                AlertMethod("Please enter a valid email address");
-            }
-            else if (nameTF.getText().isEmpty()  && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-                AlertMethod("You can't fill these field unless all the important fields are filled");
-            }
-            else if (descriptionRTA.getText().isEmpty() && (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-                AlertMethod("You can't fill these field unless all the important fields are filled");
-            }
-            else if (emailTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-                AlertMethod("You can't fill these field unless all the important fields are filled");
-            }
-            else if (phoneTF.getText().isEmpty()&& (!otherTF.getText().isEmpty() || !titleTF.getText().isEmpty() || !descriptionOTA.getText().isEmpty())){
-                AlertMethod("You can't fill these field unless all the important fields are filled");
             }
 
             else
