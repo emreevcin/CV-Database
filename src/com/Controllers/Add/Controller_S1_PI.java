@@ -76,9 +76,13 @@ public class Controller_S1_PI implements Initializable {
 
     @FXML
     public void cancel(ActionEvent actionEvent) {
-        this.getMainController().getAddStage().close();
-        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
-        stage.show();
+
+        // primary stage should come back to the screen
+        Stage stage1 = (Stage) mainController.getCvList().getScene().getWindow();
+        stage1.show();
+        Stage stage2 = (Stage) cancelButton.getScene().getWindow();
+        stage2.close();
+
     }
 
 
@@ -140,6 +144,7 @@ public class Controller_S1_PI implements Initializable {
         personImageView.setCache(true);
 
     }
+
 
 
     private void AlertMethod(String contentText){
