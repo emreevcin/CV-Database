@@ -169,11 +169,13 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
-
+/*
         if (this.getD().getNumberOfCV() != 0) {
             String stringNumberOfCV = Integer.toString(this.getD().getNumberOfCV());
             this.getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
         }
+
+ */
 
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
@@ -305,10 +307,15 @@ public class MainController implements Initializable {
             d.deleteFromTable(value, deleted_id);
         }
          */
-        d.deleteCV(deleted_id + 1);
+        d.deleteCV(deleted_id);
 
         cvList.getItems().remove(s);
         cvMap.remove(s);
+/*
+        String stringNumberOfCV = Integer.toString(this.getD().getNumberOfCV());
+        this.getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
+
+ */
 
     }
 

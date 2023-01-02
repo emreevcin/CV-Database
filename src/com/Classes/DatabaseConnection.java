@@ -31,6 +31,8 @@ public class DatabaseConnection {
     private PreparedStatement selectIDwithParam;
     private PreparedStatement updateCV;
 
+    private PreparedStatement pragmaSQL;
+
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -43,9 +45,9 @@ public class DatabaseConnection {
             config.enforceForeignKeys(true);
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:" + fileName, config.toProperties());
+            Statement stmt = conn.createStatement();
 
             if (firstRun) {
-                Statement stmt = conn.createStatement();
                 Statement stat = conn.createStatement();
                 Statement statPersonal = conn.createStatement();
                 Statement statWork = conn.createStatement();
@@ -55,6 +57,8 @@ public class DatabaseConnection {
                 Statement statSkill = conn.createStatement();
                 Statement statRecommendation = conn.createStatement();
                 Statement statOther = conn.createStatement();
+
+                stmt.executeUpdate("PRAGMA foreign_keys = ON;");
 
                 stat.executeUpdate("CREATE TABLE cvs(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -144,9 +148,8 @@ public class DatabaseConnection {
                         "title TEXT, " +
                         "description TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
-
-                stmt.execute("PRAGMA foreign_keys = 1;");
-
+            } else {
+                stmt.executeUpdate("PRAGMA foreign_keys = ON;");
             }
 
             insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
@@ -192,6 +195,8 @@ public class DatabaseConnection {
 //
             updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ? ;");
 
+            pragmaSQL = conn.prepareStatement("PRAGMA foreign_keys = ON;");
+
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
@@ -199,6 +204,7 @@ public class DatabaseConnection {
     }
     public void reloadCV(ListView <String> cvList){
         try {
+            pragmaSQL.executeUpdate();
             PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
@@ -211,6 +217,7 @@ public class DatabaseConnection {
     public void addCV(String firstName , String lastName) {
         String cvName = firstName + "_" + lastName;
         try {
+            pragmaSQL.executeUpdate();
             insertSQL.setString(1, cvName);
             insertSQL.execute();
         } catch (SQLException e) {
@@ -391,6 +398,7 @@ public class DatabaseConnection {
     public HashMap<Integer,String> searchCV(String key , String field ) throws SQLException {
         PreparedStatement statement ;
 
+
         if(!key.equals("")){
             switch (field){
                 case "Name":{
@@ -449,6 +457,7 @@ public class DatabaseConnection {
     public int getIDwithParam(String cv_name) {
         int id = 0;
         try {
+            pragmaSQL.execute();
             selectIDwithParam.setString(1, cv_name);
             ResultSet rs = selectIDwithParam.executeQuery();
             while (rs.next()) {
