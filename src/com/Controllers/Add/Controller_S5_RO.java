@@ -147,8 +147,6 @@ public class Controller_S5_RO implements Initializable {
             scenes.add(this.getMainController().getSceneList().get(i));
         }
 
-        String stringNumberOfCV = Integer.toString(this.getMainController().getD().getNumberOfCV());
-        this.getMainController().getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
         this.getMainController().getSceneList().clear();
         this.getMainController().getSceneList().addAll(scenes);
 
@@ -163,6 +161,10 @@ public class Controller_S5_RO implements Initializable {
         cv.setTag(cvTag);
         this.getMainController().getCvList().getItems().add(cv.getTitle());
         this.getMainController().getCvMap().put(cv.getTitle(), cv);
+        this.getMainController().setCvCounter(this.getMainController()
+                .getCvList().getItems().size());
+        this.getMainController().getCvNumberLabel().setText("CV Number: " +
+                this.getMainController().getCvCounter());
         //when clicked submit button the stage will be closed
         Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
         stage.show();

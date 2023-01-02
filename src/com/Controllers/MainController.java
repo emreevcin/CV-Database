@@ -94,6 +94,16 @@ public class MainController implements Initializable {
     private Scene addScene;
     private Stage addStage;
 
+    private int cvCounter;
+
+    public int getCvCounter() {
+        return cvCounter;
+    }
+
+    public void setCvCounter(int cvCounter) {
+        this.cvCounter = cvCounter;
+    }
+
     private boolean isEditFunctionRunned;
     public boolean isEditFunctionRunned() {
         return isEditFunctionRunned;
@@ -175,38 +185,17 @@ public class MainController implements Initializable {
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
 
-        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
-        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
-        if (d.getNumberOfCV() != 0) {
-            try {
-                String fileName = "cvdb.db";
-                conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
-                pull = conn.prepareStatement("SELECT * FROM cvs");
-                ResultSet rs = pull.executeQuery();
-                while (rs.next()) {
-                    String cvName = rs.getString("cv_name");
-                    cvList.getItems().add(cvName);
-                    CV cv = new CV(scene1, scene2, scene3, scene4, scene5);
-                    cvMap.put(cvName, cv);
-
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
 
-        // d.reloadCV(cvList);
+        d.reloadCV(cvList);
         filterSelection.setOnAction(actionEvent -> {
             String filter = filterSelection.getSelectionModel().getSelectedItem();
             filter(filter);
         });
 
-
+        cvCounter = cvList.getItems().size();
+        cvNumberLabel.setText("CV Number: " + cvCounter);
 
         }
 
@@ -314,9 +303,8 @@ public class MainController implements Initializable {
         cvList.getItems().remove(cvName);
         cvMap.remove(cvName);
         getD().deleteCV(d.getCVID());
-        String stringNumberOfCV = Integer.toString(d.getNumberOfCV());
-        cvNumberLabel.setText("CV Number " + stringNumberOfCV);
-
+        cvCounter = cvList.getItems().size();
+        cvNumberLabel.setText("CV Number: " + cvCounter);
     }
 
     @FXML
@@ -389,7 +377,6 @@ public class MainController implements Initializable {
         for (Integer k : showList.keySet()) {
             cvList.getItems().add(showList.get(k));
         }
-
 
     }
 

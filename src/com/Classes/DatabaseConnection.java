@@ -203,18 +203,18 @@ public class DatabaseConnection {
             System.out.println(e);
         }
     }
-//    public void reloadCV(ListView <String> cvList){
-//        try {
-//            pragmaSQL.executeUpdate();
-//            PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
-//            ResultSet rs = statement.executeQuery();
-//            while (rs.next()){
-//                String cv_name = rs.getString("cv_name");
-//                cvList.getItems().add(cv_name);
-//            }
-//        }catch(SQLException e){throw  new RuntimeException(e);}
-//
-//    }
+    public void reloadCV(ListView <String> cvList){
+        try {
+            pragmaSQL.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                String cv_name = rs.getString("cv_name");
+                cvList.getItems().add(cv_name);
+            }
+        }catch(SQLException e){throw  new RuntimeException(e);}
+
+    }
     public void addCV(String firstName , String lastName) {
         String cvName = firstName + "_" + lastName;
         try {
