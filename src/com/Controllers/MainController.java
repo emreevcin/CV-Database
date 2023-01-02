@@ -12,10 +12,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.w3c.dom.*;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -84,6 +90,8 @@ public class MainController implements Initializable {
 
     @FXML
     private Label titlePreview;
+    @FXML
+    private Label createdAtPreview;
 
     protected HashMap<String, String> information;
 
@@ -177,6 +185,10 @@ public class MainController implements Initializable {
     private PreparedStatement getPersonSurname;
     private PreparedStatement pull;
 
+    private String photoURL;
+    public String getPhotoURL(){return photoURL;}
+    public void setPhotoURL(String photoURL){this.photoURL = photoURL;}
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -198,6 +210,43 @@ public class MainController implements Initializable {
         cvNumberLabel.setText("CV Number: " + cvCounter);
 
         }
+
+    public void listActions(){
+
+        cvList.setOnMouseClicked(mouseEvent -> {
+            try {
+                String dbCvName = cvList.getSelectionModel().getSelectedItem();
+                titlePreview.setText(d.selectedCvInfo(dbCvName)[0]);
+                firstNamePreview.setText(d.selectedCvInfo(dbCvName)[1]);
+                lastNamePreview.setText(d.selectedCvInfo(dbCvName)[2]);
+                tagsPreview.setText(d.selectedCvInfo(dbCvName)[3]);
+                createdAtPreview.setText(d.selectedCvDate(dbCvName));
+
+                /**
+                 getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
+                 ResultSet gpiResultSet = getPersonImage.executeQuery();
+
+                 Blob imageBlob = gpiResultSet.getBlob("photo");
+
+
+                 byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
+                 ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+                 BufferedImage imagePpl = ImageIO.read(inputStream);
+                 Image image = SwingFXUtils.toFXImage(imagePpl, null);
+
+                 personImage.setImage(image);
+
+                 */
+                File imagePath= new File("././com/resources/attachedPhoto/"+dbCvName+".png");
+                Image personImage = new Image(String.valueOf(imagePath));
+                imagePreview.setImage(personImage);
+
+
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        });
+    }
 
     @FXML
     public void createCV() {
@@ -381,8 +430,10 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void showSourceCV() {
-
+    void showSourceCV() throws IOException {
+        String dbCvName = cvList.getSelectionModel().getSelectedItem();
+        File attachedCvPath = new File("./src/com/resources/attachedCvs/"+dbCvName+".pdf");
+        Desktop.getDesktop().open(attachedCvPath);
     }
 
 }

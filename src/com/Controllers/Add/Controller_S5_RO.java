@@ -155,7 +155,7 @@ public class Controller_S5_RO implements Initializable {
         //edit part
         String name = this.getMainController().getInformation().get("firstName");
         String surname =this.getMainController().getInformation().get("lastName");
-        String cvName = name+" "+surname;
+        String cvName = name+"_"+surname;
         cv.setTitle(cvName);
         String cvTag = this.getMainController().getInformation().get("tag");
         cv.setTag(cvTag);
@@ -198,6 +198,9 @@ public class Controller_S5_RO implements Initializable {
     private String attachedCvFolderPath = "./src/com/resources/attachedCvs";
     private File cvDocFolder = new File(attachedCvFolderPath);
     private File chosenPDF ;
+    private String attachedPhotoFolderPath= "./src/com/resources/attachedPhoto";
+    private File cvPhotoFolder = new File(attachedPhotoFolderPath);
+    private File chosenPhoto;
 
 
     @FXML
@@ -333,7 +336,7 @@ public class Controller_S5_RO implements Initializable {
 
             else
                 AllInfo();
-            /*if (!cvDocFolder.exists()){
+            if (!cvDocFolder.exists()){
                 cvDocFolder.mkdir();
                 File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
                 File sourceCv = new File(chosenPDF.getPath());
@@ -344,7 +347,24 @@ public class Controller_S5_RO implements Initializable {
                 File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
                 File sourceCv = new File(chosenPDF.getPath());
                 copyFileUsingStream(sourceCv,destinationCv);
-            }*/
+            }
+            chosenPhoto = new File(this.getMainController().getPhotoURL());
+            String name = this.getMainController().getInformation().get("firstName");
+            String surname =this.getMainController().getInformation().get("lastName");
+            String cvName = name+"_"+surname;
+
+            if (!cvPhotoFolder.exists()){
+                cvPhotoFolder.mkdir();
+                File destinationPDF = new File(attachedPhotoFolderPath +"/" +cvName+".png");
+                File sourcePhoto = new File(String.valueOf(chosenPhoto));
+
+                copyFileUsingStream(sourcePhoto,destinationPDF);
+            }
+            else {
+                File destinationPDF = new File(attachedPhotoFolderPath +"/" +cvName+".png");
+                File sourcePhoto = new File(String.valueOf(chosenPhoto));
+                copyFileUsingStream(sourcePhoto,destinationPDF);
+            }
         }catch (Exception e){
             e.printStackTrace();
             AlertMethod("Please fill all the fields");

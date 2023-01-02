@@ -33,6 +33,8 @@ public class DatabaseConnection {
    // private PreparedStatement selectIDwithParam;
     private PreparedStatement updateCV;
     private PreparedStatement pragmaSQL;
+    private PreparedStatement getPersonInfo;
+    private PreparedStatement getCreatedDate;
 
 
     public DatabaseConnection() {
@@ -197,6 +199,10 @@ public class DatabaseConnection {
             updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ? ;");
 
             pragmaSQL = conn.prepareStatement("PRAGMA foreign_keys = ON;");
+
+            getPersonInfo = conn.prepareStatement("SELECT p.title, p.first_name, p.last_name, p.tag FROM people AS p, cvs AS c WHERE c.cv_name = ? AND c.id = p.cv_id;");
+
+            getCreatedDate = conn.prepareStatement("SELECT created_at FROM cvs WHERE cv_name = ?;");
 
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -621,4 +627,18 @@ public class DatabaseConnection {
         return  result ;
     }
 
+    public String[] selectedCvInfo(String selectedCvName) throws SQLException {
+        String[] cvInfo = new String[4];
+        getPersonInfo.setString(1,selectedCvName);
+        ResultSet gpiResultSet = getPersonInfo.executeQuery();
+        for (int i = 0; i<cvInfo.length;i++){
+            cvInfo[i] = gpiResultSet.getString(i+1);
+        }
+        return cvInfo ;
+    }
+    public String selectedCvDate(String selectedCvName) throws SQLException{
+        getCreatedDate.setString(1,selectedCvName);
+        ResultSet gcdResultSet = getCreatedDate.executeQuery();
+        return gcdResultSet.getString("created_at");
+    }
 }
