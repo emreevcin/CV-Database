@@ -322,7 +322,10 @@ public class Controller_S5_RO implements Initializable {
             else if(!emailTF.getText().isEmpty() && !emailTF.getText().contains("@") && !emailTF.getText().contains(".")) {
                 AlertMethod("Please enter the email correctly and try again");
             }
-            else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+") && phoneTF.getText().length() != 10){
+            else if (!phoneTF.getText().isEmpty() && !phoneTF.getText().matches("[0-9]+")){
+                AlertMethod("Please enter a valid phone number");
+            }
+            else if (!phoneTF.getText().isEmpty() && phoneTF.getText().length() != 10){
                 AlertMethod("Please enter a valid phone number");
             }
 

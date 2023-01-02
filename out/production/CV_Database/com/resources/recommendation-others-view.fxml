@@ -9,146 +9,142 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
+
+<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
    <children>
-      <VBox prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/recomendation_icon.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recomendation Information" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="590.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-                        <TextField fx:id="nameTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-                        <TextField fx:id="emailTF" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
-                        <TextField fx:id="roleTF" prefHeight="25.0" prefWidth="284.0" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
-                        <TextField fx:id="phoneTF" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefWidth="590.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
-                        <TextArea fx:id="descriptionRTA" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <Pane prefHeight="90.0" prefWidth="300.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="300.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mutiple Recomendations Information" wrappingWidth="134.017578125">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <ComboBox fx:id="recomendationCB" prefWidth="150.0" promptText="Recomendations" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </Pane>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/other_icon.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Others" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER_LEFT" prefHeight="121.0" prefWidth="600.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Header" />
-                        <TextField fx:id="otherTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                        <TextField fx:id="titleTF" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
-                        <TextArea fx:id="descriptionOTA" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5 / 5 Pages" wrappingWidth="313.734375" />
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                    <buttons>
-                      <Button fx:id="addCVButton" mnemonicParsing="false" onMouseClicked="#loadCV" text="Load CV" />
-                        <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#submit" text="Save" />
-                    </buttons>
-                  </ButtonBar>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/recomendation_icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Recomendation Information" />
          </children>
-      </VBox>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="590.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                  <TextField fx:id="nameTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+                  <TextField fx:id="emailTF" promptText="example@gmail.com" />
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
+                  <TextField fx:id="roleTF" prefHeight="25.0" prefWidth="284.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+                  <TextField fx:id="phoneTF" promptText="5378128900" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefWidth="590.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="56.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+                  <TextArea fx:id="descriptionRTA" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <Pane prefHeight="90.0" prefWidth="300.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="53.0" prefWidth="300.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mutiple Recomendations Information" wrappingWidth="134.017578125">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Text>
+                        <ComboBox fx:id="recomendationCB" prefWidth="150.0" promptText="Recomendations" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/other_icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Others" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER_LEFT" prefHeight="121.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Header" />
+                  <TextField fx:id="otherTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+                  <TextField fx:id="titleTF" />
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+                  <TextArea fx:id="descriptionOTA" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5 / 5 Pages" wrappingWidth="313.734375" />
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="addCVButton" mnemonicParsing="false" onMouseClicked="#loadCV" text="Load CV" />
+                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#submit" text="Save" />
+              </buttons>
+            </ButtonBar>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>

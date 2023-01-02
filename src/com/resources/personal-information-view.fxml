@@ -8,189 +8,186 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
+
+<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
    <children>
-      <VBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/personal_information.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="120.0" prefWidth="600.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fx:id="personImageView" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/person_image.png" />
-                           </image>
-                           <VBox.margin>
-                              <Insets bottom="5.0" right="5.0" />
-                           </VBox.margin>
-                        </ImageView>
-                        <Button mnemonicParsing="false" onMouseClicked="#loadPhoto" prefHeight="25.0" prefWidth="120.0" text="Load Photo" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="125.0" prefWidth="250.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name(s)" />
-                        <TextField fx:id="firstNameTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                        <TextField fx:id="titleTF" />
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="125.0" prefWidth="250.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name(s)" />
-                        <TextField fx:id="lastNameTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tag(s)" />
-                        <TextField fx:id="tagTF" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <VBox prefHeight="100.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Career Objective" />
-                  <TextArea fx:id="careerObjectiveTA" prefHeight="200.0" prefWidth="200.0" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </VBox>
-            <HBox>
-               <children>
-                  <Pane>
-                     <children>
-                        <VBox prefHeight="93.0" prefWidth="300.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/contact_information.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets right="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" />
-                                 </children>
-                              </HBox>
-                              <Separator prefWidth="200.0" />
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="56.32421875" />
-                                    <TextField fx:id="emailTF" prefHeight="25.0" prefWidth="231.0">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </HBox.margin></TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" wrappingWidth="57.609375" />
-                                    <TextField fx:id="phoneTF" prefHeight="25.0" prefWidth="230.0" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Pane>
-                  <Pane>
-                     <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="300.0">
-                           <children>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@icons/address_icon.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets right="5.0" />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address Information" />
-                                 </children>
-                              </HBox>
-                              <Separator prefWidth="200.0" />
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="51.208984375" />
-                                    <TextField fx:id="cityTF" prefHeight="25.0" prefWidth="260.0">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="46.087890625">
-                                       <HBox.margin>
-                                          <Insets right="5.0" />
-                                       </HBox.margin>
-                                    </Text>
-                                    <TextField fx:id="countryTF" prefHeight="25.0" prefWidth="256.0" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </Pane>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 / 5 Pages" />
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                    <buttons>
-                      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-                        <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
-                    </buttons>
-                     <padding>
-                        <Insets left="350.0" />
-                     </padding>
-                  </ButtonBar>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/personal_information.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information" />
          </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox prefHeight="120.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <ImageView fx:id="personImageView" fitHeight="100.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/person_image.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="5.0" right="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Button mnemonicParsing="false" onMouseClicked="#loadPhoto" prefHeight="25.0" prefWidth="120.0" text="Load Photo" />
+               </children>
+            </VBox>
+            <VBox prefHeight="125.0" prefWidth="250.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name(s)" />
+                  <TextField fx:id="firstNameTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+                  <TextField fx:id="titleTF" />
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="125.0" prefWidth="250.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name(s)" />
+                  <TextField fx:id="lastNameTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tag(s)" />
+                  <TextField fx:id="tagTF" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <VBox prefHeight="100.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Career Objective" />
+            <TextArea fx:id="careerObjectiveTA" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </VBox>
+      <HBox>
+         <children>
+            <Pane>
+               <children>
+                  <VBox prefHeight="93.0" prefWidth="300.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/contact_information.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="56.32421875" />
+                              <TextField fx:id="emailTF" prefHeight="25.0" prefWidth="231.0" promptText="example@gmail.com">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" wrappingWidth="57.609375" />
+                              <TextField fx:id="phoneTF" prefHeight="25.0" prefWidth="230.0" promptText="5378128900" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Pane>
+            <Pane>
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="300.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@icons/address_icon.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address Information" />
+                           </children>
+                        </HBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="51.208984375" />
+                              <TextField fx:id="cityTF" prefHeight="25.0" prefWidth="260.0">
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="46.087890625">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <TextField fx:id="countryTF" prefHeight="25.0" prefWidth="256.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 / 5 Pages" />
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                  <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
+              </buttons>
+               <padding>
+                  <Insets left="350.0" />
+               </padding>
+            </ButtonBar>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>

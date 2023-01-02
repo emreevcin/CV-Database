@@ -11,194 +11,190 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
+
+<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
    <children>
-      <VBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/education_information_icon.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Education Information" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="90.0" prefWidth="600.0">
-               <children>
-                  <VBox prefHeight="120.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Institution" />
-                        <TextField fx:id="institutionTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" />
-                        <DatePicker fx:id="fromDateE" prefHeight="25.0" prefWidth="300.0" />
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="gpaTF" prefHeight="25.0" prefWidth="40.0">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/ 4.0" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </HBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="120.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Department" />
-                        <TextField fx:id="departmentTF" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending Date" />
-                        <DatePicker fx:id="toDateE" prefHeight="25.0" prefWidth="300.0" />
-                        <CheckBox fx:id="isOngoingE" mnemonicParsing="false" text="Ongoing">
-                           <padding>
-                              <Insets left="230.0" />
-                           </padding>
-                        </CheckBox>
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Education Information">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Text>
-                  <ComboBox fx:id="educationsCB" prefWidth="150.0" promptText="Educations" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/project_information_icon.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projects Information" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="80.0" prefWidth="600.0">
-               <children>
-                  <VBox prefHeight="80.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                        <TextField fx:id="titleTF">
-                           <VBox.margin>
-                              <Insets right="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <VBox prefHeight="39.0" prefWidth="150.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" />
-                                    <DatePicker fx:id="fromDateP">
-                                       <VBox.margin>
-                                          <Insets right="5.0" />
-                                       </VBox.margin>
-                                    </DatePicker>
-                                 </children>
-                              </VBox>
-                              <VBox prefHeight="38.0" prefWidth="150.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending Date" />
-                                    <DatePicker fx:id="toDateP">
-                                       <VBox.margin>
-                                          <Insets right="5.0" />
-                                       </VBox.margin>
-                                    </DatePicker>
-                                    <CheckBox fx:id="isOngoingP" mnemonicParsing="false" text="Ongoing">
-                                       <padding>
-                                          <Insets left="80.0" />
-                                       </padding>
-                                    </CheckBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="80.0" prefWidth="300.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
-                        <TextArea fx:id="descriptionTA" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Projects Information">
-                     <HBox.margin>
-                        <Insets right="5.0" />
-                     </HBox.margin>
-                  </Text>
-                  <ComboBox fx:id="projectsCB" prefWidth="150.0" promptText="Projects" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3 / 5 Pages" wrappingWidth="390.734375" />
-                  <ButtonBar prefHeight="40.0" prefWidth="200.0">
-                    <buttons>
-                      <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
-                        <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
-                    </buttons>
-                  </ButtonBar>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </HBox>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/education_information_icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Education Information" />
          </children>
-      </VBox>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox prefHeight="90.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="120.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Institution" />
+                  <TextField fx:id="institutionTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" />
+                  <DatePicker fx:id="fromDateE" prefHeight="25.0" prefWidth="300.0" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="gpaTF" prefHeight="25.0" prefWidth="40.0">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/ 4.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="120.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Department" />
+                  <TextField fx:id="departmentTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending Date" />
+                  <DatePicker fx:id="toDateE" prefHeight="25.0" prefWidth="300.0" />
+                  <CheckBox fx:id="isOngoingE" mnemonicParsing="false" text="Ongoing">
+                     <padding>
+                        <Insets left="230.0" />
+                     </padding>
+                  </CheckBox>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Education Information">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Text>
+            <ComboBox fx:id="educationsCB" prefWidth="150.0" promptText="Educations" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/project_information_icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projects Information" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox prefHeight="80.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="80.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
+                  <TextField fx:id="titleTF">
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="39.0" prefWidth="150.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" />
+                              <DatePicker fx:id="fromDateP">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="38.0" prefWidth="150.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending Date" />
+                              <DatePicker fx:id="toDateP">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </DatePicker>
+                              <CheckBox fx:id="isOngoingP" mnemonicParsing="false" text="Ongoing">
+                                 <padding>
+                                    <Insets left="80.0" />
+                                 </padding>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="80.0" prefWidth="300.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+                  <TextArea fx:id="descriptionTA" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Projects Information">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Text>
+            <ComboBox fx:id="projectsCB" prefWidth="150.0" promptText="Projects" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3 / 5 Pages" wrappingWidth="390.734375" />
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
+                  <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
+              </buttons>
+            </ButtonBar>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>
