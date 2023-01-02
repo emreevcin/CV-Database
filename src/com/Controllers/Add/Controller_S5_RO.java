@@ -153,7 +153,7 @@ public class Controller_S5_RO implements Initializable {
         //edit part
         String name = this.getMainController().getInformation().get("firstName");
         String surname =this.getMainController().getInformation().get("lastName");
-        String cvName = name+"_"+surname;
+        String cvName = name+" "+surname;
         cv.setTitle(cvName);
         String cvTag = this.getMainController().getInformation().get("tag");
         cv.setTag(cvTag);
@@ -199,35 +199,35 @@ public class Controller_S5_RO implements Initializable {
             if(mainController.isEditFunctionRunned()){
                 //get old
 
-                DatabaseConnection d = this.getMainController().getD();
-                String name = this.getMainController().getInformation().get("firstName");
-                String surname = this.getMainController().getInformation().get("lastName");
-                String new_cv_name = name+"_"+surname;
+//                DatabaseConnection d = this.getMainController().getD();
+//                String name = this.getMainController().getInformation().get("firstName");
+//                String surname = this.getMainController().getInformation().get("lastName");
+//                String new_cv_name = name+" "+surname;
 
 
                 this.getMainController().getCvList().getItems().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
                 this.getMainController().getCvMap().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
 
-                String oldName = d.getCVName();
-                String old_cv_name = oldName;
+//                String oldName = d.getCVName();
+//                String old_cv_name = oldName;
                 int cvID = this.getMainController().getD().getCVID();
 
-                d.updateCV(old_cv_name,new_cv_name);
-                d.deleteFromTable("people",cvID);
-                d.deleteFromTable("works",cvID);
-                d.deleteFromTable("educations",cvID);
-                d.deleteFromTable("certificates",cvID);
-                d.deleteFromTable("skills",cvID);
-                d.deleteFromTable("projects",cvID);
-                d.deleteFromTable("recommendations",cvID);
-                d.deleteFromTable("others",cvID);
+//                d.updateCV(old_cv_name,new_cv_name);
+//                d.deleteFromTable("people",cvID);
+//                d.deleteFromTable("works",cvID);
+//                d.deleteFromTable("educations",cvID);
+//                d.deleteFromTable("certificates",cvID);
+//                d.deleteFromTable("skills",cvID);
+//                d.deleteFromTable("projects",cvID);
+//                d.deleteFromTable("recommendations",cvID);
+//                d.deleteFromTable("others",cvID);
 
 
-                CV cv = this.getMainController().getCvMap().get(old_cv_name);
-                cv.setTitle(new_cv_name);
-                this.getMainController().getCvMap().put(new_cv_name,cv);
-                this.getMainController().getCvList().getItems().add(new_cv_name);
-                this.getMainController().getCvList().getSelectionModel().select(new_cv_name);
+//                CV cv = this.getMainController().getCvMap().get(old_cv_name);
+//                cv.setTitle(new_cv_name);
+//                this.getMainController().getCvMap().put(new_cv_name,cv);
+//                this.getMainController().getCvList().getItems().add(new_cv_name);
+//                this.getMainController().getCvList().getSelectionModel().select(new_cv_name);
 
                 this.getMainController().getD().addPerson(cvID,
                         this.getMainController().getInformation().get("firstName"),

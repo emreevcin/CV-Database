@@ -236,15 +236,15 @@ public class DatabaseConnection {
     public void addWork(int cvId, String occupation, String employer, String city, String country,
                         String startingDate, String endingDate, String ongoing, String activitiesResponsibilities) {
         try {
-            insertSQLPersonal.setInt(1, cvId);
-            insertSQLPersonal.setString(2, occupation);
-            insertSQLPersonal.setString(3, employer);
-            insertSQLPersonal.setString(4, city);
-            insertSQLPersonal.setString(5, country);
-            insertSQLPersonal.setString(6, startingDate);
-            insertSQLPersonal.setString(7, endingDate);
-            insertSQLPersonal.setString(8, ongoing);
-            insertSQLPersonal.setString(9, activitiesResponsibilities);
+            insertSQLWork.setInt(1, cvId);
+            insertSQLWork.setString(2, occupation);
+            insertSQLWork.setString(3, employer);
+            insertSQLWork.setString(4, city);
+            insertSQLWork.setString(5, country);
+            insertSQLWork.setString(6, startingDate);
+            insertSQLWork.setString(7, endingDate);
+            insertSQLWork.setString(8, ongoing);
+            insertSQLWork.setString(9, activitiesResponsibilities);
             insertSQLWork.execute();
         } catch (SQLException e) {
             System.out.println(e);
@@ -466,9 +466,9 @@ public class DatabaseConnection {
     }
     public void deleteFromTable(String table , int id) {
         try {
-
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM "+table+ " WHERE cv_id = "+id+" ");
-            statement.execute();
+            deleteFromTable.setString(1, table);
+            deleteFromTable.setInt(2, id);
+            deleteFromTable.execute();
 
         } catch (SQLException e) {
             System.out.println(e);
