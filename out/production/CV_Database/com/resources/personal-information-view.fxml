@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
    <children>
       <VBox>
          <children>
@@ -178,7 +178,7 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 / 5 Pages" />
                   <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                      <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#cancel" text="Cancel" />
+                      <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                         <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
                     </buttons>
                      <padding>

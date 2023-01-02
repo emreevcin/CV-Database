@@ -4,6 +4,8 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.Controllers.MainController;
 import javafx.scene.control.ListView;
 import org.sqlite.SQLiteConfig;
 
@@ -28,9 +30,8 @@ public class DatabaseConnection {
     private PreparedStatement deleteSQL;
     private PreparedStatement deleteRow ;
     private PreparedStatement multi ;
-    private PreparedStatement selectIDwithParam;
+   // private PreparedStatement selectIDwithParam;
     private PreparedStatement updateCV;
-
     private PreparedStatement pragmaSQL;
 
 
@@ -191,7 +192,7 @@ public class DatabaseConnection {
             deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
 
             //these are the part for edit
-            selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ? ;");
+            //selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ? ;");
 //
             updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ? ;");
 
@@ -202,18 +203,18 @@ public class DatabaseConnection {
             System.out.println(e);
         }
     }
-    public void reloadCV(ListView <String> cvList){
-        try {
-            pragmaSQL.executeUpdate();
-            PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()){
-                String cv_name = rs.getString("cv_name");
-                cvList.getItems().add(cv_name);
-            }
-        }catch(SQLException e){throw  new RuntimeException(e);}
-
-    }
+//    public void reloadCV(ListView <String> cvList){
+//        try {
+//            pragmaSQL.executeUpdate();
+//            PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
+//            ResultSet rs = statement.executeQuery();
+//            while (rs.next()){
+//                String cv_name = rs.getString("cv_name");
+//                cvList.getItems().add(cv_name);
+//            }
+//        }catch(SQLException e){throw  new RuntimeException(e);}
+//
+//    }
     public void addCV(String firstName , String lastName) {
         String cvName = firstName + "_" + lastName;
         try {
@@ -454,33 +455,12 @@ public class DatabaseConnection {
         return cvs ;
     }
 
-    public int getIDwithParam(String cv_name) {
-        int id = 0;
-        try {
-            pragmaSQL.execute();
-            selectIDwithParam.setString(1, cv_name);
-            ResultSet rs = selectIDwithParam.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return id;
-    }
+
     public void updateCV(String old_cv_name , String new_cv_name) {
         try {
             updateCV.setString(1, new_cv_name);
             updateCV.setString(2, old_cv_name);
             updateCV.execute();
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
-    public void deleteFromTable(String table , int id) {
-        try {
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM "+table+" WHERE cv_id = "+id);
 
         } catch (SQLException e) {
             System.out.println(e);
