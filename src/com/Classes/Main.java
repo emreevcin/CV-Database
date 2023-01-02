@@ -79,6 +79,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("CV DATABASE");
         // primaryStage.getIcons().add(new Image("com\\resources\\icons\\application_icon.png"));
+        //primaryStage.getIcons().add(new Image("../resources/icons/application_icon.png"));
         primaryStage.setScene(mainScene);
 
         primaryStage.show();

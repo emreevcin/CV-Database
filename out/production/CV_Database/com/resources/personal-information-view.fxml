@@ -145,7 +145,7 @@
                               <Separator prefWidth="200.0" />
                               <HBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="49.208984375" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="51.208984375" />
                                     <TextField fx:id="cityTF" prefHeight="25.0" prefWidth="260.0">
                                        <HBox.margin>
                                           <Insets bottom="5.0" />
@@ -155,7 +155,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="42.087890625">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="46.087890625">
                                        <HBox.margin>
                                           <Insets right="5.0" />
                                        </HBox.margin>

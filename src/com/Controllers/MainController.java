@@ -48,10 +48,19 @@ public class MainController implements Initializable {
 
     @FXML
     private Label cvNumberLabel;
+    @FXML
+    private ImageView deleteImage;
 
-    public Label getCvNumberLabel() {
-        return cvNumberLabel;
-    }
+    @FXML
+    private ImageView editImage;
+    @FXML
+    private Label firstNamePreview;
+
+    @FXML
+    private ImageView imagePreview;
+
+    @FXML
+    private Label lastNamePreview;
 
     @FXML
     private TextField searchBarTF;
@@ -60,6 +69,15 @@ public class MainController implements Initializable {
     private ComboBox<String> searchFieldCB;
     @FXML
     private ComboBox<String> filterSelection ;
+
+    @FXML
+    private ImageView sourceCVPreview;
+
+    @FXML
+    private Label tagsPreview;
+
+    @FXML
+    private Label titlePreview;
 
     protected HashMap<String, String> information;
 
@@ -132,6 +150,18 @@ public class MainController implements Initializable {
         return cvList;
     }
 
+    public Label getCvNumberLabel() {
+        return cvNumberLabel;
+    }
+
+    private Connection conn;
+    private PreparedStatement getCreatedDate;
+    private PreparedStatement getPersonTitle;
+    private PreparedStatement getPersonImage;
+    private PreparedStatement getPersonName;
+    private PreparedStatement getPersonSurname;
+    private PreparedStatement pull;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         controller_s1_pi.init(this);
@@ -139,6 +169,11 @@ public class MainController implements Initializable {
         controller_s3_ep.init(this);
         controller_s4_cs.init(this);
         controller_s5_ro.init(this);
+
+        if (this.getD().getNumberOfCV() != 0) {
+            String stringNumberOfCV = Integer.toString(this.getD().getNumberOfCV());
+            this.getCvNumberLabel().setText("CV Number " + stringNumberOfCV);
+        }
 
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
@@ -256,19 +291,21 @@ public class MainController implements Initializable {
     public void deleteCV() {
         // delete selected cv from listview and data structure that holds the selected cv
         String s = cvList.getSelectionModel().getSelectedItem();
-        int deleted_id = d.getIDwithParam(s);
+        int deleted_id = d.getIDwithParam((s));
 
         System.out.println(s);
         System.out.println(deleted_id);
         if (s.equals("")) {
             return;
         }
+        /*
         String[] tableArr = {"certificates","educations","other_information","people","projects","recommendations","skills","works" };
         for (String value : tableArr) {
             System.out.println(value);
             d.deleteFromTable(value, deleted_id);
         }
-        d.deleteCV(deleted_id);
+         */
+        d.deleteCV(deleted_id + 1);
 
         cvList.getItems().remove(s);
         cvMap.remove(s);

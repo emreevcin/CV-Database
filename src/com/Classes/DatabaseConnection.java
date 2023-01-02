@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.control.ListView;
+import org.sqlite.SQLiteConfig;
 
 
 public class DatabaseConnection {
@@ -38,10 +39,13 @@ public class DatabaseConnection {
         conn = null;
 
         try {
+            SQLiteConfig config = new SQLiteConfig();
+            config.enforceForeignKeys(true);
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:" + fileName);
+            conn = DriverManager.getConnection("jdbc:sqlite:" + fileName, config.toProperties());
 
             if (firstRun) {
+                Statement stmt = conn.createStatement();
                 Statement stat = conn.createStatement();
                 Statement statPersonal = conn.createStatement();
                 Statement statWork = conn.createStatement();
@@ -51,7 +55,6 @@ public class DatabaseConnection {
                 Statement statSkill = conn.createStatement();
                 Statement statRecommendation = conn.createStatement();
                 Statement statOther = conn.createStatement();
-
 
                 stat.executeUpdate("CREATE TABLE cvs(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -141,6 +144,8 @@ public class DatabaseConnection {
                         "title TEXT, " +
                         "description TEXT, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
+
+                stmt.execute("PRAGMA foreign_keys = 1;");
 
             }
 
@@ -378,7 +383,7 @@ public class DatabaseConnection {
     public void deleteCV(int cvId) {
         try {
             deleteSQL.setInt(1, cvId);
-            deleteSQL.execute();
+            deleteSQL.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
