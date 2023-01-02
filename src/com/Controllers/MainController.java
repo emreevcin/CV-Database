@@ -143,7 +143,14 @@ public class MainController implements Initializable {
         searchFieldCB.getItems().addAll("Title", "Name", "Surname", "Name-Surname", "Institution", "Employer", "Tag");
         filterSelection.getItems().addAll("A-Z","Z-A");
 
-//        d.reloadCV(cvList);
+        d.reloadCV(cvList);
+
+        filterSelection.setOnAction(actionEvent -> {
+            String filter = filterSelection.getSelectionModel().getSelectedItem();
+            filter(filter);
+        });
+
+
 
         }
 
@@ -245,16 +252,24 @@ public class MainController implements Initializable {
 //        }}
 
 
-
-
-
     @FXML
     public void deleteCV() {
         // delete selected cv from listview and data structure that holds the selected cv
         String s = cvList.getSelectionModel().getSelectedItem();
+        int deleted_id = d.getIDwithParam(s);
+
+        System.out.println(s);
+        System.out.println(deleted_id);
         if (s.equals("")) {
             return;
         }
+        String[] tableArr = {"certificates","educations","other_information","people","projects","recommendations","skills","works" };
+        for (String value : tableArr) {
+            System.out.println(value);
+            d.deleteFromTable(value, deleted_id);
+        }
+        d.deleteCV(deleted_id);
+
         cvList.getItems().remove(s);
         cvMap.remove(s);
 
@@ -292,10 +307,9 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void filter() {
+    void filter(String sortingAs) {
         ObservableList<String> cv_names = FXCollections.observableArrayList();
         cv_names.addAll(cvList.getItems());
-        String sortingAs = filterSelection.getSelectionModel().getSelectedItem();
 
         if(sortingAs.equals("A-Z")){
             cv_names.sort(String::compareTo);

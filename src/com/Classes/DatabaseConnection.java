@@ -25,17 +25,11 @@ public class DatabaseConnection {
     private PreparedStatement selectSQLCounterCV;
     private PreparedStatement selectSQLCVNames;
     private PreparedStatement deleteSQL;
+    private PreparedStatement deleteRow ;
     private PreparedStatement multi ;
-
-
-    private javafx.scene.control.ListView<String> cvList;
-
-
-
-
     private PreparedStatement selectIDwithParam;
     private PreparedStatement updateCV;
-    private PreparedStatement deleteFromTable;
+
 
     public DatabaseConnection() {
         fileName = "cvdb.db";
@@ -186,34 +180,31 @@ public class DatabaseConnection {
 
             selectSQLCVNames = conn.prepareStatement("SELECT cv_name FROM cvs;");
 
-            deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = (?);");
+            deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
 
             //these are the part for edit
-            selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = (?);");
+            selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ? ;");
 //
-            updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = (?) WHERE id = (?);");
-//
-//            deleteFromTable = conn.prepareStatement("DELETE FROM (?) WHERE cv_id = (?);");
+            updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ? ;");
 
 
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e);
         }
     }
+    public void reloadCV(ListView <String> cvList){
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT id  ,cv_name  FROM cvs ");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                String cv_name = rs.getString("cv_name");
+                cvList.getItems().add(cv_name);
+            }
+        }catch(SQLException e){throw  new RuntimeException(e);}
 
-//    public void reloadCV(ListView <String> cvList){
-//        try {
-//            ResultSet rs = selectSQLLastCVName.executeQuery();
-//            while (rs.next()){
-//                cvList.getItems().add(getCVName());
-//        }
-//
-//        }catch(SQLException e){throw  new RuntimeException(e);}
-//
-//    }
-
+    }
     public void addCV(String firstName , String lastName) {
-        String cvName = firstName + " " + lastName;
+        String cvName = firstName + "_" + lastName;
         try {
             insertSQL.setString(1, cvName);
             insertSQL.execute();
@@ -383,18 +374,6 @@ public class DatabaseConnection {
         }
         return cvName;
     }
-    public String getCVTag() {
-        String tag = "EMPTY";
-        try {
-            ResultSet rs = selectSQLCVTag.executeQuery();
-            while (rs.next()) {
-                tag = rs.getString("tag");
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return tag;
-    }
     // Delete CV from database with Cascade
     public void deleteCV(int cvId) {
         try {
@@ -462,11 +441,10 @@ public class DatabaseConnection {
         return cvs ;
     }
 
-    public int getIDwithParam(String firstName, String lastName) {
+    public int getIDwithParam(String cv_name) {
         int id = 0;
-        String param= firstName + "_" + lastName;
         try {
-            selectIDwithParam.setString(1, param);
+            selectIDwithParam.setString(1, cv_name);
             ResultSet rs = selectIDwithParam.executeQuery();
             while (rs.next()) {
                 id = rs.getInt("id");
@@ -488,21 +466,18 @@ public class DatabaseConnection {
     }
     public void deleteFromTable(String table , int id) {
         try {
-            deleteFromTable.setString(1, table);
-            deleteFromTable.setInt(2, id);
-            deleteFromTable.execute();
+
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM "+table+ " WHERE cv_id = "+id+" ");
+            statement.execute();
 
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
 
+    public HashMap<Integer,ArrayList<HashMap<String,String>>> returnCV(int cv_id) throws SQLException {
 
-
-    public HashMap<Integer,ArrayList<HashMap<String,String>>> returnCV(Integer cv_id) throws SQLException {
-
-        HashMap<Integer,ArrayList<HashMap<String,String>>> result = new HashMap<>();
-
+        HashMap<Integer,ArrayList<HashMap<String,String>>> result = new HashMap<>(); // returns a cv with a exact cv id
         /**
          * -Explanation for getting cv -
          * CV
@@ -512,7 +487,6 @@ public class DatabaseConnection {
          *  ->education
          *      ->education1
          *      ->education2
-         *
          * finding cv example
          * ->>>
          * cv_id = 5
@@ -526,29 +500,133 @@ public class DatabaseConnection {
          * ->result.get(0) returns a ArrayList that stores multi personal information
          * ->result.get(0).get(0) returns a HashMap which is a one of the personal information for in this context
          * ->In the hashmap each key represents a attribute .For instance ,  result.get(0).get(0).put("firstName","Emre") stores data
-         *
          * **/
 
-
         PreparedStatement statement ;
-        String[] tableArr = {"certificates","cvs","educations","others","people","skills","recommendations","works" };
+        String[] tableArr = {"certificates","educations","other_information","people","projects","recommendations","skills","works" };
 
         for (int i=0 ; i<tableArr.length ; i++){
             String table = tableArr[i];
-            statement = conn.prepareStatement("SELECT * FROM "+table+"WHERE cv_id ="+cv_id);
+            ArrayList<HashMap<String,String >> data = new ArrayList<>();
+            statement = conn.prepareStatement("SELECT * FROM "+table+" WHERE cv_id = "+cv_id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
+                HashMap<String,String> field = new HashMap<>();
+                if(i==0){
+                    //certificates
+                    String e_name = rs.getString("education_name");
+                    String company = rs.getString("company");
+                    String verified_date = rs.getString("verified_date");
+                    field.put("education_name",e_name);
+                    field.put("company",company);
+                    field.put("verified_date",verified_date);
+                }
+                if(i==1){
+                    //educations
+                    String institution = rs.getString("institution");
+                    String department = rs.getString("department");
+                    String gpa =rs.getString("gpa");
+                    String starting_date = rs.getString("starting_date");
+                    String ending_date = rs.getString("ending_date");
+                    String ongoing = rs.getString("ongoing");
+                    field.put("institution",institution);
+                    field.put("department",department);
+                    field.put("gpa",gpa);
+                    field.put("starting_date",starting_date);
+                    field.put("ending_date",ending_date);
+                    field.put("ongoing",ongoing);
+                }
+                if(i==2){
+                    //other_information
+                    String header = rs.getString("header");
+                    String title = rs.getString("title");
+                    String description = rs.getString("description");
+                    field.put("header",header);
+                    field.put("title",title);
+                    field.put("description",description);
+                }
+                if(i==3){
+                    //people
+                    String first_name = rs.getString("first_name");
+                    String last_name = rs.getString("last_name");
+                    String tag = rs.getString("tag");
+                    String title = rs.getString("title");
+                    String email =rs.getString("email");
+                    String phone =rs.getString("phone");
+                    String city =rs.getString("city");
+                    String country =rs.getString("country");
+                    field.put("first_name",first_name);
+                    field.put("last_name",last_name);
+                    field.put("tag",tag);
+                    field.put("title",title);
+                    field.put("email",email);
+                    field.put("phone",phone);
+                    field.put("city",city);
+                    field.put("country",country);
+                }
+                if(i==4){
+                    //projects
+                    String title = rs.getString("title");
+                    String starting_date = rs.getString("starting_date");
+                    String ending_date = rs.getString("ending_date");
+                    String ongoing = rs.getString("ongoing");
+                    String description = rs.getString("description");
+                    field.put("title",title);
+                    field.put("starting_date",starting_date);
+                    field.put("ending_date",ending_date);
+                    field.put("ongoing",ongoing);
+                    field.put("description",description);
+                }
+                if(i==5){
+                    //recommendations
+                    String name_ = rs.getString("name_");
+                    String role_ = rs.getString("role_");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("phone");
+                    String description = rs.getString("description");
+                    field.put("name_",name_);
+                    field.put("role_",role_);
+                    field.put("email",email);
+                    field.put("phone",phone);
+                    field.put("description",description);
+                }
+                if(i==6){
+                    //skills
+                    String mother_tongue = rs.getString("mother_tongue");
+                    String other_languages = rs.getString("other_languages");
+                    String soft_skills = rs.getString("soft_skills");
+                    String hard_skills = rs.getString("hard_skills");
+                    String hobbies_interests = rs.getString("hobbies_interests");
+                    field.put("mother_tongue",mother_tongue);
+                    field.put("other_languages",other_languages);
+                    field.put("soft_skills",soft_skills);
+                    field.put("hard_skills",hard_skills);
+                    field.put("hobbies_interests",hobbies_interests);
+                }
+                if(i==7){
+                    //works
+                    String occupation = rs.getString("occupation");
+                    String employer = rs.getString("employer");
+                    String city = rs.getString("city");
+                    String country = rs.getString("country");
+                    String starting_date = rs.getString("starting_date");
+                    String ending_date = rs.getString("ending_date");
+                    String ongoing = rs.getString("ongoing");
+                    String activities_responsibilities = rs.getString("activities_responsibilities");
+                    field.put("occupation",occupation);
+                    field.put("employer",employer);
+                    field.put("city",city);
+                    field.put("country",country);
+                    field.put("starting_date",starting_date);
+                    field.put("ending_date",ending_date);
+                    field.put("ongoing",ongoing);
+                    field.put("activities_responsibilities",activities_responsibilities);
+                }
+                data.add(field);
             }
+            result.put(i,data);
         }
-
-
-
-
         return  result ;
     }
-
-
-
-
 
 }
