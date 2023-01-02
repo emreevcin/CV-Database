@@ -466,9 +466,7 @@ public class DatabaseConnection {
     }
     public void deleteFromTable(String table , int id) {
         try {
-            deleteFromTable.setString(1, table);
-            deleteFromTable.setInt(2, id);
-            deleteFromTable.execute();
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM "+table+" WHERE cv_id = "+id);
 
         } catch (SQLException e) {
             System.out.println(e);
