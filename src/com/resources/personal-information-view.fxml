@@ -9,15 +9,14 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
+<VBox prefHeight="550.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S1_PI">
    <children>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@icons/personal_information.png" />
                </image>
@@ -25,180 +24,140 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </ImageView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Information" HBox.hgrow="ALWAYS" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="222.56048583984375" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="600.0">
+      <HBox prefHeight="120.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="280.0">
+            <VBox alignment="CENTER" prefHeight="125.0" prefWidth="250.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name(s)" />
-                  <TextField fx:id="firstNameTF">
-                     <VBox.margin>
-                        <Insets left="6.0" />
-                     </VBox.margin></TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name(s)" VBox.vgrow="ALWAYS" />
+                  <TextField fx:id="firstNameTF" VBox.vgrow="ALWAYS" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
-                  <TextField fx:id="titleTF">
-                     <VBox.margin>
-                        <Insets left="6.0" />
-                     </VBox.margin></TextField>
+                  <TextField fx:id="titleTF" VBox.vgrow="ALWAYS" />
                </children>
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="280.0">
+            <VBox alignment="CENTER" prefHeight="125.0" prefWidth="250.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name(s)" />
-                  <TextField fx:id="lastNameTF" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tag(s)" />
-                  <TextField fx:id="tagTF" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name(s)" VBox.vgrow="ALWAYS" />
+                  <TextField fx:id="lastNameTF" VBox.vgrow="ALWAYS" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tag(s)" VBox.vgrow="ALWAYS" />
+                  <TextField fx:id="tagTF" VBox.vgrow="ALWAYS" />
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <HBox.margin>
-                  <Insets left="30.0" />
-               </HBox.margin>
             </VBox>
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <VBox prefHeight="100.0" prefWidth="600.0">
+      <VBox prefHeight="100.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Career Objective" />
-            <TextArea fx:id="careerObjectiveTA" prefHeight="200.0" prefWidth="200.0">
-               <VBox.margin>
-                  <Insets left="6.0" right="16.0" />
-               </VBox.margin></TextArea>
+            <TextArea fx:id="careerObjectiveTA" prefHeight="200.0" prefWidth="200.0" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </VBox>
-      <HBox>
+      <HBox VBox.vgrow="ALWAYS">
          <children>
-            <Pane>
+            <VBox prefHeight="93.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox prefHeight="93.0" prefWidth="300.0">
+                  <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/contact_information.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" />
-                           </children>
-                        </HBox>
-                        <Separator prefWidth="200.0" />
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="56.32421875">
-                                 <HBox.margin>
-                                    <Insets left="6.0" />
-                                 </HBox.margin></Text>
-                              <TextField fx:id="emailTF" prefHeight="25.0" prefWidth="231.0" promptText="example@gmail.com">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" wrappingWidth="57.609375">
-                                 <HBox.margin>
-                                    <Insets left="6.0" />
-                                 </HBox.margin></Text>
-                              <TextField fx:id="phoneTF" prefHeight="25.0" prefWidth="230.0" promptText="5378128900" />
-                           </children>
-                        </HBox>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@icons/contact_information.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact Information" HBox.hgrow="ALWAYS" />
                      </children>
-                  </VBox>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="56.32421875" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="emailTF" prefHeight="25.0" prefWidth="231.0" promptText="example@gmail.com" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" wrappingWidth="57.609375" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="phoneTF" prefHeight="25.0" prefWidth="230.0" promptText="5378128900" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
                </children>
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Pane>
-            <Pane>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="93.0" prefWidth="300.0">
+                  <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@icons/address_icon.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address Information" />
-                           </children>
-                        </HBox>
-                        <Separator prefWidth="200.0" />
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="51.208984375" />
-                              <TextField fx:id="cityTF" prefHeight="25.0" prefWidth="260.0">
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" right="5.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="46.087890625">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Text>
-                              <TextField fx:id="countryTF" prefHeight="25.0" prefWidth="256.0">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin></TextField>
-                           </children>
-                        </HBox>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@icons/address_icon.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Address Information" HBox.hgrow="ALWAYS" />
                      </children>
-                  </VBox>
+                  </HBox>
+                  <Separator prefWidth="200.0" />
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="City" wrappingWidth="51.208984375" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="cityTF" prefHeight="25.0" prefWidth="260.0" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="46.087890625" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="countryTF" prefHeight="25.0" prefWidth="256.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
                </children>
-            </Pane>
+            </VBox>
          </children>
          <VBox.margin>
-            <Insets bottom="20.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 / 5 Pages">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin></Text>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 / 5 Pages" />
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
               <buttons>
                 <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
                   <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
               </buttons>
                <padding>
-                  <Insets left="340.0" />
+                  <Insets left="350.0" />
                </padding>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
             </ButtonBar>
          </children>
          <VBox.margin>

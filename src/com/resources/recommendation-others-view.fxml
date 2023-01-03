@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
+<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S5_RO">
    <children>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
          <children>
@@ -34,7 +34,7 @@
       <Separator prefWidth="200.0" />
       <HBox alignment="CENTER_LEFT" prefHeight="90.0" prefWidth="590.0">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
                   <TextField fx:id="nameTF" />
@@ -45,7 +45,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_LEFT">
+            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
                   <TextField fx:id="roleTF" prefHeight="25.0" prefWidth="284.0" />
@@ -60,7 +60,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefWidth="590.0">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="487.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="487.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
                   <TextArea fx:id="descriptionRTA" prefHeight="200.0" prefWidth="200.0" />
@@ -69,21 +69,11 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="306.0" spacing="5.0">
+            <VBox alignment="CENTER" prefHeight="58.0" prefWidth="306.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mutiple Recommendations Information" wrappingWidth="150.81756718456745" />
                   <ComboBox fx:id="recommendationCB" prefWidth="150.0" promptText="Recommendations" />
-                  <HBox>
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#addRecommendation" prefHeight="26.0" prefWidth="102.0" text="Add New" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="30.0" />
-                     </padding>
-                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#addRecommendation" prefHeight="26.0" prefWidth="102.0" text="Add New" />
                </children>
                <HBox.margin>
                   <Insets />
@@ -113,7 +103,7 @@
       <Separator prefWidth="200.0" />
       <HBox alignment="CENTER_LEFT" prefHeight="121.0" prefWidth="600.0">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Header" />
                   <TextField fx:id="otherTF" />
@@ -124,7 +114,7 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
                   <TextArea fx:id="descriptionOTA" prefHeight="200.0" prefWidth="200.0" />
@@ -135,10 +125,10 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5 / 5 Pages" wrappingWidth="313.734375" />
-            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5 / 5 Pages" wrappingWidth="313.734375" HBox.hgrow="ALWAYS" />
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
               <buttons>
                 <Button fx:id="addCVButton" mnemonicParsing="false" onMouseClicked="#loadCV" text="Load CV" />
                   <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />

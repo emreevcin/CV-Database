@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
+<VBox prefHeight="550.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S3_EP">
    <children>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -34,15 +34,15 @@
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
-      <HBox prefHeight="90.0" prefWidth="600.0">
+      <HBox prefHeight="90.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="120.0" prefWidth="300.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="120.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Institution" />
                   <TextField fx:id="institutionTF" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Starting Date" />
-                  <DatePicker fx:id="fromDateE" prefHeight="25.0" prefWidth="300.0" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                  <DatePicker fx:id="fromDateE" prefHeight="25.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GPA">
                            <HBox.margin>
@@ -68,13 +68,13 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <VBox prefHeight="120.0" prefWidth="300.0">
+            <VBox prefHeight="120.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Department" />
                   <TextField fx:id="departmentTF" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ending Date" />
-                  <DatePicker fx:id="toDateE" prefHeight="25.0" prefWidth="300.0" />
-                  <CheckBox fx:id="isOngoingE" mnemonicParsing="false" prefHeight="30.0" prefWidth="300.0" text="Ongoing">
+                  <DatePicker fx:id="toDateE" prefHeight="25.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
+                  <CheckBox fx:id="isOngoingE" mnemonicParsing="false" prefHeight="30.0" prefWidth="300.0" text="Ongoing" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -92,7 +92,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Education Information">
                <HBox.margin>
@@ -110,7 +110,7 @@
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -127,9 +127,9 @@
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
-      <HBox prefHeight="80.0" prefWidth="600.0">
+      <HBox prefHeight="80.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox prefHeight="80.0" prefWidth="300.0">
+            <VBox prefHeight="80.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
                   <TextField fx:id="titleTF">
@@ -174,7 +174,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </VBox>
-            <VBox prefHeight="80.0" prefWidth="300.0">
+            <VBox prefHeight="80.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
                   <TextArea fx:id="descriptionTA" prefHeight="200.0" prefWidth="200.0" />
@@ -188,7 +188,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Projects Information">
                <HBox.margin>
@@ -206,13 +206,13 @@
             <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3 / 5 Pages" wrappingWidth="390.734375">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3 / 5 Pages" wrappingWidth="390.734375" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin></Text>
-            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
               <buttons>
                 <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#back" text="Back" />
                   <Button fx:id="nextButton" mnemonicParsing="false" onMouseClicked="#next" text="Next" />
