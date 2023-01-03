@@ -17,5 +17,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="org.apache.pdfbox:fontbox:2.0.27" level="project" />
+    <orderEntry type="library" name="org.apache.pdfbox:pdfbox:2.0.27" level="project" />
   </component>
 </module>

@@ -11,15 +11,24 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.*;
+import java.util.List;
 
 
 public class MainController implements Initializable {
@@ -57,6 +66,8 @@ public class MainController implements Initializable {
     private Label titlePreview;
     @FXML
     private Label createdAtPreview;
+    @FXML
+    private Button exportButton;
 
 
     protected HashMap<Integer, ArrayList<HashMap<String,String>>> cvInfo;
@@ -469,6 +480,330 @@ public class MainController implements Initializable {
     public void displayer (HashMap<String,String> map ){
         System.out.println(map);
     }
+
+
+    public List<String> Splitter(String multiLineString){
+        List<String> splitString = new ArrayList<>();
+        int start = 0;
+        int end = 110;
+        while(true) {
+            if(multiLineString.length()<110){
+                splitString.add(multiLineString);
+                break;
+            }
+            splitString.add(multiLineString.substring(start, end));
+            start+=110;
+            end+=110;
+            if (end > multiLineString.length()) {
+                end = multiLineString.length();
+                splitString.add(multiLineString.substring(start, end));
+                break;
+            }
+
+        }
+        return splitString;
+    }
+
+
+
+    public void export() throws SQLException, IOException {
+        int marginTop = 24;
+        String dbCvName = cvList.getSelectionModel().getSelectedItem();
+
+        System.out.println(d.returnCV(dbCvName).get(3).size());
+
+        String NameSurname = d.returnCV(dbCvName).get(3).get(0).get("first_name") + " "+ d.returnCV(dbCvName).get(3).get(0).get("last_name");
+        String Title = "Title: " + d.returnCV(dbCvName).get(3).get(0).get("title");
+        String CareerObj = "Career Objectives: " + d.returnCV(dbCvName).get(3).get(0).get("career_objective");
+        String Adress = "Adress: "+ d.returnCV(dbCvName).get(3).get(0).get("city")+"/"+ d.returnCV(dbCvName).get(3).get(0).get("country");
+        String GSM = "Gsm: "+ d.returnCV(dbCvName).get(3).get(0).get("phone");
+        String Email = "E-mail: "+ d.returnCV(dbCvName).get(3).get(0).get("email");
+
+
+        List<String> carerOBJ = Splitter(CareerObj);
+        int careerObjLine = carerOBJ.size();
+
+        List<String> personalInfo = new ArrayList();
+        personalInfo.add(NameSurname);
+        personalInfo.add(Title);
+        for (String p:carerOBJ) {
+            personalInfo.add(p);
+        }
+        personalInfo.add(Adress);
+        personalInfo.add(GSM);
+        personalInfo.add(Email);
+        PDDocument document = new PDDocument();
+        PDPage firstPage = new PDPage();
+        document.addPage(firstPage);
+        PDPageContentStream contentStream = new PDPageContentStream(document, firstPage);
+
+        PDFont font = PDType0Font.load(document, new File("./src/com/resources/fonts/times.ttf"));
+        PDFont fontBold = PDType0Font.load(document, new File("./src/com/resources/fonts/times-bold.ttf"));
+
+
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Personal Information--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop +=12;
+
+        contentStream.beginText();
+        contentStream.setFont(font, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        for (String s:personalInfo) {
+            contentStream.showText(s);
+            contentStream.newLine();
+        }
+        contentStream.endText();
+
+        marginTop+=96;
+        marginTop+= careerObjLine*12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Education--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=12;
+
+
+        while (true) {
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setLeading(16.0f);
+            contentStream.newLineAtOffset(25, firstPage.getTrimBox().getHeight() - marginTop);
+            String EduDateFrom = d.returnCV(dbCvName).get(1).get(0).get("starting_date");
+            String EduDateTo = d.returnCV(dbCvName).get(1).get(0).get("ending_date");
+            String Institution = d.returnCV(dbCvName).get(1).get(0).get("institution");
+            String Department = d.returnCV(dbCvName).get(1).get(0).get("department");
+            String GPA = "GPA: " + d.returnCV(dbCvName).get(1).get(0).get("gpa");
+            contentStream.showText(EduDateFrom + "-" + EduDateTo + "        " + Institution + "/" + Department);
+            contentStream.newLine();
+            contentStream.showText(GPA);
+            contentStream.endText();
+            marginTop += 30;
+            break;
+        }
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Projects--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=12;
+
+        while (true){
+
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setLeading(16.0f);
+            contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+            String ProjectDateFrom = d.returnCV(dbCvName).get(4).get(0).get("starting_date");
+            String ProjectDateTo = d.returnCV(dbCvName).get(4).get(0).get("ending_date");
+            String ProjectTitle = d.returnCV(dbCvName).get(4).get(0).get("title");
+            String ProjectDescription = d.returnCV(dbCvName).get(4).get(0).get("description");
+
+            List<String> projectDESC= Splitter(ProjectDescription);
+            int projectDescLine = projectDESC.size();
+
+            contentStream.showText(ProjectDateFrom+"-"+ProjectDateTo+"        "+ProjectTitle);
+            contentStream.newLine();
+            for (String line: projectDESC) {
+                contentStream.showText(line);
+            }
+            contentStream.endText();
+            marginTop+=30;
+            marginTop+= projectDescLine*12;
+            break;
+
+        }
+
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Work Experience--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=14;
+
+        while (true){
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setLeading(16.0f);
+            contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+            String WorkDateFrom = d.returnCV(dbCvName).get(7).get(0).get("starting_date");
+            String WorkDateTo = d.returnCV(dbCvName).get(7).get(0).get("ending_date");
+            String Employer = d.returnCV(dbCvName).get(7).get(0).get("employer");
+            String Occupation= d.returnCV(dbCvName).get(7).get(0).get("occupation");
+            String City = d.returnCV(dbCvName).get(7).get(0).get("city");
+            String Country = d.returnCV(dbCvName).get(7).get(0).get("country");
+            String Activities = d.returnCV(dbCvName).get(7).get(0).get("activities");
+
+            List<String> activities = Splitter(Activities);
+            int activitiesLine = activities.size();
+
+
+            contentStream.showText(WorkDateFrom+"-"+WorkDateTo+"        "+Employer+"/"+Occupation);
+            contentStream.newLine();
+            for (String line: activities) {
+                contentStream.showText(line);
+                contentStream.newLine();
+            }
+            contentStream.showText(City+"/"+Country);
+            contentStream.endText();
+            marginTop+=34;
+            marginTop+=activitiesLine*12;
+            break;
+        }
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Certificates--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=12;
+
+
+        while (true){
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setLeading(16.0f);
+            contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+            String CertificateDate = d.returnCV(dbCvName).get(0).get(0).get("verified_date");
+            String CertificateCompany = d.returnCV(dbCvName).get(0).get(0).get("company");
+            String CertificateEducationName = d.returnCV(dbCvName).get(0).get(0).get("education_name");
+            contentStream.showText(CertificateDate+"        "+CertificateCompany);
+            contentStream.showText(CertificateEducationName);
+            contentStream.newLine();
+            contentStream.endText();
+            marginTop+=16;
+            break;
+        }
+
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Skills & Hobbies--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(font, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+
+        String MotherLanguage = d.returnCV(dbCvName).get(6).get(0).get("mother_tongue");
+        String Languages = d.returnCV(dbCvName).get(6).get(0).get("other_languages");
+        String HardSkills = d.returnCV(dbCvName).get(6).get(0).get("hard_skills");
+        String SoftSkills = d.returnCV(dbCvName).get(6).get(0).get("soft_skills");
+        String HobbiesAndInterests = d.returnCV(dbCvName).get(6).get(0).get("hobbies_interests");
+        contentStream.showText("Languages: "+ MotherLanguage+", "+Languages);
+        contentStream.newLine();
+        contentStream.showText("Hard Skills: "+ HardSkills);
+        contentStream.newLine();
+        contentStream.showText("Soft Skills: "+ SoftSkills);
+        contentStream.newLine();
+        contentStream.showText("Hobbies & Interests: "+ HobbiesAndInterests);
+        contentStream.newLine();
+
+        contentStream.endText();
+        marginTop+=64;
+
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Recomendation--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=14;
+
+        while (true){
+            contentStream.beginText();
+            contentStream.setFont(font, 12);
+            contentStream.setLeading(16.0f);
+            contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+            String RecoRole = d.returnCV(dbCvName).get(5).get(0).get("role_");
+            String RecoNameSname= d.returnCV(dbCvName).get(5).get(0).get("name_");
+            String RecoDescription = d.returnCV(dbCvName).get(5).get(0).get("description");
+            String RecoPhoneNo = d.returnCV(dbCvName).get(5).get(0).get("phone");
+            String RecoEmail = d.returnCV(dbCvName).get(5).get(0).get("email");
+
+            List<String> recoDESC = Splitter(RecoDescription);
+            int recoDESCLine = recoDESC.size();
+
+            contentStream.showText(RecoRole+"-"+RecoNameSname);
+            contentStream.newLine();
+            contentStream.showText(RecoPhoneNo+"-"+RecoEmail);
+            contentStream.newLine();
+            for (String line: recoDESC) {
+                contentStream.showText(line);
+                contentStream.newLine();
+            }
+            contentStream.endText();
+            marginTop+=42;
+            marginTop+=recoDESCLine*12;
+            break;
+        }
+        marginTop+=12;
+        contentStream.beginText();
+        contentStream.setFont(fontBold, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        contentStream.showText("--Others--");
+        contentStream.newLine();
+        contentStream.endText();
+        marginTop+=14;
+
+        contentStream.beginText();
+        contentStream.setFont(font, 12);
+        contentStream.setLeading(16.0f);
+        contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
+        String Others = d.returnCV(dbCvName).get(2).get(0).get("header");
+        String OtherTitle= d.returnCV(dbCvName).get(2).get(0).get("title");
+        String OtherDescription = d.returnCV(dbCvName).get(2).get(0).get("description");
+
+        List<String> otherDESC = Splitter(OtherDescription);
+        int otherDESCLine = otherDESC.size();
+        contentStream.showText(Others+"-"+OtherTitle);
+        contentStream.newLine();
+
+        for (String line: otherDESC) {
+            contentStream.showText(line);
+            contentStream.newLine();
+        }
+
+
+
+        contentStream.endText();
+        contentStream.close();
+        FileChooser exportSave = new FileChooser();
+        exportSave.setInitialFileName(dbCvName+".pdf");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        exportSave.setSelectedExtensionFilter(extFilter);
+        document.save(exportSave.showSaveDialog(null));
+
+        document.close();
+
+
+
+
+    }
+
+
 
 }
 
