@@ -4,8 +4,6 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.Controllers.MainController;
 import javafx.scene.control.ListView;
 import org.sqlite.SQLiteConfig;
 
@@ -29,8 +27,7 @@ public class DatabaseConnection {
     private PreparedStatement selectSQLCVNames;
     private PreparedStatement deleteSQL;
     private PreparedStatement deleteRow ;
-    private PreparedStatement multi ;
-   // private PreparedStatement selectIDwithParam;
+    private PreparedStatement selectIDwithParam;
     private PreparedStatement updateCV;
     private PreparedStatement pragmaSQL;
     private PreparedStatement getPersonInfo;
@@ -193,9 +190,8 @@ public class DatabaseConnection {
 
             deleteSQL = conn.prepareStatement("DELETE FROM cvs WHERE id = ?;");
 
-            //these are the part for edit
-            //selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ? ;");
-//
+            selectIDwithParam = conn.prepareStatement("SELECT id FROM cvs WHERE cv_name = ? ;");
+
             updateCV = conn.prepareStatement("UPDATE cvs SET cv_name = ? WHERE id = ? ;");
 
             pragmaSQL = conn.prepareStatement("PRAGMA foreign_keys = ON;");
@@ -430,12 +426,12 @@ public class DatabaseConnection {
                 }
                 case "Institution":{
                     statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM education INNER JOIN cvs ON cvs.id = education.cv_id WHERE instituion LIKE '%" +
-                            key+"%'");;
+                            key+"%'");
                     break;
                 }
                 case"Title":{
                     statement = conn.prepareStatement("SELECT cvs.cv_name , cvs.id FROM works INNER JOIN cvs ON cvs.id = works.cv_id WHERE employer LIKE '%" +
-                            key+"%'");;
+                            key+"%'");
                     break;
                 }
                 default:
@@ -462,15 +458,11 @@ public class DatabaseConnection {
     }
 
 
-    public void updateCV(String old_cv_name , String new_cv_name) {
-        try {
-            updateCV.setString(1, new_cv_name);
-            updateCV.setString(2, old_cv_name);
-            updateCV.execute();
+    public void updateCV(String old_cv_name , String new_cv_name) throws SQLException{
+        updateCV.setString(1, new_cv_name);
+        updateCV.setString(2, old_cv_name);
+        updateCV.execute();
 
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
     }
 
     public HashMap<Integer,ArrayList<HashMap<String,String>>> returnCV(int cv_id) throws SQLException {
@@ -553,6 +545,7 @@ public class DatabaseConnection {
                     String phone =rs.getString("phone");
                     String city =rs.getString("city");
                     String country =rs.getString("country");
+                    String career = rs.getString("career_objective");
                     field.put("first_name",first_name);
                     field.put("last_name",last_name);
                     field.put("tag",tag);
@@ -561,6 +554,7 @@ public class DatabaseConnection {
                     field.put("phone",phone);
                     field.put("city",city);
                     field.put("country",country);
+                    field.put("career_objective",career);
                 }
                 if(i==4){
                     //projects
@@ -640,5 +634,13 @@ public class DatabaseConnection {
         getCreatedDate.setString(1,selectedCvName);
         ResultSet gcdResultSet = getCreatedDate.executeQuery();
         return gcdResultSet.getString("created_at");
+    }
+
+    public HashMap<Integer,ArrayList<HashMap<String,String>>> returnCV(String cv_name) throws SQLException {
+        HashMap<Integer,ArrayList<HashMap<String,String>>> result = null ;
+        selectIDwithParam.setString(1,cv_name);
+        int id =  selectIDwithParam.executeQuery().getInt("id");
+        result =returnCV(id);
+        return result ;
     }
 }

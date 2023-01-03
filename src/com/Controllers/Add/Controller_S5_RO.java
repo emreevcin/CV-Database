@@ -1,44 +1,44 @@
 package com.Controllers.Add;
 
 import com.Classes.CV;
-import com.Classes.DatabaseConnection;
-import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller_S5_RO implements Initializable {
 
     private MainController mainController ;
-    private Main main ;
     private Scene scene ;
 
-
+    private ArrayList<HashMap<String,String>> recommendationsData = new ArrayList<>();
+    private ArrayList<HashMap<String,String>> other_informationData = new ArrayList<>();
 
     @FXML
-    private Button backButton,addCVButton,saveButton;
-
+    private Button addCVButton;
     @FXML
     private TextArea descriptionOTA,descriptionRTA;
     @FXML
     private TextField emailTF,nameTF,otherTF,phoneTF,roleTF,titleTF;
 
+    @FXML
+    private ComboBox<Integer> recommendationCB;
 
-    private final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    public void setData(ArrayList<HashMap<String, String>> recommendationsTable, ArrayList<HashMap<String, String>> other_informationTable) {
+        this.recommendationsData = recommendationsTable;
+        this.other_informationData = other_informationTable;
+        loadRecommendation(-1);
+        loadOther();
+    }
 
     public Scene getScene() {
         return scene;
@@ -56,126 +56,12 @@ public class Controller_S5_RO implements Initializable {
         this.mainController = mainController;
     }
 
-    public Main getMain() {
-        return main;
-    }
-
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
     public void init (MainController mainController){
         setMainController(mainController);
     }
 
-    public void AllInfo(){
-        this.getMainController().getInformation().put("nameR", nameTF.getText());
-        this.getMainController().getInformation().put("roleR", roleTF.getText());
-        this.getMainController().getInformation().put("emailR", emailTF.getText());
-        this.getMainController().getInformation().put("phoneR", phoneTF.getText());
-        this.getMainController().getInformation().put("descriptionR", descriptionRTA.getText());
-        this.getMainController().getInformation().put("otherAddition", otherTF.getText());
-        this.getMainController().getInformation().put("titleAddition", titleTF.getText());
-        this.getMainController().getInformation().put("descriptionAddition", descriptionOTA.getText());
-
-
-        this.getMainController().getD().addCV(this.getMainController().getInformation().get("firstName"), this.getMainController().getInformation().get("lastName"));
-        int cvID = this.getMainController().getD().getCVID();
-
-        this.getMainController().getD().addPerson(cvID,
-                this.getMainController().getInformation().get("firstName"),
-                this.getMainController().getInformation().get("lastName"),
-                this.getMainController().getInformation().get("tagPI"),
-                this.getMainController().getInformation().get("titlePI"),
-                this.getMainController().getInformation().get("careerObjective"),
-                this.getMainController().getInformation().get("emailPI"),
-                this.getMainController().getInformation().get("phonePI"),
-                this.getMainController().getInformation().get("cityPI"),
-                this.getMainController().getInformation().get("countryPI"));
-
-        this.getMainController().getD().addWork(cvID,
-                this.getMainController().getInformation().get("occupation"),
-                this.getMainController().getInformation().get("employer"),
-                this.getMainController().getInformation().get("cityWE"),
-                this.getMainController().getInformation().get("countryWE"),
-                this.getMainController().getInformation().get("fromWE"),
-                this.getMainController().getInformation().get("toWE"),
-                this.getMainController().getInformation().get("ongoingWE"),
-                this.getMainController().getInformation().get("explanationWE"));
-
-        this.getMainController().getD().addEducation(cvID,
-                this.getMainController().getInformation().get("institution"),
-                this.getMainController().getInformation().get("department"),
-                this.getMainController().getInformation().get("gpa"),
-                this.getMainController().getInformation().get("fromE"),
-                this.getMainController().getInformation().get("toE"),
-                this.getMainController().getInformation().get("ongoingE"));
-
-        this.getMainController().getD().addProjects(cvID,
-                this.getMainController().getInformation().get("titleP"),
-                this.getMainController().getInformation().get("fromP"),
-                this.getMainController().getInformation().get("toD"),
-                this.getMainController().getInformation().get("ongoingP"),
-                this.getMainController().getInformation().get("descriptionP"));
-
-        this.getMainController().getD().addCertificates(cvID,
-                this.getMainController().getInformation().get("education"),
-                this.getMainController().getInformation().get("company"),
-                this.getMainController().getInformation().get("dateC"));
-
-        this.getMainController().getD().addSkills(cvID,
-                this.getMainController().getInformation().get("mother"),
-                this.getMainController().getInformation().get("otherLanguage"),
-                this.getMainController().getInformation().get("softSkills"),
-                this.getMainController().getInformation().get("hardSkills"),
-                this.getMainController().getInformation().get("descriptionHI"));
-
-        this.getMainController().getD().addRecommendations(cvID,
-                this.getMainController().getInformation().get("nameR"),
-                this.getMainController().getInformation().get("roleR"),
-                this.getMainController().getInformation().get("emailR"),
-                this.getMainController().getInformation().get("descriptionR"),
-                this.getMainController().getInformation().get("phoneR"));
-
-        this.getMainController().getD().addOthers(cvID,
-                this.getMainController().getInformation().get("otherAddition"),
-                this.getMainController().getInformation().get("titleAddition"),
-                this.getMainController().getInformation().get("descriptionAddition"));
-
-        ArrayList<Scene> scenes = new ArrayList<>();
-        for (int i = 0; i <this.getMainController().getSceneList().size() ; i++) {
-            scenes.add(this.getMainController().getSceneList().get(i));
-        }
-
-        this.getMainController().getSceneList().clear();
-        this.getMainController().getSceneList().addAll(scenes);
-
-
-        CV cv = new CV(scenes.get(0),scenes.get(1),scenes.get(2),scenes.get(3),scenes.get(4));
-        //edit part
-        String name = this.getMainController().getInformation().get("firstName");
-        String surname =this.getMainController().getInformation().get("lastName");
-        String cvName = name+"_"+surname;
-        cv.setTitle(cvName);
-        String cvTag = this.getMainController().getInformation().get("tag");
-        cv.setTag(cvTag);
-        this.getMainController().getCvList().getItems().add(cv.getTitle());
-        this.getMainController().getCvMap().put(cv.getTitle(), cv);
-        this.getMainController().setCvCounter(this.getMainController()
-                .getCvList().getItems().size());
-        this.getMainController().getCvNumberLabel().setText("CV Number: " +
-                this.getMainController().getCvCounter());
-        //when clicked submit button the stage will be closed
-        Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
-        stage.show();
-        //last stage will be close when you click submit button
-        Stage stage2 = (Stage) cv.getScene5().getWindow();
-        stage2.close();
-
-    }
-
     public void back(){
-        Scene scene4 = this.getMainController().getSceneList().get(3);
+        Scene scene4 = this.getMainController().getController_s4_cs().getScene();
         this.getMainController().getAddStage().setScene(scene4);
     }
 
@@ -186,123 +72,15 @@ public class Controller_S5_RO implements Initializable {
         alert.setContentText(contentText);
         alert.show();
     }
-    private void submitMethod(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Submit");
-        alert.setHeaderText("Submit");
-        alert.setContentText("Your CV is submitted");
-        alert.show();
-    }
-
 
     private String attachedCvFolderPath = "./src/com/resources/attachedCvs";
     private File cvDocFolder = new File(attachedCvFolderPath);
     private File chosenPDF ;
-    private String attachedPhotoFolderPath= "./src/com/resources/attachedPhoto";
-    private File cvPhotoFolder = new File(attachedPhotoFolderPath);
-    private File chosenPhoto;
-
 
     @FXML
-    public void submit() throws IOException {
+    public void submit()  {
         try {
-            if(mainController.isEditFunctionRunned()){
-                //get old
-
-//                DatabaseConnection d = this.getMainController().getD();
-//                String name = this.getMainController().getInformation().get("firstName");
-//                String surname = this.getMainController().getInformation().get("lastName");
-//                String new_cv_name = name+" "+surname;
-
-
-                this.getMainController().getCvList().getItems().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
-                this.getMainController().getCvMap().remove(this.getMainController().getCvList().getSelectionModel().getSelectedItem());
-
-//                String oldName = d.getCVName();
-//                String old_cv_name = oldName;
-                int cvID = this.getMainController().getD().getCVID();
-
-//                d.updateCV(old_cv_name,new_cv_name);
-//                d.deleteFromTable("people",cvID);
-//                d.deleteFromTable("works",cvID);
-//                d.deleteFromTable("educations",cvID);
-//                d.deleteFromTable("certificates",cvID);
-//                d.deleteFromTable("skills",cvID);
-//                d.deleteFromTable("projects",cvID);
-//                d.deleteFromTable("recommendations",cvID);
-//                d.deleteFromTable("others",cvID);
-
-
-//                CV cv = this.getMainController().getCvMap().get(old_cv_name);
-//                cv.setTitle(new_cv_name);
-//                this.getMainController().getCvMap().put(new_cv_name,cv);
-//                this.getMainController().getCvList().getItems().add(new_cv_name);
-//                this.getMainController().getCvList().getSelectionModel().select(new_cv_name);
-
-                this.getMainController().getD().addPerson(cvID,
-                        this.getMainController().getInformation().get("firstName"),
-                        this.getMainController().getInformation().get("lastName"),
-                        this.getMainController().getInformation().get("tagPI"),
-                        this.getMainController().getInformation().get("titlePI"),
-                        this.getMainController().getInformation().get("careerObjective"),
-                        this.getMainController().getInformation().get("emailPI"),
-                        this.getMainController().getInformation().get("phonePI"),
-                        this.getMainController().getInformation().get("cityPI"),
-                        this.getMainController().getInformation().get("countryPI"));
-
-                this.getMainController().getD().addWork(cvID,
-                        this.getMainController().getInformation().get("occupation"),
-                        this.getMainController().getInformation().get("employer"),
-                        this.getMainController().getInformation().get("cityWE"),
-                        this.getMainController().getInformation().get("countryWE"),
-                        this.getMainController().getInformation().get("fromWE"),
-                        this.getMainController().getInformation().get("toWE"),
-                        this.getMainController().getInformation().get("ongoingWE"),
-                        this.getMainController().getInformation().get("explanationWE"));
-
-                this.getMainController().getD().addEducation(cvID,
-                        this.getMainController().getInformation().get("institution"),
-                        this.getMainController().getInformation().get("department"),
-                        this.getMainController().getInformation().get("gpa"),
-                        this.getMainController().getInformation().get("fromE"),
-                        this.getMainController().getInformation().get("toE"),
-                        this.getMainController().getInformation().get("ongoingE"));
-
-                this.getMainController().getD().addProjects(cvID,
-                        this.getMainController().getInformation().get("titleP"),
-                        this.getMainController().getInformation().get("fromP"),
-                        this.getMainController().getInformation().get("toD"),
-                        this.getMainController().getInformation().get("ongoingP"),
-                        this.getMainController().getInformation().get("descriptionP"));
-
-                this.getMainController().getD().addCertificates(cvID,
-                        this.getMainController().getInformation().get("education"),
-                        this.getMainController().getInformation().get("company"),
-                        this.getMainController().getInformation().get("dateC"));
-
-                this.getMainController().getD().addSkills(cvID,
-                        this.getMainController().getInformation().get("mother"),
-                        this.getMainController().getInformation().get("otherLanguage"),
-                        this.getMainController().getInformation().get("softSkills"),
-                        this.getMainController().getInformation().get("hardSkills"),
-                        this.getMainController().getInformation().get("descriptionHI"));
-
-                this.getMainController().getD().addRecommendations(cvID,
-                        this.getMainController().getInformation().get("nameR"),
-                        this.getMainController().getInformation().get("roleR"),
-                        this.getMainController().getInformation().get("emailR"),
-                        this.getMainController().getInformation().get("descriptionR"),
-                        this.getMainController().getInformation().get("phoneR"));
-
-                this.getMainController().getD().addOthers(cvID,
-                        this.getMainController().getInformation().get("otherAddition"),
-                        this.getMainController().getInformation().get("titleAddition"),
-                        this.getMainController().getInformation().get("descriptionAddition"));
-
-
-
-            }
-            else if(nameTF.getText().isEmpty() && !descriptionRTA.getText().isEmpty()) {
+            if(nameTF.getText().isEmpty() && !descriptionRTA.getText().isEmpty()) {
                 AlertMethod("Please enter the name");
 
             }
@@ -334,84 +112,183 @@ public class Controller_S5_RO implements Initializable {
                 AlertMethod("Please enter a valid phone number");
             }
 
+
+            HashMap<String,String> other = new HashMap<>();
+
+            other.put("header",otherTF.getText());
+            other.put("title",titleTF.getText());
+            other.put("description",descriptionOTA.getText());
+
+
+            if(other_informationData.size()==0){
+                other_informationData.add(0,other);
+            }
             else
-                AllInfo();
-            if (!cvDocFolder.exists()){
-                cvDocFolder.mkdir();
-                File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
-                File sourceCv = new File(chosenPDF.getPath());
-                copyFileUsingStream(sourceCv,destinationCv);
-            }
-            else {
+                other_informationData.set(0,other);
 
-                File destinationCv = new File(attachedCvFolderPath +"/" + this.getMainController().getD().getCVName()+".pdf");
-                File sourceCv = new File(chosenPDF.getPath());
-                copyFileUsingStream(sourceCv,destinationCv);
-            }
-            chosenPhoto = new File(this.getMainController().getPhotoURL());
-            String name = this.getMainController().getInformation().get("firstName");
-            String surname =this.getMainController().getInformation().get("lastName");
-            String cvName = name+"_"+surname;
+            Scene scene1= this.getMainController().getController_s1_pi().getScene();
+            Scene scene2= this.getMainController().getController_s2_we().getScene();
+            Scene scene3= this.getMainController().getController_s3_ep().getScene();
+            Scene scene4= this.getMainController().getController_s4_cs().getScene();
+            Scene scene5= this.getMainController().getController_s5_ro().getScene();
 
-            if (!cvPhotoFolder.exists()){
-                cvPhotoFolder.mkdir();
-                File destinationPDF = new File(attachedPhotoFolderPath +"/" +cvName+".png");
-                File sourcePhoto = new File(String.valueOf(chosenPhoto));
+            CV cv = new CV(scene1,scene2,scene3,scene4,scene5);
 
-                copyFileUsingStream(sourcePhoto,destinationPDF);
+            String name = this.getMainController().getController_s1_pi().getData().get(0).get("first_name");
+            String surname = this.getMainController().getController_s1_pi().getData().get(0).get("last_name");
+            this.getMainController().getD().addCV( name ,surname );
+            int cvID = this.getMainController().getD().getCVID();
+
+            for (int i = 0; i < 5; i++) {
+                if(i==0){
+                    ArrayList<HashMap<String,String>> data = this.getMainController().getController_s1_pi().getData();
+                    for (int j = 0; j <data.size() ; j++) {
+                        HashMap<String, String> person = data.get(i);
+                        this.getMainController().getD().addPerson(cvID,
+                                person.get("first_name"),
+                                person.get("last_name"),
+                                person.get("tag"),
+                                person.get("title"),
+                                person.get("career_objective"),
+                                person.get("email"),
+                                person.get("phone"),
+                                person.get("city"),
+                                person.get("country"));
+                    }
+                }
+                if(i==1){
+                    ArrayList<HashMap<String,String>> data = this.getMainController().getController_s2_we().getData();
+                    for (HashMap<String, String> work : data) {
+                        this.getMainController().getD().addWork(cvID,
+                                work.get("occupation"),
+                                work.get("employer"),
+                                work.get("city"),
+                                work.get("country"),
+                                work.get("starting_date"),
+                                work.get("ending_date"),
+                                work.get("ongoing"),
+                                work.get("description"));
+                    }
+                }
+                if(i==2){
+                    ArrayList<HashMap<String,String>> educationData = this.getMainController().getController_s3_ep().getEducationData();
+                    for (HashMap<String, String> education : educationData) {
+                        this.getMainController().getD().addEducation(cvID,
+                                education.get("institution"),
+                                education.get("department"),
+                                education.get("gpa"),
+                                education.get("fromE"),
+                                education.get("toE"),
+                                education.get("ongoingE"));
+
+                    }
+                    ArrayList<HashMap<String,String>> projectsData = this.getMainController().getController_s3_ep().getProjectsData();
+                    for (HashMap<String, String> project : projectsData) {
+                        this.getMainController().getD().addProjects(cvID,
+                                project.get("titleP"),
+                                project.get("fromP"),
+                                project.get("toD"),
+                                project.get("ongoingP"),
+                                project.get("descriptionP"));
+
+                    }
+
+                }
+                if(i==3){
+                    ArrayList<HashMap<String,String>> certificatesData = this.getMainController().getController_s4_cs().getCertificatesData();
+                    for (HashMap<String, String> certificate : certificatesData) {
+                        this.getMainController().getD().addCertificates(cvID,
+                                certificate.get("education"),
+                                certificate.get("company"),
+                                certificate.get("dateC"));
+
+                    }
+                    ArrayList<HashMap<String,String>> skillsData = this.getMainController().getController_s4_cs().getSkillsData();
+                    for (HashMap<String, String> skills : skillsData) {
+                        this.getMainController().getD().addSkills(cvID,
+                                skills.get("mother"),
+                                skills.get("otherLanguage"),
+                                skills.get("softSkills"),
+                                skills.get("hardSkills"),
+                                skills.get("descriptionHI"));
+
+                    }
+
+                }
+                if(i==4){
+                    ArrayList<HashMap<String,String>> recommendationsData = this.recommendationsData;
+                    for (HashMap<String, String> recommendation : recommendationsData) {
+                        this.getMainController().getD().addRecommendations(cvID,
+                                recommendation.get("name_"),
+                                recommendation.get("role_"),
+                                recommendation.get("email"),
+                                recommendation.get("description"),
+                                recommendation.get("phone"));
+                    }
+                    ArrayList<HashMap<String,String>> other_informationData = this.other_informationData;
+                    for (HashMap<String, String> other_information : other_informationData) {
+                        this.getMainController().getD().addOthers(cvID,
+                                other_information.get("otherAddition"),
+                                other_information.get("titleAddition"),
+                                other_information.get("descriptionAddition"));
+                    }
+
+
+                }
             }
-            else {
-                File destinationPDF = new File(attachedPhotoFolderPath +"/" +cvName+".png");
-                File sourcePhoto = new File(String.valueOf(chosenPhoto));
-                copyFileUsingStream(sourcePhoto,destinationPDF);
-            }
+            HashMap<Integer,ArrayList<HashMap<String,String>>> cvI = new HashMap<>();
+            cvI.put(0,this.getMainController().getController_s1_pi().getData());
+            cvI.put(1,this.getMainController().getController_s2_we().getData());
+            cvI.put(2,this.getMainController().getController_s3_ep().getEducationData());
+            cvI.put(3,this.getMainController().getController_s3_ep().getProjectsData());
+            cvI.put(4,this.getMainController().getController_s4_cs().getCertificatesData());
+            cvI.put(5,this.getMainController().getController_s4_cs().getSkillsData());
+            cvI.put(6,recommendationsData);
+            cvI.put(7,other_informationData);
+
+
+
+
+            String title = name+"_"+surname ;
+            cv.setTitle(title);
+
+            String cvTag = this.getMainController().getController_s1_pi().getData().get(0).get("tag");
+            cv.setTag(cvTag);
+
+            this.getMainController().getCvList().getItems().add(cv.getTitle());
+            this.getMainController().getCvMap().put(cv.getTitle(), cv);
+
+            this.getMainController().setCvCounter(this.getMainController().getCvList().getItems().size());
+            this.getMainController().getCvNumberLabel().setText("CV Number: " + this.getMainController().getCvCounter());
+
+            //when clicked submit button the stage will be closed
+            Stage stage = (Stage) mainController.getCvList().getScene().getWindow();
+            stage.show();
+            //last stage will be close when you click submit button
+            Stage stage2 = (Stage) cv.getScene5().getWindow();
+            stage2.close();
+
         }catch (Exception e){
             e.printStackTrace();
-            AlertMethod("Please fill all the fields");
         }
 
     }
 
 
 
-
-    public static void copyFileUsingStream(File source, File dest) throws IOException {
-        try (InputStream is = new FileInputStream(source); OutputStream os = new FileOutputStream(dest)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        }
-    }
     @FXML
-    void loadCV() throws IOException {
+    void loadCV() {
         FileChooser fileChooser = new FileChooser();
-
-        FileInputStream fis;
 
         FileChooser.ExtensionFilter extensionFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF");
         FileChooser.ExtensionFilter extensionFilterDOCX = new FileChooser.ExtensionFilter("DOCX files (*.docx)", "*.DOCX");
 
         fileChooser.getExtensionFilters().addAll(extensionFilterPDF, extensionFilterDOCX);
 
-
         chosenPDF = fileChooser.showOpenDialog(null);
         if(chosenPDF != null){
             addCVButton.setDisable(true);
         }
-
-
-
-
-        /**
-        fis = new FileInputStream(file);
-
-        byte[] buf = new byte[1024];
-        for (int readNum; (readNum = fis.read(buf)) != -1;) {
-            bos.write(buf, 0, readNum);
-        }
-        fis.close();*/
     }
 
 
@@ -421,4 +298,44 @@ public class Controller_S5_RO implements Initializable {
 
     }
 
+    public void loadRecommendation(int index){
+        HashMap<String,String> recommendation ;
+
+        if(index ==-1)
+            recommendation= recommendationsData.get(0);
+        else
+            recommendation= recommendationsData.get(index);
+
+        nameTF.setText(recommendation.get("name_"));
+        roleTF.setText(recommendation.get("role_"));
+        emailTF.setText(recommendation.get("email"));
+        phoneTF.setText(recommendation.get("phone"));
+        descriptionRTA.setText(recommendation.get("description"));
+
+    }
+    public void loadOther() {
+        HashMap<String,String> other = other_informationData.get(0);
+
+        otherTF.setText(other.get("header"));
+        titleTF.setText(other.get("title"));
+        descriptionOTA.setText(other.get("description"));
+
+    }
+    public void addRecommendation(){
+        HashMap<String,String> recommendation = new HashMap<>();
+
+        recommendation.put("name_",nameTF.getText());
+        recommendation.put("role_",roleTF.getText());
+        recommendation.put("email", emailTF.getText());
+        recommendation.put("phone",phoneTF.getText());
+        recommendation.put("description", descriptionRTA.getText());
+
+        recommendationsData.add(recommendation);
+
+        int i = recommendationCB.getItems().size()+1;
+        recommendationCB.getItems().add(i);
+
+
+
+    }
 }

@@ -1,29 +1,26 @@
 package com.Controllers.Add;
 
-import com.Classes.CV;
-import com.Classes.Main;
 import com.Controllers.MainController;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller_S4_CS implements Initializable {
     private MainController mainController ;
-    private Main main ;
     private Scene scene ;
 
-    @FXML
-    private Button backButton,nextButton;
+    private ArrayList<HashMap<String,String>> certificatesData = new ArrayList<>();
+    private ArrayList<HashMap<String,String>> skillsData = new ArrayList<>();
 
     @FXML
     private DatePicker certificateDate;
@@ -31,8 +28,15 @@ public class Controller_S4_CS implements Initializable {
     @FXML
     private TextField companyTF,educationTF,hardTF,
                       motherTF,otherTF,softTF,titleTF;
+    @FXML
+    private ComboBox<Integer> certificatesCB ;
 
-
+    public void setData(ArrayList<HashMap<String, String>> certificatesTable, ArrayList<HashMap<String, String>> skillsTable) {
+        this.certificatesData = certificatesTable ;
+        this.skillsData = skillsTable ;
+        loadCertificates(-1);
+        loadSkills();
+    }
     public Scene getScene() {
         return scene;
     }
@@ -49,113 +53,96 @@ public class Controller_S4_CS implements Initializable {
         this.mainController = mainController;
     }
 
-    public Main getMain() {
-        return main;
-    }
-
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
     public void init (MainController mainController){
         setMainController(mainController);
     }
 
+    public ArrayList<HashMap<String, String>> getCertificatesData() {
+        return certificatesData;
+    }
 
-    private void AlertMethod(String contentText){
+    public ArrayList<HashMap<String, String>> getSkillsData() {
+        return skillsData;
+    }
+
+    private void AlertMethod(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Error");
         alert.setHeaderText("PROBLEM:");
-        alert.setContentText(contentText);
+        alert.setContentText("Please fill in education name field and try again");
         alert.show();
     }
 
-
-    //All things that need to be done when the scene is loaded
-    public void allInfo(boolean IncludeDate){
-        this.getMainController().getInformation().put("education", educationTF.getText());
-        this.getMainController().getInformation().put("company", companyTF.getText());
-        if(IncludeDate){
-            this.getMainController().getInformation().put("dateC", certificateDate.getValue().toString());
-        }
-        this.getMainController().getInformation().put("mother", motherTF.getText());
-        this.getMainController().getInformation().put("otherLanguage", otherTF.getText());
-        this.getMainController().getInformation().put("softSkills", softTF.getText());
-        this.getMainController().getInformation().put("hardSkills", hardTF.getText());
-        this.getMainController().getInformation().put("descriptionHI", titleTF.getText());
-        Scene scene5 = this.getMainController().getSceneList().get(4);
-        this.getMainController().getAddStage().setScene(scene5);
-    }
-
-
-
     public void next() {
-        if(mainController.isEditFunctionRunned()){
-            String title = mainController.getCvList().getSelectionModel().getSelectedItem();
-            CV cv = mainController.checkCV(title);
-            if(cv==null){
-                return;
-            }
-            Scene scene5 = this.getMainController().getSceneList().get(4);
-            this.getMainController().getAddStage().setScene(scene5);
-            Stage stage = this.getMainController().getAddStage();
-            stage.show();
-            // this is the main stage and when you clickled edit screen it will be hidden
-
-        }
         //If the date is not null and the education field is empty
-        else if (certificateDate.getValue() != null && educationTF.getText().isEmpty() ){
-            AlertMethod ("Please fill in education name field and try again");
+
+        HashMap<String,String> skills = new HashMap<>();
+
+        skills.put("mother_tongue",motherTF.getText());
+        skills.put("other_language", otherTF.getText());
+        skills.put("soft_skills",softTF.getText());
+        skills.put("hard_skills",hardTF.getText());
+        skills.put("hobbies_interests",titleTF.getText());
+
+        if(skillsData.size()==0){
+           skillsData.add(0,skills);
         }
-        else if (educationTF.getText().isEmpty() && !companyTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        else if (educationTF.getText().isEmpty() && !motherTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        else if (educationTF.getText().isEmpty() && !otherTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        else if (educationTF.getText().isEmpty() && !softTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        else if (educationTF.getText().isEmpty() && !hardTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        else if (educationTF.getText().isEmpty() && !titleTF.getText().isEmpty() ) {
-            AlertMethod("Please fill in education name field and try again");
-        }
-        //If the date is not null and the education field is not empty
-        else if (certificateDate.getValue() != null && !educationTF.getText().isEmpty()){
-            allInfo(true);
-        }
-        //If the date is null and the education field is not empty
-        else if (certificateDate.getValue() == null && !educationTF.getText().isEmpty()){
-            allInfo(false);
-        }
-        else if (certificateDate.getValue() != null) {
-            try {
-                allInfo(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (certificateDate.getValue() == null) {
-            try {
-                allInfo(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        else
+            skillsData.set(0,skills);
+
+        Scene scene5 = this.getMainController().getController_s5_ro().getScene();
+        this.getMainController().getAddStage().setScene(scene5);
 
     }
     public void back(){
-
-        Scene scene3 = this.getMainController().getSceneList().get(2);
+        Scene scene3 = this.getMainController().getController_s3_ep().getScene();
         this.getMainController().getAddStage().setScene(scene3);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+    public void loadCertificates(int index) {
+        HashMap<String,String> certificate ;
+        if(index ==-1)
+            certificate= certificatesData.get(0);
+        else
+            certificate= certificatesData.get(index);
+
+        educationTF.setText(certificate.get("education_name"));
+        companyTF.setText(certificate.get("company"));
+        String verifiedDate = certificate.get("verified_date");
+        if(verifiedDate!= null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate verified = LocalDate.parse(verifiedDate, formatter);
+            certificateDate.setValue(verified);
+        }
+    }
+    private void loadSkills(){
+        HashMap<String,String> skills= skillsData.get(0) ;
+        motherTF.setText(skills.get("mother_tongue"));
+        otherTF.setText(skills.get("other_language"));
+        softTF.setText(skills.get("soft_skills"));
+        hardTF.setText(skills.get("hard_skills"));
+        titleTF.setText(skills.get("hobbies_interests"));
+    }
+
+    public void addCertificate(){
+        HashMap<String,String> certificate = new HashMap<>();
+
+        certificate.put("education_name",educationTF.getText());
+        certificate.put("company",companyTF.getText());
+        if(certificateDate.getValue()==null){
+            certificate.put("verified_date",null);
+        }
+        else {
+            certificate.put("verified_date",certificateDate.getValue().toString());
+        }
+        certificatesData.add(certificate);
+
+        int i = certificatesCB.getItems().size()+1;
+        certificatesCB.getItems().add(i);
 
     }
 }

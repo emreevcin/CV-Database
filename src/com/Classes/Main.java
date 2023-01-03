@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,24 +13,16 @@ import java.io.IOException;
 
 
 public class Main extends Application {
-    MainController mainController ;
 
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-    //this method is used to make bigger the image when vbox is fullscreen and smaller when it is not
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/main-view.fxml"));
-        Scene mainScene = new Scene(loader.<Parent> load());
+        Scene mainScene = new Scene(loader.load());
 
         MainController mainController =new MainController();
-        mainController.setMain(this);
-
 
         // loaders for adding process
         FXMLLoader addLoader1 = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
@@ -60,23 +51,18 @@ public class Main extends Application {
         Controller_S4_CS controller_s4_cs = new Controller_S4_CS();
         Controller_S5_RO controller_s5_ro = new Controller_S5_RO();
 
-        controller_s1_pi.setMain(this);
         controller_s1_pi.setMainController(mainController);
         controller_s1_pi.setScene(scene1);
 
-        controller_s2_we.setMain(this);
         controller_s2_we.setMainController(mainController);
         controller_s2_we.setScene(scene2);
 
         controller_s3_ep.setMainController(mainController);
-        controller_s3_ep.setMain(this);
         controller_s3_ep.setScene(scene3);
 
         controller_s4_cs.setMainController(mainController);
-        controller_s4_cs.setMain(this);
         controller_s4_cs.setScene(scene4);
 
-        controller_s5_ro.setMain(this);
         controller_s5_ro.setMainController(mainController);
         controller_s5_ro.setScene(scene5);
 

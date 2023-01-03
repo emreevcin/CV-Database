@@ -2,7 +2,6 @@ package com.Controllers;
 
 import com.Classes.CV;
 import com.Classes.DatabaseConnection;
-import com.Classes.Main;
 import com.Controllers.Add.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,23 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import org.w3c.dom.*;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
-
-import javax.swing.JFileChooser;
-
 
 
 public class MainController implements Initializable {
@@ -41,13 +30,6 @@ public class MainController implements Initializable {
         return d;
     }
 
-    private Main main;
-    private Scene scene1;
-    private Scene scene2;
-    private Scene scene3;
-    private Scene scene4;
-    private Scene scene5;
-
 
     private Controller_S1_PI controller_s1_pi;
     private Controller_S2_WE controller_s2_we;
@@ -57,68 +39,36 @@ public class MainController implements Initializable {
 
     @FXML
     private ListView<String> cvList;
-
     @FXML
     private Label cvNumberLabel;
     @FXML
-    private ImageView deleteImage;
-
-    @FXML
-    private ImageView editImage;
-    @FXML
     private Label firstNamePreview;
-
-    @FXML
-    private ImageView imagePreview;
-
     @FXML
     private Label lastNamePreview;
-
     @FXML
     private TextField searchBarTF;
-
     @FXML
     private ComboBox<String> searchFieldCB;
     @FXML
     private ComboBox<String> filterSelection ;
-
-    @FXML
-    private ImageView sourceCVPreview;
-
     @FXML
     private Label tagsPreview;
-
     @FXML
     private Label titlePreview;
     @FXML
     private Label createdAtPreview;
 
-    protected HashMap<String, String> information;
+
+    protected HashMap<Integer, ArrayList<HashMap<String,String>>> cvInfo;
 
     private HashMap<String, CV> cvMap;
 
     private ArrayList<Scene> sceneList;
 
-    private Scene addScene;
     private Stage addStage;
 
     private int cvCounter;
 
-    public int getCvCounter() {
-        return cvCounter;
-    }
-
-    public void setCvCounter(int cvCounter) {
-        this.cvCounter = cvCounter;
-    }
-
-    private boolean isEditFunctionRunned;
-    public boolean isEditFunctionRunned() {
-        return isEditFunctionRunned;
-    }
-    public void setEditFunctionRunned(boolean editFunctionRunned) {
-        isEditFunctionRunned = editFunctionRunned;
-    }
     public MainController() {
         this.controller_s1_pi = new Controller_S1_PI();
         this.controller_s2_we = new Controller_S2_WE();
@@ -128,12 +78,9 @@ public class MainController implements Initializable {
         addStage = new Stage();
         cvMap = new HashMap<>();
         sceneList = new ArrayList<>();
-        information = new HashMap<>();
+        cvInfo = new HashMap<>();
     }
 
-    public void setMain(Main main) {
-        this.main = main;
-    }
     public void setController_s1_pi(Controller_S1_PI controller_s1_pi) {
         this.controller_s1_pi = controller_s1_pi;
     }
@@ -154,9 +101,40 @@ public class MainController implements Initializable {
         this.controller_s5_ro = controller_s5_ro;
     }
 
-    public HashMap<String, String> getInformation() {
-        return information;
+    public void setCvInfo(HashMap<Integer, ArrayList<HashMap<String, String>>> cvInfo) {
+        this.cvInfo = cvInfo;
     }
+
+
+    public Controller_S1_PI getController_s1_pi() {
+        return controller_s1_pi;
+    }
+
+    public Controller_S2_WE getController_s2_we() {
+        return controller_s2_we;
+    }
+
+    public Controller_S3_EP getController_s3_ep() {
+        return controller_s3_ep;
+    }
+
+    public Controller_S4_CS getController_s4_cs() {
+        return controller_s4_cs;
+    }
+
+    public Controller_S5_RO getController_s5_ro() {
+        return controller_s5_ro;
+    }
+
+    public int getCvCounter() {
+        return cvCounter;
+    }
+
+    public void setCvCounter(int cvCounter) {
+        this.cvCounter = cvCounter;
+    }
+
+
     public Stage getAddStage() {
         return addStage;
     }
@@ -177,17 +155,9 @@ public class MainController implements Initializable {
         return cvNumberLabel;
     }
 
-    private Connection conn;
-    private PreparedStatement getCreatedDate;
-    private PreparedStatement getPersonTitle;
-    private PreparedStatement getPersonImage;
-    private PreparedStatement getPersonName;
-    private PreparedStatement getPersonSurname;
-    private PreparedStatement pull;
-
-    private String photoURL;
-    public String getPhotoURL(){return photoURL;}
-    public void setPhotoURL(String photoURL){this.photoURL = photoURL;}
+    public HashMap<Integer, ArrayList<HashMap<String, String>>> getCvInfo() {
+        return cvInfo;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -221,26 +191,6 @@ public class MainController implements Initializable {
                 lastNamePreview.setText(d.selectedCvInfo(dbCvName)[2]);
                 tagsPreview.setText(d.selectedCvInfo(dbCvName)[3]);
                 createdAtPreview.setText(d.selectedCvDate(dbCvName));
-
-                /**
-                 getPersonImage = conn.prepareStatement("SELECT photo FROM people WHERE cv_id = '35';");
-                 ResultSet gpiResultSet = getPersonImage.executeQuery();
-
-                 Blob imageBlob = gpiResultSet.getBlob("photo");
-
-
-                 byte[] imageBytes = imageBlob.getBytes(0, (int) imageBlob.length());
-                 ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
-                 BufferedImage imagePpl = ImageIO.read(inputStream);
-                 Image image = SwingFXUtils.toFXImage(imagePpl, null);
-
-                 personImage.setImage(image);
-
-                 */
-                File imagePath= new File("././com/resources/attachedPhoto/"+dbCvName+".png");
-                Image personImage = new Image(String.valueOf(imagePath));
-                imagePreview.setImage(personImage);
-
 
             } catch (SQLException exception) {
                 exception.printStackTrace();
@@ -280,15 +230,21 @@ public class MainController implements Initializable {
             Scene scene4 = new Scene(root4);
             Scene scene5 = new Scene(root5);
 
-            sceneList.clear();
-            sceneList.add(scene1);
-            sceneList.add(scene2);
-            sceneList.add(scene3);
-            sceneList.add(scene4);
-            sceneList.add(scene5);
+            controller_s1_pi1.setScene(scene1);
+            controller_s2_we1.setScene(scene2);
+            controller_s3_ep1.setScene(scene3);
+            controller_s4_cs1.setScene(scene4);
+            controller_s5_ro1.setScene(scene5);
 
-            addScene = scene1;
-            addStage.setScene(addScene);
+            this.controller_s1_pi = controller_s1_pi1;
+            this.controller_s2_we = controller_s2_we1;
+            this.controller_s3_ep = controller_s3_ep1 ;
+            this.controller_s4_cs = controller_s4_cs1 ;
+            this.controller_s5_ro = controller_s5_ro1 ;
+
+
+
+            addStage.setScene(scene1);
             addStage.show();
             //When we click on create button main scene will be hidden
             Stage stage = (Stage) cvList.getScene().getWindow();
@@ -345,7 +301,6 @@ public class MainController implements Initializable {
 //
 //        }}
 
-
     @FXML
     public void deleteCV() {
         String cvName = cvList.getSelectionModel().getSelectedItem();
@@ -359,22 +314,97 @@ public class MainController implements Initializable {
     @FXML
     public void editCV() {    // If selected CV exist edit screen openable
         try {
-            isEditFunctionRunned = true;
             String title = cvList.getSelectionModel().getSelectedItem();
             CV cv = checkCV(title);
             if(cv==null){
-                return;
+                cvInfo = d.returnCV(title);
+                if(cvInfo == null)
+                    return;
+
+                if(cvList.getItems().size()==0){
+                    return;
+                }
+
+                System.out.println(title);
+
+                FXMLLoader addLoader1 = new FXMLLoader(getClass().getResource("../resources/personal-information-view.fxml"));
+                FXMLLoader addLoader2 = new FXMLLoader(getClass().getResource("../resources/work-experience-view.fxml"));
+                FXMLLoader addLoader3 = new FXMLLoader(getClass().getResource("../resources/education-projects-view.fxml"));
+                FXMLLoader addLoader4 = new FXMLLoader(getClass().getResource("../resources/certificates-skills-view.fxml"));
+                FXMLLoader addLoader5 = new FXMLLoader(getClass().getResource("../resources/recommendation-others-view.fxml"));
+
+                Parent root1 = addLoader1.load();
+                Scene scene1 = new Scene(root1);
+                Parent root2 = addLoader2.load();
+                Scene scene2 = new Scene(root2);
+                Parent root3 = addLoader3.load();
+                Scene scene3 = new Scene(root3);
+                Parent root4 = addLoader4.load();
+                Scene scene4 = new Scene(root4);
+                Parent root5 = addLoader5.load();
+                Scene scene5 = new Scene(root5);
+
+                Controller_S1_PI controller_s1_pi1= addLoader1.getController();
+                controller_s1_pi1.init(this);
+                Controller_S2_WE controller_s2_we1 = addLoader2.getController();
+                controller_s2_we1.init(this);
+                Controller_S3_EP controller_s3_ep1 = addLoader3.getController();
+                controller_s3_ep1.init(this);
+                Controller_S4_CS controller_s4_cs1 = addLoader4.getController();
+                controller_s4_cs1.init(this);
+                Controller_S5_RO controller_s5_ro1 = addLoader5.getController();
+                controller_s5_ro1.init(this);
+
+                controller_s1_pi1.setScene(scene1);
+                controller_s2_we1.setScene(scene2);
+                controller_s3_ep1.setScene(scene3);
+                controller_s4_cs1.setScene(scene4);
+                controller_s5_ro1.setScene(scene5);
+
+                this.controller_s1_pi = controller_s1_pi1;
+                this.controller_s2_we = controller_s2_we1;
+                this.controller_s3_ep = controller_s3_ep1 ;
+                this.controller_s4_cs = controller_s4_cs1 ;
+                this.controller_s5_ro = controller_s5_ro1 ;
+
+
+                ArrayList<HashMap<String,String>>certificatesTable = cvInfo.get(0);
+                ArrayList<HashMap<String,String>>educationsTable = cvInfo.get(1);
+                ArrayList<HashMap<String,String>>other_informationTable = cvInfo.get(2);
+                ArrayList<HashMap<String,String>>peopleTable = cvInfo.get(3);
+                ArrayList<HashMap<String,String>>projectsTable = cvInfo.get(4);
+                ArrayList<HashMap<String,String>>recommendationsTable = cvInfo.get(5);
+                ArrayList<HashMap<String,String>>skillsTable = cvInfo.get(6);
+                ArrayList<HashMap<String,String>>worksTable = cvInfo.get(7);
+
+                System.out.println(peopleTable);
+
+                controller_s1_pi.setData(peopleTable);
+                controller_s2_we.setData(worksTable);
+                controller_s3_ep.setData(educationsTable ,projectsTable);
+                controller_s4_cs.setData(certificatesTable,skillsTable);
+                controller_s5_ro.setData(recommendationsTable,other_informationTable);
+
+
+                addStage.setScene(scene1);
+                addStage.show();
+                Stage mainStage = (Stage) getCvList().getScene().getWindow();
+                mainStage.hide();
             }
-            Stage stage = new Stage();
-            stage.setScene(cv.getScene1());
-            stage.show();
-            // this is the main stage and when you clickled edit screen it will be hidden
-            Stage mainStage = (Stage) getCvList().getScene().getWindow();
-            mainStage.hide();
+            else
+            {
+                Stage stage = new Stage();
+                stage.setScene(cv.getScene1());
+                stage.show();
+                // this is the main stage and when you clicked edit screen it will be hidden
+                Stage mainStage = (Stage) getCvList().getScene().getWindow();
+                mainStage.hide();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public CV checkCV(String s) { //Checking CV is exists if exist return selected CV otherwise return null
         if (s != null) {
@@ -434,6 +464,10 @@ public class MainController implements Initializable {
         String dbCvName = cvList.getSelectionModel().getSelectedItem();
         File attachedCvPath = new File("./src/com/resources/attachedCvs/"+dbCvName+".pdf");
         Desktop.getDesktop().open(attachedCvPath);
+    }
+
+    public void displayer (HashMap<String,String> map ){
+        System.out.println(map);
     }
 
 }

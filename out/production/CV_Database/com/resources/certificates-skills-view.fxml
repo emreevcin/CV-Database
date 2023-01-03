@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S4_CS">
+<VBox prefHeight="450.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Controllers.Add.Controller_S4_CS">
    <children>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="606.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="606.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -28,7 +28,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Certificate Information" />
          </children>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
@@ -39,21 +39,21 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Education Name" />
                   <TextField fx:id="educationTF" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
-                  <DatePicker fx:id="certificateDate" />
+                  <DatePicker fx:id="certificateDate" prefHeight="26.0" prefWidth="299.0" />
                </children>
                <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                </HBox.margin>
             </VBox>
-            <VBox prefHeight="60.0" prefWidth="300.0">
+            <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="300.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Company" />
                   <TextField fx:id="companyTF">
                      <VBox.margin>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="5.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Multiple Certifiacate Information">
                            <HBox.margin>
@@ -62,7 +62,18 @@
                         </Text>
                         <ComboBox fx:id="certificatesCB" prefWidth="150.0" promptText="Certificates" />
                      </children>
+                     <VBox.margin>
+                        <Insets left="4.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </HBox>
+                  <Button mnemonicParsing="false" onAction="#addCertificate" text="Add New">
+                     <VBox.margin>
+                        <Insets left="220.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -73,7 +84,7 @@
             <Insets top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -83,7 +94,7 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Language Skills" />
          </children>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
@@ -95,13 +106,16 @@
                   <TextField fx:id="motherTF" />
                </children>
                <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets left="10.0" right="5.0" />
                </HBox.margin>
             </VBox>
             <VBox prefHeight="50.0" prefWidth="300.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Foreign Languages" />
-                  <TextField fx:id="otherTF" />
+                  <TextField fx:id="otherTF">
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin></TextField>
                </children>
                <HBox.margin>
                   <Insets right="5.0" />
@@ -112,7 +126,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="606.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="606.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -131,7 +145,10 @@
             <VBox prefHeight="50.0" prefWidth="300.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Soft Skills" />
-                  <TextField fx:id="softTF" />
+                  <TextField fx:id="softTF">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin></TextField>
                </children>
                <HBox.margin>
                   <Insets right="5.0" />
@@ -140,7 +157,10 @@
             <VBox prefHeight="50.0" prefWidth="300.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hard Skills" />
-                  <TextField fx:id="hardTF" />
+                  <TextField fx:id="hardTF" prefHeight="26.0" prefWidth="286.0">
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin></TextField>
                </children>
                <HBox.margin>
                   <Insets />
@@ -151,7 +171,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="606.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="606.0">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -165,18 +185,21 @@
          </VBox.margin>
       </HBox>
       <Separator prefWidth="200.0" />
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hobbies and Interests">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Text>
-            <TextField fx:id="titleTF" alignment="CENTER" prefHeight="25.0" prefWidth="400.0" />
+            <TextField fx:id="titleTF" alignment="CENTER" prefHeight="26.0" prefWidth="464.0" />
          </children>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
          </VBox.margin>
+         <opaqueInsets>
+            <Insets left="10.0" />
+         </opaqueInsets>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="600.0">
          <children>
