@@ -36,7 +36,7 @@ public class DatabaseConnection {
 
 
     public DatabaseConnection() {
-        fileName = "./source/cvdb.db";
+        fileName = "./src/cvdb.db";
         File file = new File(fileName);
         boolean firstRun = !file.exists();
         conn = null;
@@ -70,84 +70,84 @@ public class DatabaseConnection {
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
                         "first_name TEXT UNIQUE NOT NULL, " +
-                        "last_name TEXT UNIQUE  NOT NULL , " +
-                        "tag TEXT NOT NULL ," +
-                        "title TEXT NOT NULL, " +
-                        "career_objective TEXT NOT NULL, " +
-                        "email TEXT NOT NULL, " +
-                        "phone TEXT NOT NULL, " +
-                        "city TEXT NOT NULL, " +
-                        "country TEXT NOT NULL, " +
+                        "last_name TEXT UNIQUE  NOT NULL, " +
+                        "tag TEXT DEFAULT '' NOT NULL," +
+                        "title TEXT DEFAULT '' NOT NULL, " +
+                        "career_objective TEXT DEFAULT '' NOT NULL, " +
+                        "email TEXT DEFAULT '' NOT NULL, " +
+                        "phone TEXT DEFAULT '' NOT NULL, " +
+                        "city TEXT DEFAULT '' NOT NULL, " +
+                        "country TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statWork.executeUpdate("CREATE TABLE works(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "occupation TEXT NOT NULL, " +
-                        "employer TEXT NOT NULL, " +
-                        "city TEXT NOT NULL, " +
-                        "country TEXT NOT NULL, " +
-                        "starting_date TEXT NOT NULL, " +
-                        "ending_date TEXT NOT NULL, " +
-                        "ongoing TEXT NOT NULL, " +
+                        "occupation TEXT DEFAULT '' NOT NULL, " +
+                        "employer TEXT DEFAULT '' NOT NULL, " +
+                        "city TEXT DEFAULT '' NOT NULL, " +
+                        "country TEXT DEFAULT '' NOT NULL, " +
+                        "starting_date TEXT DEFAULT '' NOT NULL, " +
+                        "ending_date TEXT DEFAULT '' NOT NULL, " +
+                        "ongoing TEXT DEFAULT '' NOT NULL, " +
                         "activities_responsibilities TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statEducation.executeUpdate("CREATE TABLE educations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "institution TEXT NOT NULL, " +
-                        "department TEXT NOT NULL, " +
-                        "gpa TEXT NOT NULL, " +
-                        "starting_date TEXT NOT NULL, " +
-                        "ending_date TEXT NOT NULL, " +
-                        "ongoing TEXT NOT NULL, " +
+                        "institution TEXT DEFAULT '' NOT NULL, " +
+                        "department TEXT DEFAULT '' NOT NULL, " +
+                        "gpa TEXT DEFAULT '' NOT NULL, " +
+                        "starting_date TEXT DEFAULT '' NOT NULL, " +
+                        "ending_date TEXT DEFAULT '' NOT NULL, " +
+                        "ongoing TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statCertificate.executeUpdate("CREATE TABLE certificates(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "education_name TEXT NOT NULL, " +
-                        "company TEXT NOT NULL, " +
-                        "verified_date TEXT NOT NULL, " +
+                        "education_name TEXT DEFAULT '' NOT NULL, " +
+                        "company TEXT DEFAULT '' NOT NULL, " +
+                        "verified_date TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statSkill.executeUpdate("CREATE TABLE skills(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "mother_tongue TEXT NOT NULL, " +
-                        "other_languages TEXT NOT NULL, " +
-                        "soft_skills TEXT NOT NULL, " +
-                        "hard_skills TEXT NOT NULL, " +
-                        "hobbies_interests TEXT NOT NULL, " +
+                        "mother_tongue TEXT DEFAULT '' NOT NULL, " +
+                        "other_languages TEXT DEFAULT '' NOT NULL, " +
+                        "soft_skills TEXT DEFAULT '' NOT NULL, " +
+                        "hard_skills TEXT DEFAULT '' NOT NULL, " +
+                        "hobbies_interests TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statProject.executeUpdate("CREATE TABLE projects(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "title TEXT NOT NULL, " +
-                        "starting_date TEXT NOT NULL, " +
-                        "ending_date TEXT NOT NULL, " +
-                        "ongoing TEXT NOT NULL, " +
-                        "description TEXT NOT NULL, " +
+                        "title TEXT DEFAULT '' NOT NULL, " +
+                        "starting_date TEXT DEFAULT '' NOT NULL, " +
+                        "ending_date TEXT DEFAULT '' NOT NULL, " +
+                        "ongoing TEXT DEFAULT '' NOT NULL, " +
+                        "description TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statRecommendation.executeUpdate("CREATE TABLE recommendations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "name_ TEXT NOT NULL, " +
-                        "role_ TEXT NOT NULL, " +
-                        "email TEXT NOT NULL, " +
-                        "phone TEXT NOT NULL, " +
-                        "description TEXT NOT NULL, " +
+                        "name_ TEXT DEFAULT '' NOT NULL, " +
+                        "role_ TEXT DEFAULT '' NOT NULL, " +
+                        "email TEXT DEFAULT '' NOT NULL, " +
+                        "phone TEXT DEFAULT '' NOT NULL, " +
+                        "description TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statOther.executeUpdate("CREATE TABLE other_information(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "header TEXT NOT NULL, " +
-                        "title TEXT NOT NULL, " +
-                        "description TEXT NOT NULL, " +
+                        "header TEXT DEFAULT '' NOT NULL, " +
+                        "title TEXT DEFAULT '' NOT NULL, " +
+                        "description TEXT DEFAULT '' NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
             } else {
                 stmt.executeUpdate("PRAGMA foreign_keys = ON;");
