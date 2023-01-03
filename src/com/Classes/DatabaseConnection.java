@@ -1,11 +1,12 @@
 package com.Classes;
 
+import javafx.scene.control.ListView;
+import org.sqlite.SQLiteConfig;
+
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javafx.scene.control.ListView;
-import org.sqlite.SQLiteConfig;
 
 
 public class DatabaseConnection {
@@ -35,7 +36,7 @@ public class DatabaseConnection {
 
 
     public DatabaseConnection() {
-        fileName = "cvdb.db";
+        fileName = "./source/cvdb.db";
         File file = new File(fileName);
         boolean firstRun = !file.exists();
         conn = null;
@@ -68,85 +69,85 @@ public class DatabaseConnection {
                 statPersonal.executeUpdate("CREATE TABLE people(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "first_name TEXT, " +
-                        "last_name TEXT, " +
-                        "tag TEXT," +
-                        "title TEXT, " +
-                        "career_objective TEXT, " +
-                        "email TEXT, " +
-                        "phone TEXT, " +
-                        "city TEXT, " +
-                        "country TEXT, " +
+                        "first_name TEXT UNIQUE NOT NULL, " +
+                        "last_name TEXT UNIQUE  NOT NULL , " +
+                        "tag TEXT NOT NULL ," +
+                        "title TEXT NOT NULL, " +
+                        "career_objective TEXT NOT NULL, " +
+                        "email TEXT NOT NULL, " +
+                        "phone TEXT NOT NULL, " +
+                        "city TEXT NOT NULL, " +
+                        "country TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statWork.executeUpdate("CREATE TABLE works(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "occupation TEXT, " +
-                        "employer TEXT, " +
-                        "city TEXT, " +
-                        "country TEXT, " +
-                        "starting_date TEXT, " +
-                        "ending_date TEXT, " +
-                        "ongoing TEXT, " +
-                        "activities_responsibilities TEXT, " +
+                        "occupation TEXT NOT NULL, " +
+                        "employer TEXT NOT NULL, " +
+                        "city TEXT NOT NULL, " +
+                        "country TEXT NOT NULL, " +
+                        "starting_date TEXT NOT NULL, " +
+                        "ending_date TEXT NOT NULL, " +
+                        "ongoing TEXT NOT NULL, " +
+                        "activities_responsibilities TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statEducation.executeUpdate("CREATE TABLE educations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "institution TEXT, " +
-                        "department TEXT, " +
-                        "gpa TEXT, " +
-                        "starting_date TEXT, " +
-                        "ending_date TEXT, " +
-                        "ongoing TEXT, " +
+                        "institution TEXT NOT NULL, " +
+                        "department TEXT NOT NULL, " +
+                        "gpa TEXT NOT NULL, " +
+                        "starting_date TEXT NOT NULL, " +
+                        "ending_date TEXT NOT NULL, " +
+                        "ongoing TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statCertificate.executeUpdate("CREATE TABLE certificates(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "education_name TEXT, " +
-                        "company TEXT, " +
-                        "verified_date TEXT, " +
+                        "education_name TEXT NOT NULL, " +
+                        "company TEXT NOT NULL, " +
+                        "verified_date TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statSkill.executeUpdate("CREATE TABLE skills(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "mother_tongue TEXT, " +
-                        "other_languages TEXT, " +
-                        "soft_skills TEXT, " +
-                        "hard_skills TEXT, " +
-                        "hobbies_interests TEXT, " +
+                        "mother_tongue TEXT NOT NULL, " +
+                        "other_languages TEXT NOT NULL, " +
+                        "soft_skills TEXT NOT NULL, " +
+                        "hard_skills TEXT NOT NULL, " +
+                        "hobbies_interests TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statProject.executeUpdate("CREATE TABLE projects(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "title TEXT, " +
-                        "starting_date TEXT, " +
-                        "ending_date TEXT, " +
-                        "ongoing TEXT, " +
-                        "description TEXT, " +
+                        "title TEXT NOT NULL, " +
+                        "starting_date TEXT NOT NULL, " +
+                        "ending_date TEXT NOT NULL, " +
+                        "ongoing TEXT NOT NULL, " +
+                        "description TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statRecommendation.executeUpdate("CREATE TABLE recommendations(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "name_ TEXT, " +
-                        "role_ TEXT, " +
-                        "email TEXT, " +
-                        "phone TEXT, " +
-                        "description TEXT, " +
+                        "name_ TEXT NOT NULL, " +
+                        "role_ TEXT NOT NULL, " +
+                        "email TEXT NOT NULL, " +
+                        "phone TEXT NOT NULL, " +
+                        "description TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
 
                 statOther.executeUpdate("CREATE TABLE other_information(" +
                         "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "cv_id INTEGER REFERENCES cvs(id) ON DELETE CASCADE, " +
-                        "header TEXT, " +
-                        "title TEXT, " +
-                        "description TEXT, " +
+                        "header TEXT NOT NULL, " +
+                        "title TEXT NOT NULL, " +
+                        "description TEXT NOT NULL, " +
                         "created_at DATE DEFAULT CURRENT_TIMESTAMP);");
             } else {
                 stmt.executeUpdate("PRAGMA foreign_keys = ON;");
@@ -154,7 +155,7 @@ public class DatabaseConnection {
 
             insertSQL = conn.prepareStatement("INSERT INTO cvs(cv_name) values (?);");
 
-            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, tag, first_name, last_name, title, career_objective, " +
+            insertSQLPersonal = conn.prepareStatement("INSERT INTO  people(cv_id, first_name, last_name, tag, title, career_objective, " +
                     "email, phone, city, country) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 
             insertSQLWork = conn.prepareStatement("INSERT INTO  works(cv_id, occupation, employer, city, country, " +
