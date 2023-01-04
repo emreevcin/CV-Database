@@ -66,10 +66,11 @@ public class Controller_S1_PI implements Initializable {
         else{
             try{
                 allInfo();
-                Scene scene2 = this.getMainController().getController_s2_we().getScene();
-                this.getMainController().getAddStage().setScene(scene2);
+
             } catch (Exception e){e.printStackTrace();}
         }
+        Scene scene2 = this.getMainController().getController_s2_we().getScene();
+        this.getMainController().getAddStage().setScene(scene2);
 
 
     }

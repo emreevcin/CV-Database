@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Controller_S2_WE implements Initializable {
@@ -99,13 +100,15 @@ public class Controller_S2_WE implements Initializable {
         work.put("occupation",occupationTF.getText());
         work.put("activities_responsibilities",explanationTA.getText());
         if(fromDate.getValue()==null){
-            work.put("starting_date",null);
+            LocalDate currenDate = LocalDate.now();
+            work.put("starting_date",currenDate.toString());
         }
         else{
             work.put("starting_date",fromDate.getValue().toString());
         }
         if(toDate.getValue()==null){
-            work.put("ending_date",null);
+            LocalDate currenDate = LocalDate.now();
+            work.put("ending_date",currenDate.toString());
         }
         else {
             work.put("ending_date", toDate.getValue().toString());

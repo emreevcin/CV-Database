@@ -79,7 +79,7 @@ public class Controller_S4_CS implements Initializable {
         HashMap<String,String> skills = new HashMap<>();
 
         skills.put("mother_tongue",motherTF.getText());
-        skills.put("other_language", otherTF.getText());
+        skills.put("other_languages", otherTF.getText());
         skills.put("soft_skills",softTF.getText());
         skills.put("hard_skills",hardTF.getText());
         skills.put("hobbies_interests",titleTF.getText());
@@ -122,7 +122,7 @@ public class Controller_S4_CS implements Initializable {
     private void loadSkills(){
         HashMap<String,String> skills= skillsData.get(0) ;
         motherTF.setText(skills.get("mother_tongue"));
-        otherTF.setText(skills.get("other_language"));
+        otherTF.setText(skills.get("other_languages"));
         softTF.setText(skills.get("soft_skills"));
         hardTF.setText(skills.get("hard_skills"));
         titleTF.setText(skills.get("hobbies_interests"));
@@ -134,7 +134,8 @@ public class Controller_S4_CS implements Initializable {
         certificate.put("education_name",educationTF.getText());
         certificate.put("company",companyTF.getText());
         if(certificateDate.getValue()==null){
-            certificate.put("verified_date",null);
+            LocalDate currenDate = LocalDate.now();
+            certificate.put("verified_date",currenDate.toString());
         }
         else {
             certificate.put("verified_date",certificateDate.getValue().toString());

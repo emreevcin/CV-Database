@@ -645,7 +645,7 @@ public class MainController implements Initializable {
             String Occupation= d.returnCV(dbCvName).get(7).get(0).get("occupation");
             String City = d.returnCV(dbCvName).get(7).get(0).get("city");
             String Country = d.returnCV(dbCvName).get(7).get(0).get("country");
-            String Activities = d.returnCV(dbCvName).get(7).get(0).get("activities");
+            String Activities = d.returnCV(dbCvName).get(7).get(0).get("activities_responsibilities");
 
             List<String> activities = Splitter(Activities);
             int activitiesLine = activities.size();

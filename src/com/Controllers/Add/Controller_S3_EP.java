@@ -146,13 +146,13 @@ public class Controller_S3_EP implements Initializable {
         education.put("gpa",gpaTF.getText());
 
         if(fromDateE.getValue()==null){
-            education.put("starting_date",null);
+            education.put("starting_date","");
         }
         else{
             education.put("starting_date",fromDateE.getValue().toString());
         }
         if(toDateE.getValue()==null){
-            education.put("ending_date",null);
+            education.put("ending_date","");
         }
         else {
             education.put("ending_date", toDateE.getValue().toString());
@@ -180,13 +180,15 @@ public class Controller_S3_EP implements Initializable {
         project.put("description",descriptionTA.getText());
         project.put("title",titleTF.getText());
         if(fromDateP.getValue()==null){
-            project.put("starting_date",null);
+            LocalDate currenDate = LocalDate.now();
+            project.put("starting_date",currenDate.toString());
         }
         else{
             project.put("starting_date",fromDateP.getValue().toString());
         }
         if(toDateP.getValue()==null){
-            project.put("ending_date",null);
+            LocalDate currenDate = LocalDate.now();
+            project.put("ending_date",currenDate.toString());
         }
         else {
             project.put("ending_date", toDateP.getValue().toString());

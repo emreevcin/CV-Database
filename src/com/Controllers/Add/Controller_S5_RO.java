@@ -167,7 +167,7 @@ public class Controller_S5_RO implements Initializable {
                                 work.get("starting_date"),
                                 work.get("ending_date"),
                                 work.get("ongoing"),
-                                work.get("description"));
+                                work.get("activities_responsibilities"));
                     }
                 }
                 if(i==2){
@@ -177,19 +177,19 @@ public class Controller_S5_RO implements Initializable {
                                 education.get("institution"),
                                 education.get("department"),
                                 education.get("gpa"),
-                                education.get("fromE"),
-                                education.get("toE"),
-                                education.get("ongoingE"));
+                                education.get("starting_date"),
+                                education.get("ending_date"),
+                                education.get("ongoing"));
 
                     }
                     ArrayList<HashMap<String,String>> projectsData = this.getMainController().getController_s3_ep().getProjectsData();
                     for (HashMap<String, String> project : projectsData) {
                         this.getMainController().getD().addProjects(cvID,
-                                project.get("titleP"),
-                                project.get("fromP"),
-                                project.get("toD"),
-                                project.get("ongoingP"),
-                                project.get("descriptionP"));
+                                project.get("title"),
+                                project.get("starting_date"),
+                                project.get("ending_date"),
+                                project.get("ongoing"),
+                                project.get("description"));
 
                     }
 
@@ -198,20 +198,19 @@ public class Controller_S5_RO implements Initializable {
                     ArrayList<HashMap<String,String>> certificatesData = this.getMainController().getController_s4_cs().getCertificatesData();
                     for (HashMap<String, String> certificate : certificatesData) {
                         this.getMainController().getD().addCertificates(cvID,
-                                certificate.get("education"),
+                                certificate.get("education_name"),
                                 certificate.get("company"),
-                                certificate.get("dateC"));
+                                certificate.get("verified_date"));
 
                     }
                     ArrayList<HashMap<String,String>> skillsData = this.getMainController().getController_s4_cs().getSkillsData();
                     for (HashMap<String, String> skills : skillsData) {
                         this.getMainController().getD().addSkills(cvID,
-                                skills.get("mother"),
-                                skills.get("otherLanguage"),
-                                skills.get("softSkills"),
-                                skills.get("hardSkills"),
-                                skills.get("descriptionHI"));
-
+                                skills.get("mother_tongue"),
+                                skills.get("other_languages"),
+                                skills.get("soft_skills"),
+                                skills.get("hard_skills"),
+                                skills.get("hobbies_interests"));
                     }
 
                 }
@@ -228,26 +227,14 @@ public class Controller_S5_RO implements Initializable {
                     ArrayList<HashMap<String,String>> other_informationData = this.other_informationData;
                     for (HashMap<String, String> other_information : other_informationData) {
                         this.getMainController().getD().addOthers(cvID,
-                                other_information.get("otherAddition"),
-                                other_information.get("titleAddition"),
-                                other_information.get("descriptionAddition"));
+                                other_information.get("header"),
+                                other_information.get("title"),
+                                other_information.get("description"));
                     }
 
 
                 }
             }
-            HashMap<Integer,ArrayList<HashMap<String,String>>> cvI = new HashMap<>();
-            cvI.put(0,this.getMainController().getController_s1_pi().getData());
-            cvI.put(1,this.getMainController().getController_s2_we().getData());
-            cvI.put(2,this.getMainController().getController_s3_ep().getEducationData());
-            cvI.put(3,this.getMainController().getController_s3_ep().getProjectsData());
-            cvI.put(4,this.getMainController().getController_s4_cs().getCertificatesData());
-            cvI.put(5,this.getMainController().getController_s4_cs().getSkillsData());
-            cvI.put(6,recommendationsData);
-            cvI.put(7,other_informationData);
-
-
-
 
             String title = name+"_"+surname ;
             cv.setTitle(title);
