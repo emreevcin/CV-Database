@@ -554,8 +554,8 @@ public class MainController implements Initializable {
         contentStream.setFont(font, 12);
         contentStream.setLeading(16.0f);
         contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
-        for (String s:personalInfo) {
-            contentStream.showText(s);
+        for (String line:personalInfo) {
+            contentStream.showText(line);
             contentStream.newLine();
         }
         contentStream.endText();
@@ -572,22 +572,21 @@ public class MainController implements Initializable {
         marginTop+=12;
 
 
-        while (true) {
+        for(int i = 0; i<d.returnCV(dbCvName).get(1).size(); i++) {
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setLeading(16.0f);
             contentStream.newLineAtOffset(25, firstPage.getTrimBox().getHeight() - marginTop);
-            String EduDateFrom = d.returnCV(dbCvName).get(1).get(0).get("starting_date");
-            String EduDateTo = d.returnCV(dbCvName).get(1).get(0).get("ending_date");
-            String Institution = d.returnCV(dbCvName).get(1).get(0).get("institution");
-            String Department = d.returnCV(dbCvName).get(1).get(0).get("department");
-            String GPA = "GPA: " + d.returnCV(dbCvName).get(1).get(0).get("gpa");
-            contentStream.showText(EduDateFrom + "-" + EduDateTo + "        " + Institution + "/" + Department);
+            String EduDateFrom ="Start: "+  d.returnCV(dbCvName).get(1).get(i).get("starting_date");
+            String EduDateTo ="End: "+  d.returnCV(dbCvName).get(1).get(i).get("ending_date");
+            String Institution = d.returnCV(dbCvName).get(1).get(i).get("institution");
+            String Department = d.returnCV(dbCvName).get(1).get(i).get("department");
+            String GPA = "                                                                   GPA:" + d.returnCV(dbCvName).get(1).get(i).get("gpa");
+            contentStream.showText(EduDateFrom + " | " + EduDateTo + "         " + Institution + "/" + Department);
             contentStream.newLine();
             contentStream.showText(GPA);
             contentStream.endText();
             marginTop += 30;
-            break;
         }
         marginTop+=12;
         contentStream.beginText();
@@ -599,21 +598,21 @@ public class MainController implements Initializable {
         contentStream.endText();
         marginTop+=12;
 
-        while (true){
+        for(int i = 0; i<d.returnCV(dbCvName).get(4).size(); i++){
 
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setLeading(16.0f);
             contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
-            String ProjectDateFrom = d.returnCV(dbCvName).get(4).get(0).get("starting_date");
-            String ProjectDateTo = d.returnCV(dbCvName).get(4).get(0).get("ending_date");
-            String ProjectTitle = d.returnCV(dbCvName).get(4).get(0).get("title");
-            String ProjectDescription = d.returnCV(dbCvName).get(4).get(0).get("description");
+            String ProjectDateFrom ="Start: "+  d.returnCV(dbCvName).get(4).get(i).get("starting_date");
+            String ProjectDateTo ="End: "+ d.returnCV(dbCvName).get(4).get(i).get("ending_date");
+            String ProjectTitle = d.returnCV(dbCvName).get(4).get(i).get("title");
+            String ProjectDescription = d.returnCV(dbCvName).get(4).get(i).get("description");
 
             List<String> projectDESC= Splitter(ProjectDescription);
             int projectDescLine = projectDESC.size();
 
-            contentStream.showText(ProjectDateFrom+"-"+ProjectDateTo+"        "+ProjectTitle);
+            contentStream.showText(ProjectDateFrom+" | "+ProjectDateTo+"        "+ProjectTitle);
             contentStream.newLine();
             for (String line: projectDESC) {
                 contentStream.showText(line);
@@ -621,7 +620,6 @@ public class MainController implements Initializable {
             contentStream.endText();
             marginTop+=30;
             marginTop+= projectDescLine*12;
-            break;
 
         }
 
@@ -634,24 +632,24 @@ public class MainController implements Initializable {
         contentStream.endText();
         marginTop+=14;
 
-        while (true){
+        for(int i = 0; i<d.returnCV(dbCvName).get(7).size(); i++){
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setLeading(16.0f);
             contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
-            String WorkDateFrom = d.returnCV(dbCvName).get(7).get(0).get("starting_date");
-            String WorkDateTo = d.returnCV(dbCvName).get(7).get(0).get("ending_date");
-            String Employer = d.returnCV(dbCvName).get(7).get(0).get("employer");
-            String Occupation= d.returnCV(dbCvName).get(7).get(0).get("occupation");
-            String City = d.returnCV(dbCvName).get(7).get(0).get("city");
-            String Country = d.returnCV(dbCvName).get(7).get(0).get("country");
-            String Activities = d.returnCV(dbCvName).get(7).get(0).get("activities_responsibilities");
+            String WorkDateFrom ="Start: "+ d.returnCV(dbCvName).get(7).get(i).get("starting_date");
+            String WorkDateTo = "End: "+d.returnCV(dbCvName).get(7).get(i).get("ending_date");
+            String Employer = d.returnCV(dbCvName).get(7).get(i).get("employer");
+            String Occupation= d.returnCV(dbCvName).get(7).get(i).get("occupation");
+            String City = d.returnCV(dbCvName).get(7).get(i).get("city");
+            String Country = d.returnCV(dbCvName).get(7).get(i).get("country");
+            String Activities = d.returnCV(dbCvName).get(7).get(i).get("activities_responsibilities");
 
             List<String> activities = Splitter(Activities);
             int activitiesLine = activities.size();
 
 
-            contentStream.showText(WorkDateFrom+"-"+WorkDateTo+"        "+Employer+"/"+Occupation);
+            contentStream.showText(WorkDateFrom+" | "+WorkDateTo+"        "+Employer+"/"+Occupation);
             contentStream.newLine();
             for (String line: activities) {
                 contentStream.showText(line);
@@ -661,7 +659,7 @@ public class MainController implements Initializable {
             contentStream.endText();
             marginTop+=34;
             marginTop+=activitiesLine*12;
-            break;
+
         }
         marginTop+=12;
         contentStream.beginText();
@@ -674,20 +672,19 @@ public class MainController implements Initializable {
         marginTop+=12;
 
 
-        while (true){
+        for(int i = 0; i<d.returnCV(dbCvName).get(0).size(); i++){
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setLeading(16.0f);
             contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
-            String CertificateDate = d.returnCV(dbCvName).get(0).get(0).get("verified_date");
-            String CertificateCompany = d.returnCV(dbCvName).get(0).get(0).get("company");
-            String CertificateEducationName = d.returnCV(dbCvName).get(0).get(0).get("education_name");
+            String CertificateDate = d.returnCV(dbCvName).get(0).get(i).get("verified_date");
+            String CertificateCompany = d.returnCV(dbCvName).get(0).get(i).get("company");
+            String CertificateEducationName = d.returnCV(dbCvName).get(0).get(i).get("education_name");
             contentStream.showText(CertificateDate+"        "+CertificateCompany);
             contentStream.showText(CertificateEducationName);
             contentStream.newLine();
             contentStream.endText();
             marginTop+=16;
-            break;
         }
 
         marginTop+=12;
@@ -731,16 +728,16 @@ public class MainController implements Initializable {
         contentStream.endText();
         marginTop+=14;
 
-        while (true){
+        for(int i = 0; i<d.returnCV(dbCvName).get(5).size(); i++){
             contentStream.beginText();
             contentStream.setFont(font, 12);
             contentStream.setLeading(16.0f);
             contentStream.newLineAtOffset(25,firstPage.getTrimBox().getHeight()-marginTop);
-            String RecoRole = d.returnCV(dbCvName).get(5).get(0).get("role_");
-            String RecoNameSname= d.returnCV(dbCvName).get(5).get(0).get("name_");
-            String RecoDescription = d.returnCV(dbCvName).get(5).get(0).get("description");
-            String RecoPhoneNo = d.returnCV(dbCvName).get(5).get(0).get("phone");
-            String RecoEmail = d.returnCV(dbCvName).get(5).get(0).get("email");
+            String RecoRole = d.returnCV(dbCvName).get(5).get(i).get("role_");
+            String RecoNameSname= d.returnCV(dbCvName).get(5).get(i).get("name_");
+            String RecoDescription = d.returnCV(dbCvName).get(5).get(i).get("description");
+            String RecoPhoneNo = d.returnCV(dbCvName).get(5).get(i).get("phone");
+            String RecoEmail = d.returnCV(dbCvName).get(5).get(i).get("email");
 
             List<String> recoDESC = Splitter(RecoDescription);
             int recoDESCLine = recoDESC.size();
@@ -756,7 +753,7 @@ public class MainController implements Initializable {
             contentStream.endText();
             marginTop+=42;
             marginTop+=recoDESCLine*12;
-            break;
+
         }
         marginTop+=12;
         contentStream.beginText();
@@ -793,7 +790,7 @@ public class MainController implements Initializable {
         FileChooser exportSave = new FileChooser();
         exportSave.setInitialFileName(dbCvName+".pdf");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-        exportSave.setSelectedExtensionFilter(extFilter);
+        exportSave.getExtensionFilters().addAll(extFilter);
         document.save(exportSave.showSaveDialog(null));
 
         document.close();
